@@ -11,16 +11,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
 import model.Slider;
 
-/**
- *
- * @author midni
- */
+@WebServlet(name = "HomeController", urlPatterns = {"/home"})
+
 public class HomeController extends HttpServlet {
 
     @Override
@@ -29,7 +28,7 @@ public class HomeController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         AccountDAO accountDAO = new AccountDAO();
-        Account acc = accountDAO.getAccount("weqsfub.ycvvjer@trgfmshan.sqalfs.net", "111111");
+        Account acc = accountDAO.getAccount("weqsfub.ycvvjer@trgfmshan.sqalfs.net", "123456");
         request.getSession().setAttribute("account", acc);
         SliderDAO sliderDB = new SliderDAO();
         ArrayList<Slider> sliders = sliderDB.getSliders();

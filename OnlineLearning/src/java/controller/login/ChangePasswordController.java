@@ -9,15 +9,14 @@ import dao.PasswordDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
 
-/**
- *
- * @author midni
- */
+@WebServlet(name = "ChangePasswordController", urlPatterns = {"/change-password"})
+
 public class ChangePasswordController extends HttpServlet {
 
     @Override
