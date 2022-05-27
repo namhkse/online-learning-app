@@ -1,0 +1,163 @@
+.topbar-divider {
+    width: 0;
+    border-right: 1px solid #e3e6f0;
+    height: calc(4.375rem - 2rem);
+    margin: auto 1rem;
+    display: block;
+}
+
+#top-bar ul {
+    margin: 0;
+    list-style: none;
+    display: flex;
+    height: 70px;
+    justify-content: right;
+}
+
+#top-bar img {
+    width: 32px;
+    height: 32px;
+}
+
+#top-bar li {
+    position: relative;
+}
+
+#dropdown-toggle {
+    color: #000;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    text-decoration: none;
+    font-size: 12.8px;
+    line-height: 70px;
+    margin-right: 16px;
+}
+
+#dropdown-toggle span {
+    margin-right: 8px;
+    color: #000;
+    font-size: 16px;
+}
+
+#dropdown-toggle img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+#dropdown-menu {
+    position: absolute;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58, 59, 69, .15);
+    background-color: #fff;
+    border: 1px solid #e3e6f0;
+    border-radius: 0.35rem;
+    width: auto;
+    right: 0;
+    top: 100%;
+    display: none;
+    flex-direction: column;
+    padding: 8px 0;
+    margin-top: 2px;
+    border: 1px;
+    min-width: 10rem;
+    z-index: 1;
+    margin-right: 16px;
+}
+
+#dropdown-menu i {
+    margin-right: 8px;
+}
+
+#dropdown-menu a {
+    text-decoration: none;
+    color: #3a3b45;
+    font-weight: 400;
+    font-size: 13.6px;
+    font-size: 16px;
+    padding: 4px 24px;
+}
+
+#dropdown-menu a:hover {
+    background-color: #eaecf4;
+}
+
+#dropdown-menu a:active {
+    color: #fff;
+    background-color: #4e73df;
+}
+
+.dropdown-divider {
+    height: 0;
+    margin: 0.5rem 0;
+    overflow: hidden;
+    border-top: 1px solid #eaecf4;
+}
+
+#container{
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+form{
+    border-radius: calc(0.25rem - 1px);
+    border: 1px solid rgba(0,0,0,.125);
+    margin-right: 100px;
+}
+
+table{
+
+    line-height: 1.5;
+    border: 0;
+}
+
+#table-header{
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    background-color: #f5f8fa;
+    font-family: Raleway, sans-serif;font-size: .9rem;
+    font-weight: 400;
+    padding: 16px 20px;
+    text-align: left;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+table td{
+    padding: 15px 15px;
+    font-family: Raleway, sans-serif;
+    text-align: center;
+}
+
+table input{
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 12px 24px;
+    width: 500px;
+}
+
+#submit-btn{
+    font-family: Raleway, sans-serif;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    font-weight: 400;
+    text-align: center;
+    padding: 0.375rem 0.75rem;
+    font-size: 16px;
+    padding: 12px;
+    width: 80px;
+    cursor: pointer;
+}
+
+#submit-btn:hover{
+    background-color: #0069d9;
+}
+
+#notification{
+    background: #27c24c;
+    color: #fff;
+    font-family: Raleway, sans-serif;
+    font-size: 16px;
+    padding: 12px 24px;
+}
