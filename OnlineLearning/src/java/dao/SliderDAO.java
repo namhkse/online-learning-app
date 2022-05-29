@@ -23,8 +23,8 @@ public class SliderDAO extends DBContext {
     public ArrayList<Slider> getSliders() {
         ArrayList<Slider> sliders = new ArrayList<>();
         try {
-            String sql = "SELECT s.SliderID, s.Title, s.SubTitle, s.Description, s.NavigationLink, s.ImageUrl, s.[Order], s.Status, s.SliderColectionID\n"
-                    + "FROM dbo.Slider s INNER JOIN dbo.SliderColection sc ON sc.SliderColectionID = s.SliderColectionID\n"
+            String sql = "SELECT s.SliderID, s.Title, s.SubTitle, s.Description, s.NavigationLink, s.ImageUrl, s.[Order], s.Status, s.SliderCollectionID\n"
+                    + "FROM dbo.Slider s INNER JOIN dbo.SliderCollection sc ON sc.SliderCollectionID = s.SliderCollectionID\n"
                     + "WHERE sc.Status = 1 AND s.Status = 1\n"
                     + "ORDER BY sc.[Order] ASC, s.[Order] ASC";
             PreparedStatement stm = connection.prepareStatement(sql);

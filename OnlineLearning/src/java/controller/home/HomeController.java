@@ -6,6 +6,7 @@
 package controller.home;
 
 import dao.AccountDAO;
+import dao.CourseDAO;
 import dao.SliderDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
+import model.Course;
 import model.Slider;
 
 @WebServlet(name = "HomeController", urlPatterns = {"/home"})
@@ -32,6 +34,9 @@ public class HomeController extends HttpServlet {
         request.getSession().setAttribute("account", acc);
         SliderDAO sliderDB = new SliderDAO();
         ArrayList<Slider> sliders = sliderDB.getSliders();
+        CourseDAO courseDAO=new CourseDAO();
+        ArrayList<Course> bestRatedCourses = courseDAO.getBestRatedCourses();
+        request.setAttribute("bestRatedCourses", bestRatedCourses);
         request.setAttribute("sliders", sliders);
         request.getRequestDispatcher("view/home.jsp").forward(request, response);
     }

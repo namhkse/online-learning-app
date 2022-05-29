@@ -19,7 +19,7 @@
               integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
               crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link href="css/base.css" rel="stylesheet" type="text/css"/>
-        <link href="css/index.css" rel="stylesheet" type="text/css"/>
+        <link href="css/home.css" rel="stylesheet" type="text/css"/>
         <title>JSP Page</title>
         <% Account acc = (Account) request.getSession().getAttribute("account");%>
     </head>
@@ -112,6 +112,21 @@
         </div>
 
         <!-- Slider End -->
+
+        <h1 id="best-rated-course-header">Popular Courses</h1>
+
+        <div id="best-rated-course">
+            <c:forEach items="${requestScope.bestRatedCourses}" var="course">
+                <div class="course-item">
+                    <div class="tiny-picture">
+                        <img src="${course.tinyPictureUrl}" alt="">
+                        <div><a href="#">Join Now</a></div>
+                    </div>
+                    <h2>$${course.price}</h2>
+                    <h3>${course.name}</h3>
+                </div>
+            </c:forEach>
+        </div>
 
         <div class="footer">
             <ul>
