@@ -102,7 +102,7 @@
             </form>
 
             <div id="avatar">
-                <img src="${account.profilePictureUrl!=null?account.profilePictureUrl:'https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg'}" alt="Avatar" width="250" height="250">
+                <img src="${sessionScope.account.profilePictureUrl!=null?sessionScope.account.profilePictureUrl:'https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg'}" alt="Avatar" width="250" height="250">
             </div>  
         </div>
 

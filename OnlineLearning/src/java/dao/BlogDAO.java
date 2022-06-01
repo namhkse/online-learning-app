@@ -463,4 +463,16 @@ public class BlogDAO extends DBContext {
         }
         return blogs;
     }
+    
+    public void increaseNumberOfView(int id, int newNumberOfView){
+        try {
+            String sql="UPDATE [dbo].[Blog] SET [NumberOfView] = ? WHERE BlogID = ?";
+            PreparedStatement stm=connection.prepareStatement(sql);
+            stm.setInt(1, newNumberOfView);
+            stm.setInt(2, id);
+            stm.executeUpdate(); 
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

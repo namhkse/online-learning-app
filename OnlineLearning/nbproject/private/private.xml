@@ -3,13 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/web/view/dashboard.jsp</file>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/web/view/base-view/dropDownAdmin.jsp</file>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/web/view/profile.jsp</file>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/web/view/base-view/headerAdmin.jsp</file>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/web/css/base.css</file>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/web/view/base-view/baseTagAdmin.jsp</file>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/web/view/base-view/headerUser.jsp</file>
+            <file>file:/C:/Users/midni/Desktop/OnlineLearning/src/java/dao/SliderDAO.java</file>
+            <file>file:/C:/Users/midni/Desktop/OnlineLearning/src/java/controller/home/HomeController.java</file>
             <file>file:/C:/Users/midni/Desktop/OnlineLearning/web/view/home.jsp</file>
             <file>file:/C:/Users/midni/Desktop/OnlineLearning/src/java/dao/DBContext.java</file>
         </group>

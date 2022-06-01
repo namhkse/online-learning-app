@@ -7,9 +7,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DBContext {
-protected Connection connection;
-    public DBContext()
-    {
+
+    protected Connection connection;
+
+    public DBContext() {
         try {
             String user = "votai";
             String pass = "123456";
