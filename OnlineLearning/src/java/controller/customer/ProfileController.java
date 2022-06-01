@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller.customer;
 
 import dao.AccountDAO;
@@ -13,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
+import model.Gender;
 
 @WebServlet(name = "ProfileController", urlPatterns = {"/profile"})
 
@@ -23,7 +19,7 @@ public class ProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        request.getRequestDispatcher("view/customer/profile.jsp").forward(request, response);
+        request.getRequestDispatcher("view/profile.jsp").forward(request, response);
     }
 
     @Override
@@ -31,11 +27,11 @@ public class ProfileController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        AccountDAO accountDAO=new AccountDAO();
+        AccountDAO accountDAO = new AccountDAO();
         String isNoti = "yes";
         request.setAttribute("isNoti", isNoti);
-        Account oldAccount=(Account) request.getSession().getAttribute("account");
-        int accountID = oldAccount.getAccountId();
+        Account oldAccount = (Account) request.getSession().getAttribute("account");
+        int accountID = oldAccount.getAccountID();
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         boolean gender = true;
@@ -45,20 +41,21 @@ public class ProfileController extends HttpServlet {
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         String profilePictureUrl = request.getParameter("profilePictureUrl");
-        Account acc=new Account();
-        acc.setAccountId(accountID);
+        Account acc = new Account();
+        
+        acc.setAccountID(accountID);
         acc.setFirstName(firstName);
         acc.setLastName(lastName);
-        acc.setGender(gender);
+        acc.setGender(Gender.of(gender));
         acc.setPhone(phone);
         acc.setAddress(address);
         acc.setProfilePictureUrl(profilePictureUrl);
         accountDAO.editProfile(acc);
-        
+
         Account accountUpdate = accountDAO.getAccount(oldAccount.getEmail(), oldAccount.getPassword());
         request.getSession().setAttribute("account", accountUpdate);
-        
-        request.getRequestDispatcher("view/customer/profile.jsp").forward(request, response);
+
+        request.getRequestDispatcher("view/profile.jsp").forward(request, response);
     }
 
     @Override

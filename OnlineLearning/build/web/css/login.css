@@ -44,3 +44,35 @@ body{
     margin-left: 0;
     margin-right: 0;
 }
+
+.success {
+    background-color: #27c24c;
+    color: #fff;
+    padding: 15px;
+    margin-bottom: 32px;
+}
+
+.margin-0 {
+    margin: 0;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0;
+}
+
+.error {
+    color: red;
+}
+
+.margin-auto-0 {
+    margin: auto 0;
+}
+
+.margin-auto-15px {
+    margin: auto 15px;
+}
+
+.gender-form {
+    display: flex; 
+    justify-content: space-around;
+}

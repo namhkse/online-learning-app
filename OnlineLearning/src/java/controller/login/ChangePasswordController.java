@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller.login;
 
 import dao.PasswordDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,9 +28,9 @@ public class ChangePasswordController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         PasswordDAO passwordDAO = new PasswordDAO();
         Account oldAccount=(Account) request.getSession().getAttribute("account");
-        int accountID = oldAccount.getAccountId();
+        int accountID = oldAccount.getAccountID();
         String newPassword = request.getParameter("newPassword");
-        passwordDAO.changPassword(accountID, newPassword);
+        passwordDAO.changePassword(accountID, newPassword);
         String isNoti = "yes";
         request.setAttribute("isNoti", isNoti);
         

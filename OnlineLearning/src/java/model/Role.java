@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
-/**
- *
- * @author midni
- */
 public class Role {
-
+    
+    public static String ADMIN = "ADMIN";
+    public static String EXPERT = "EXPERT";
+    public static String CUSTOMER = "CUSTOMER";
+    public static String SALE = "SALE";
+    public static String MARKETING = "MARKETING";
+    
     private int id;
     private String name;
 
@@ -38,4 +36,8 @@ public class Role {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }

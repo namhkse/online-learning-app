@@ -44,13 +44,3 @@ function showSlides2() {
 
     setTimeout(showSlides2, 5000);
 }
-
-function dropdown() {
-    var dropdownMenu = document.querySelector('#dropdown-menu');
-
-    if (dropdownMenu.style.display == 'flex') {
-        dropdownMenu.style.display = 'none';
-    } else {
-        dropdownMenu.style.display = 'flex';
-    }
-}

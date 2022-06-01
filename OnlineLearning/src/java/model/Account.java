@@ -1,58 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-/**
- *
- * @author midni
- */
 public class Account {
-
-    private int accountId;
+    private int accountID;
     private String firstName;
     private String lastName;
-    private String profilePictureUrl;
     private String email;
-    private String password;
-    private boolean gender;
-    private String address;
-    private String phone;
+    private String profilePictureUrl;
+    private Role role;   
     private BigDecimal balance;
-    private Role role;
     private Timestamp createdTime;
     private Timestamp modifiedTime;
+    private String phone;    
+    private String address;
+    private Gender gender;
+    private String password;
 
     public Account() {
     }
 
-    public Account(int accountID, String firstName, String lastName, String profilePictureUrl, String email, String password, boolean gender, String address, String phone, BigDecimal balance, Role role, Timestamp createdTime, Timestamp modifiedTime) {
-        this.accountId = accountID;
+    public Account(int accountId, String firstName, String lastName, String email, String profilePictureUrl, Role role, BigDecimal balance, Timestamp createdTime, Timestamp modifiedTime, String phone, String address, Gender gender, String password) {
+        this.accountID = accountId;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.profilePictureUrl = profilePictureUrl;
         this.email = email;
-        this.password = password;
-        this.gender = gender;
-        this.address = address;
-        this.phone = phone;
-        this.balance = balance;
+        this.profilePictureUrl = profilePictureUrl;
         this.role = role;
+        this.balance = balance;
         this.createdTime = createdTime;
         this.modifiedTime = modifiedTime;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+        this.password = password;
     }
 
-    public int getAccountId() {
-        return accountId;
+    public int getAccountID() {
+        return accountID;
     }
 
-    public void setAccountId(int accountID) {
-        this.accountId = accountID;
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
     }
 
     public String getFirstName() {
@@ -71,14 +61,6 @@ public class Account {
         this.lastName = lastName;
     }
 
-    public String getProfilePictureUrl() {
-        return profilePictureUrl;
-    }
-
-    public void setProfilePictureUrl(String profilePictureUrl) {
-        this.profilePictureUrl = profilePictureUrl;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -87,44 +69,12 @@ public class Account {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getProfilePictureUrl() {
+        return profilePictureUrl;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isGender() {
-        return gender;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        this.profilePictureUrl = profilePictureUrl;
     }
 
     public Role getRole() {
@@ -133,6 +83,14 @@ public class Account {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public Timestamp getCreatedTime() {
@@ -151,4 +109,36 @@ public class Account {
         this.modifiedTime = modifiedTime;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }   
+    
 }

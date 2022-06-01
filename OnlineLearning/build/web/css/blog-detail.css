@@ -31,7 +31,20 @@
     font-size: 23px;
 }
 
-.blog-detail>p {
+.blog-detail > p {
     font-size: 20px;
-    color: #69707A;
+    color: #292929;
+    margin-top: 15px;
+}
+
+.blog-detail > span {
+    font-size: 18px;
+    color: #111;
+    margin-bottom: 30px;
+    display: inline-block;
+    line-height: 1.6;
+}
+
+.blog-detail-title {
+    margin-bottom: 20px;
 }

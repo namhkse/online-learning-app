@@ -1,23 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller.home;
 
-import dao.AccountDAO;
-import dao.CourseDAO;
+import dao.BlogDAO;
+import dao.CourseAccountDAO;
 import dao.SliderDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Account;
-import model.Course;
+import model.Blog;
+import model.CourseAccount;
 import model.Slider;
 
 @WebServlet(name = "HomeController", urlPatterns = {"/home"})
@@ -29,13 +23,13 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        AccountDAO accountDAO = new AccountDAO();
-        Account acc = accountDAO.getAccount("weqsfub.ycvvjer@trgfmshan.sqalfs.net", "123456");
-        request.getSession().setAttribute("account", acc);
         SliderDAO sliderDB = new SliderDAO();
         ArrayList<Slider> sliders = sliderDB.getSliders();
-        CourseDAO courseDAO=new CourseDAO();
-        ArrayList<Course> bestRatedCourses = courseDAO.getBestRatedCourses();
+        CourseAccountDAO courseAccountDAO = new CourseAccountDAO();
+        ArrayList<CourseAccount> bestRatedCourses = courseAccountDAO.getBestRatedCourses();
+        BlogDAO blogDAO=new BlogDAO();
+        ArrayList<Blog> mostViewedBlogs = blogDAO.getMostViewedBlogs();
+        request.setAttribute("mostViewedBlogs", mostViewedBlogs);
         request.setAttribute("bestRatedCourses", bestRatedCourses);
         request.setAttribute("sliders", sliders);
         request.getRequestDispatcher("view/home.jsp").forward(request, response);

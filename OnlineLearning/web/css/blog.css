@@ -77,3 +77,8 @@
     max-width: 1200px;
     margin: 100px auto;
 }
+
+.active-category-blog {
+    background-color: #4b4a4a! important;
+    color: #fff !important;
+}
