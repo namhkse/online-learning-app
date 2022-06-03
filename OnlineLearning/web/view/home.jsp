@@ -83,7 +83,7 @@
             <c:forEach items="${mostViewedBlogs}" var="blog">
                 <div class="blog-item">
                     <div class="tiny-picture">
-                        <img src="${blog.thumbnailUrl}" alt="">
+                        <img src="img/${blog.thumbnailUrl}" alt="">
                         <div><a href="blog-detail?blogID=${blog.blogID}">View</a></div>
                     </div>
                     <div class="desc-best-course"> 

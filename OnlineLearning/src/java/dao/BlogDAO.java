@@ -1,9 +1,13 @@
 package dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,13 +96,14 @@ public class BlogDAO extends DBContext {
                     + "from [Blog] b, [Account] a where b.AuthorID = a.AccountID"
                     + " and b.Display = 1 and \n"
                     + "(Title like ? or [Description] like ? "
-                    + "or (a.LastName +' '+ a.FirstName) like ? )\n"
+                    + "or (a.LastName +' '+ a.FirstName) like ? or b.CreatedDate like ?)\n"
                     + "order by b.createdDate desc, b.BlogID desc offset ? rows fetch next 5 rows only";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, "%" + search + "%");
             stm.setString(2, "%" + search + "%");
             stm.setString(3, "%" + search + "%");
-            stm.setInt(4, page);
+            stm.setString(4, "%" + search + "%");
+            stm.setInt(5, page);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
 
@@ -138,6 +143,25 @@ public class BlogDAO extends DBContext {
             stm.setString(1, "%" + search + "%");
             stm.setString(2, "%" + search + "%");
             stm.setString(3, "%" + search + "%");
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("count");
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getSizeBlogByWeek(String search) {
+        Date[] dates = convertWeekdays(search);
+        try {
+            String sql = "select COUNT(*) [count] from [Blog] where Display = 1 "
+                    + "and CreatedDate between ? and ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setDate(1, dates[0]);
+            stm.setDate(2, dates[1]);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("count");
@@ -420,26 +444,26 @@ public class BlogDAO extends DBContext {
                     + "BlogCategory.Description, BlogCategory.IconUrl, BlogCategory.Name, BlogCategory.ThumbnailUrl\n"
                     + "FROM Blog join BlogCategoryBlog on blog.BlogID = BlogCategoryBlog.BlogID\n"
                     + "join BlogCategory on BlogCategoryBlog.BlogCategoryID = BlogCategory.BlogCategoryID \n";
-             if (cid != -1 && sid != -1) {
+            if (cid != -1 && sid != -1) {
                 sql += "where Blog.Display = ? and BlogCategory.BlogCategoryID = ?";
-                
-            }else if(cid != -1){
+
+            } else if (cid != -1) {
                 sql += "where BlogCategory.BlogCategoryID = ?";
-                
-            }else if(cid == -1){
+
+            } else if (cid == -1) {
                 sql += "where Blog.Display = ?";
-            
-            } 
+
+            }
             PreparedStatement stm = connection.prepareStatement(sql);
             if (cid != -1 && sid != -1) {
-               stm.setInt(1, sid);
-                stm.setInt(2, cid);
-                
-            }else if(cid != -1){
-                stm.setInt(1, cid);
-            }else if(cid == -1){
                 stm.setInt(1, sid);
-            } 
+                stm.setInt(2, cid);
+
+            } else if (cid != -1) {
+                stm.setInt(1, cid);
+            } else if (cid == -1) {
+                stm.setInt(1, sid);
+            }
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Account account = new Account();
@@ -463,16 +487,203 @@ public class BlogDAO extends DBContext {
         }
         return blogs;
     }
-    
-    public void increaseNumberOfView(int id, int newNumberOfView){
+
+    public ArrayList<Blog> getListBlogRelated(int blogID) {
+        ArrayList<Blog> blogs = new ArrayList<>();
         try {
-            String sql="UPDATE [dbo].[Blog] SET [NumberOfView] = ? WHERE BlogID = ?";
-            PreparedStatement stm=connection.prepareStatement(sql);
+            String sql = "SELECT TOP 3 b.* FROM dbo.Blog b JOIN dbo.BlogCategoryBlog bcb\n"
+                    + "ON bcb.BlogID = b.BlogID\n"
+                    + "WHERE b.BlogID != ? AND bcb.BlogCategoryID\n"
+                    + "IN (SELECT BlogCategoryID FROM dbo.BlogCategoryBlog WHERE BlogID = ?)\n"
+                    + "ORDER BY b.CreatedDate desc";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, blogID);
+            stm.setInt(2, blogID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Account account = new Account();
+                account.setAccountID(rs.getInt("AuthorID"));
+
+                Blog blog = new Blog();
+                blog.setBlogID(rs.getInt("BlogID"));
+                blog.setTitle(rs.getString("Title"));
+                blog.setDescription(rs.getString("Description"));
+                blog.setContent(rs.getString("Content"));
+                blog.setCreatedDate(rs.getDate("CreatedDate"));
+                blog.setAuthorID(account);
+                blog.setDisplay(rs.getBoolean("Display"));
+                blog.setThumbnailUrl(rs.getString("ThumbnailUrl"));
+                blog.setNumberOfView(rs.getInt("NumberOfView"));
+
+                blogs.add(blog);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return blogs;
+    }
+
+    public ArrayList<Blog> listBlogMostView(int cid) {
+        ArrayList<Blog> list = new ArrayList<>();
+        try {
+            String sql = "select top(3) b.*, cb.BlogCategoryID, bc.Name, a.FirstName, a.LastName, a.ProfilePictureUrl "
+                    + "from [Blog] b, [BlogCategoryBlog] cb, [BlogCategory] bc , [Account] a \n"
+                    + "where b.BlogID = cb.BlogID and cb.BlogCategoryID = bc.BlogCategoryID and a.AccountID = b.AuthorID "
+                    + "and b.Display = 1 order by b.NumberOfView desc";
+            if (cid != 0) {
+                sql = "select top(3) b.*, cb.BlogCategoryID, bc.Name, a.FirstName, a.LastName, a.ProfilePictureUrl  "
+                        + "from [Blog] b, [BlogCategoryBlog] cb, [BlogCategory] bc , [Account] a\n"
+                        + "where b.BlogID = cb.BlogID and cb.BlogCategoryID = bc.BlogCategoryID "
+                        + "and a.AccountID = b.AuthorID and bc.BlogCategoryID = ? and b.Display = 1"
+                        + "order by b.NumberOfView desc";
+            }
+            PreparedStatement stm = connection.prepareStatement(sql);
+            if (cid != 0) {
+                stm.setInt(1, cid);
+            }
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+
+                Account account = new Account();
+                account.setAccountID(rs.getInt("AuthorID"));
+                account.setFirstName(rs.getString("FirstName"));
+                account.setLastName(rs.getString("LastName"));
+                account.setProfilePictureUrl(rs.getString("ProfilePictureUrl"));
+
+                Blog blog = new Blog();
+
+                blog.setBlogID(rs.getInt("BlogID"));
+                blog.setTitle(rs.getString("Title"));
+                blog.setDescription(rs.getString("Description"));
+                blog.setContent(rs.getString("Content"));
+                blog.setCreatedDate(rs.getDate("CreatedDate"));
+                blog.setAuthorID(account);
+                blog.setDisplay(rs.getBoolean("Display"));
+                blog.setThumbnailUrl(rs.getString("ThumbnailUrl"));
+                blog.setNumberOfView(rs.getInt("NumberOfView"));
+
+                list.add(blog);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public void increaseNumberOfView(int id, int newNumberOfView) {
+        try {
+            String sql = "UPDATE [dbo].[Blog] SET [NumberOfView] = ? WHERE BlogID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, newNumberOfView);
             stm.setInt(2, id);
-            stm.executeUpdate(); 
+            stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public ArrayList<Blog> search_byDate(String fromDate, String toDate) {
+        ArrayList<Blog> blogs = new ArrayList<>();
+        BlogCategoryDAO blogCategoryDAO = new BlogCategoryDAO();
+        try {
+            String sql = "select b.*, bc.* from Blog b join BlogCategoryBlog bcb\n"
+                    + "on bcb.BlogID = b.BlogID join BlogCategory bc\n"
+                    + "on bc.BlogCategoryID = bcb.BlogCategoryID\n"
+                    + "where b.CreatedDate  BETWEEN ? AND ?";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, fromDate);
+            stm.setString(2, toDate);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Account account = new Account();
+                account.setAccountID(rs.getInt("AuthorID"));
+
+                Blog blog = new Blog();
+                blog.setBlogID(rs.getInt("BlogID"));
+                blog.setTitle(rs.getString("Title"));
+                blog.setDescription(rs.getString("Description"));
+                blog.setContent(rs.getString("Content"));
+                blog.setCreatedDate(rs.getDate("CreatedDate"));
+                blog.setAuthorID(account);
+                blog.setDisplay(rs.getBoolean("Display"));
+                blog.setThumbnailUrl(rs.getString("ThumbnailUrl"));
+                blog.setNumberOfView(rs.getInt("NumberOfView"));
+
+                ArrayList<BlogCategory> blogCategories = new BlogCategoryDAO().getCategoryByID(blog.getBlogID());
+
+                blog.setBlogCategories(blogCategories);
+
+                blogs.add(blog);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return blogs;
+    }
+
+    public ArrayList<Blog> listAllBlogByWeek(String search, int page) {
+        Date[] dates = convertWeekdays(search);
+        ArrayList<Blog> list = new ArrayList<>();
+        try {
+            String sql = "select b.*, a.FirstName, a.LastName, (a.LastName +' '+ a.FirstName) as [fullname], a.ProfilePictureUrl "
+                    + "from [Blog] b, [Account] a where b.AuthorID = a.AccountID and b.Display = 1 and "
+                    + "b.CreatedDate between ? and ? order by b.createdDate desc, b.BlogID desc offset ? rows fetch next 5 rows only";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setDate(1, dates[0]);
+            stm.setDate(2, dates[1]);
+            stm.setInt(3, page);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+
+                Account account = new Account();
+                account.setAccountID(rs.getInt("AuthorID"));
+                account.setFirstName(rs.getString("FirstName"));
+                account.setLastName(rs.getString("LastName"));
+                account.setProfilePictureUrl(rs.getString("ProfilePictureUrl"));
+
+                Blog blog = new Blog();
+
+                blog.setBlogID(rs.getInt("BlogID"));
+                blog.setTitle(rs.getString("Title"));
+                blog.setDescription(rs.getString("Description"));
+                blog.setContent(rs.getString("Content"));
+                blog.setCreatedDate(rs.getDate("CreatedDate"));
+                blog.setAuthorID(account);
+                blog.setDisplay(rs.getBoolean("Display"));
+                blog.setThumbnailUrl(rs.getString("ThumbnailUrl"));
+                blog.setNumberOfView(rs.getInt("NumberOfView"));
+
+                list.add(blog);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public Date[] convertWeekdays(String search) {
+        //convert string to weekdays
+        String[] dateArr = search.split("-");
+
+        Date[] dates = new Date[2];
+        int year = Integer.parseInt(dateArr[0]);
+        int week = Integer.parseInt(dateArr[1].substring(1));
+
+        LocalDate dateMonday = LocalDate.now()
+                .with(WeekFields.ISO.weekBasedYear(), year)
+                .with(WeekFields.ISO.weekOfWeekBasedYear(), week)
+                .with(WeekFields.ISO.dayOfWeek(), DayOfWeek.MONDAY.getValue());
+        LocalDate dateSunday = LocalDate.now()
+                .with(WeekFields.ISO.weekBasedYear(), year)
+                .with(WeekFields.ISO.weekOfWeekBasedYear(), week)
+                .with(WeekFields.ISO.dayOfWeek(), DayOfWeek.SUNDAY.getValue());
+        Date monday = Date.valueOf(dateMonday);
+        Date sunday = Date.valueOf(dateSunday);
+        dates[0] = monday;
+        dates[1] = sunday;
+        return dates;
+    }
+
 }

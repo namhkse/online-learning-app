@@ -207,11 +207,6 @@ ul {
     margin-bottom: 30px;
 }
 
-.search {
-    display: flex;
-    justify-content: end;
-}
-
 .search-child {
     margin-bottom: 30px;
     margin-right: 70px;
@@ -223,6 +218,7 @@ ul {
     outline: none;
     border: 1px solid #ccc;
     border-radius: 20px;
+    margin-left: 35px;
 }
 
 .topbar-divider {
@@ -301,7 +297,6 @@ ul {
     text-decoration: none;
     color: #3a3b45;
     font-weight: 400;
-    font-size: 13.6px;
     font-size: 16px;
     padding: 4px 24px;
 }

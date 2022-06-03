@@ -3,6 +3,7 @@ package controller.management.post;
 import dao.BlogCategoryDAO;
 import dao.BlogDAO;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +22,15 @@ public class PostListController extends HttpServlet {
             throws ServletException, IOException {
         BlogDAO blogDao = new BlogDAO();
         // get all blogs
+        String fromDate_raw = request.getParameter("fromDate");
+        String toDate_raw = request.getParameter("toDate");
+        if(fromDate_raw == null || fromDate_raw.isEmpty()){
+            fromDate_raw = "-1";
+        }
+        if(toDate_raw == null || toDate_raw.isEmpty()){
+            toDate_raw = "-1";
+        }
+
         String cid_raw = request.getParameter("cid");
         int cid = -1;
         if (cid_raw != null) {
@@ -51,7 +61,8 @@ public class PostListController extends HttpServlet {
             totalPage++;
         }
         ArrayList<BlogCategory> allBlogCategory = new ArrayList<>();
-        if (title == null && sid == -1 && cid == -1) {
+        if (title == null && sid == -1 && cid == -1 && fromDate_raw.equalsIgnoreCase("-1")
+                && toDate_raw.equalsIgnoreCase("-1")) {
             ArrayList<Blog> blogs = blogDao.getAllBlogs();
             BlogCategoryDAO blogCategoryDAO = new BlogCategoryDAO();
             allBlogCategory = blogCategoryDAO.getAllBlogCategory_DistinctName();
@@ -75,6 +86,14 @@ public class PostListController extends HttpServlet {
             allBlogCategory = blogCategoryDAO.getAllBlogCategory_DistinctName();
             
             request.setAttribute("listBlog", listBlogsAfterFilter);
+        }
+        if (!fromDate_raw.equalsIgnoreCase("-1") || !toDate_raw.equalsIgnoreCase("-1")) {
+            ArrayList<Blog> DateResult = blogDao.search_byDate(fromDate_raw, toDate_raw);
+            ArrayList<Blog> listBlogsAfterDate = getListPage(page, DateResult);
+            BlogCategoryDAO blogCategoryDAO = new BlogCategoryDAO();
+            allBlogCategory = blogCategoryDAO.getAllBlogCategory_DistinctName();
+            
+            request.setAttribute("listBlog", listBlogsAfterDate);
         }
 
         request.setAttribute("cid", cid);

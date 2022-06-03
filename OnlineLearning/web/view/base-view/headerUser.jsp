@@ -39,7 +39,7 @@
                                     <span>${sessionScope.account.firstName} ${sessionScope.account.lastName}</span>
                                     <span>${sessionScope.account.balance} $</span>
                                 </div>
-                                <img src="${sessionScope.account.profilePictureUrl!=null?sessionScope.account.profilePictureUrl:'https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg'}">
+                                <img src="img/${sessionScope.account.profilePictureUrl}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div id="dropdown-menu">

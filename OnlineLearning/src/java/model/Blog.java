@@ -110,6 +110,6 @@ public class Blog {
     public void setBlogCategories(ArrayList<BlogCategory> blogCategories) {
         this.blogCategories = blogCategories;
     }
-    
-    
+
+  
 }

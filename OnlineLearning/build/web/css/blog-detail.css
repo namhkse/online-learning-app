@@ -1,6 +1,13 @@
+.blog-detail-container {
+    display: flex;
+    padding: 0 50px;
+}
+
 .blog-detail {
-    margin: 50px auto;
-    max-width: 1200px;
+    margin: 50px 0;
+    padding: 0 50px;
+    width: 70%;
+    border-right: 1px solid #ccc; 
 }
 
 .blog-detail-author {
@@ -14,7 +21,6 @@
     border-radius: 50%;
     margin: auto 0;
     margin-right: 20px;
-
 }
 
 .blog-detail-create p {
@@ -47,4 +53,50 @@
 
 .blog-detail-title {
     margin-bottom: 20px;
+}
+
+
+.related-blog {
+    width: 30%;
+    margin: 100px 30px;
+}
+
+.related-blog h2 {
+    color: #111;
+    margin-left: 20px;
+}
+
+.list-related-blog {
+    margin: 50px 0;
+}
+
+.item-related-blog {
+    background-color: #eafdff;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+}
+
+.item-related-blog a{
+    color: #111;
+}
+
+.img-related-blog {
+    width: 100%;
+}
+
+.desc-related-blog {
+    padding: 20px;
+}
+
+.title-related-blog {
+   margin-bottom: 20px; 
+}
+
+.desc-text {
+    padding: 0 15px;
+    height: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

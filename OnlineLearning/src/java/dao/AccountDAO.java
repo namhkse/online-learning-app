@@ -150,8 +150,8 @@ public class AccountDAO extends DBContext {
         PreparedStatement stm = null;
         try {
             String sqlAccount = "INSERT INTO [Account]([FirstName],[LastName],[Email],"
-                    + "[RoleID],[CreatedTime],[Phone],[Gender],[Balance])\n"
-                    + "VALUES(?,?,?,2,?,?,?,10000)";
+                    + "[RoleID],[CreatedTime],[Phone],[Gender],[Balance],[ProfilePictureUrl])\n"
+                    + "VALUES(?,?,?,2,?,?,?,10000,'default-account-profile-picture-7.jpg')";
             stm = connection.prepareStatement(sqlAccount);
             stm.setString(1, fname);
             stm.setString(2, lname);

@@ -25,6 +25,13 @@
                             <div class="table-content">
                                 <div class="search">
                                     <a class="margin-auto-0" id="add-blog" href="post-detail" ><i class="fa-solid fa-plus"></i> Add Blog</a>
+                                    
+                                        <form action="post-list" method="GET">
+                                        From <input type="date" name="fromDate">
+                                        To <input type="date" name="toDate">
+                                        <input id="submit" type="submit" value="Find"/>
+                                        </form>   
+                                    
                                     <form action="post-list" method="GET"> 
                                         Category: 
                                         <select name="cid" class="select-tag">
@@ -42,7 +49,7 @@
 
                                         <input id="submit" type="submit" value="Filter"/>
                                     </form>
-                                <div>
+                                        <div class="margin-top-20">
                                     <form action="post-list" method="GET">
                                         <input type="text" id="search" name="search">
                                         <input id="submit" type="submit" value="Search"/>
@@ -67,7 +74,7 @@
                                     <c:forEach items="${listBlog}" var="blog" >
                                         <tr>
                                             <td>${blog.blogID}</td>
-                                            <td><img class="img-thumbnail-blog" src="${blog.thumbnailUrl}"></td>
+                                            <td><img class="img-thumbnail-blog" src="../img/${blog.thumbnailUrl}"></td>
                                             <td>${blog.title}</td>
 
                                             <td>
@@ -78,8 +85,8 @@
 
                                             <td>${blog.createdDate}</td>
                                             <td>${blog.display ? 'Display' : 'Hidden'}</td>
-                                            <td><a id="myTable-change" href="post-detail?bid=${blog.blogID}" >Edit</a></td>
-                                            <td><a id="myTable-change" href="#" onclick="deleteBlog(${blog.blogID})">Delete</a></td>
+                                            <td><a class="myTable-change myTable-change1" href="post-detail?bid=${blog.blogID}" >Edit</a></td>
+                                            <td><a class="myTable-change myTable-change2" href="#" onclick="deleteBlog(${blog.blogID})">Delete</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

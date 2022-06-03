@@ -3,10 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/src/java/dao/SliderDAO.java</file>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/src/java/controller/home/HomeController.java</file>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/web/view/home.jsp</file>
-            <file>file:/C:/Users/midni/Desktop/OnlineLearning/src/java/dao/DBContext.java</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/web/view/profile.jsp</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/src/java/controller/management/post/PostDetailController.java</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/web/view/post-management.jsp</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/web/css_admin/table.css</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/web/view/post-detail.jsp</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/web/css/account-list.css</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/src/java/controller/blog/BlogController.java</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/web/css_admin/dashboard.css</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/web/view/blog-detail.jsp</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/web/view/base-view/headerUser.jsp</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/src/java/controller/customer/ProfileController.java</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/src/java/dao/BlogDAO.java</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/src/java/controller/management/post/PostListController.java</file>
+            <file>file:/E:/CODE/summer2022-se1617-g4/OnlineLearning/web/view/blog.jsp</file>
         </group>
     </open-files>
 </project-private>

@@ -23,9 +23,20 @@ public class BlogController extends HttpServlet {
         request.getRequestDispatcher("view/blog.jsp").forward(request, response);
     }
 
-    private ArrayList<Blog> ListAllBlogBySearch(HttpServletRequest request, HttpServletResponse response, int offset) {
-        String search = request.getParameter("search");
-        ArrayList<Blog> blist = blist = new BlogDAO().listAllBlogBySearch(search, offset);
+    private ArrayList<Blog> ListAllBlogBySearch(HttpServletRequest request, HttpServletResponse response, int offset, int bcID) {
+        String search = (String) request.getParameter("search");
+        ArrayList<Blog> blist = new BlogDAO().listAllBlogBySearch(search, offset);;
+        if (request.getParameter("SearchWeek") != null) {
+            //check if searchweek is different than empty string then enter
+            if (!request.getParameter("SearchWeek").toString().equals("")) {
+                search = (String) request.getParameter("SearchWeek");
+                blist = new BlogDAO().listAllBlogByWeek(search, offset);
+            }
+        }
+        if (blist.size() == 0 && request.getParameter("search") == null) {
+            blist = new BlogDAO().listAllBlogByPage(bcID, offset);
+        }
+        System.out.println("blist: " + blist);
         return blist;
     }
 
@@ -37,13 +48,16 @@ public class BlogController extends HttpServlet {
             bcID = Integer.parseInt(request.getParameter("bcid"));
         }
 
-        ArrayList<Blog> bList = new ArrayList<>();
-
         //get size and dive page by blog category
         int totalpageProduct = new BlogDAO().getSizeBlog(bcID);
         //if search not null then reassign the value of totalpageProduct
         if (request.getParameter("search") != null) {
             totalpageProduct = new BlogDAO().getSizeBlogBySearch(request.getParameter("search"));
+        } else if (request.getParameter("SearchWeek") != null) {
+            //check if searchweek is different than empty string then enter
+            if (!request.getParameter("SearchWeek").toString().equals("")) {
+                totalpageProduct = new BlogDAO().getSizeBlogByWeek(request.getParameter("SearchWeek"));
+            }
         }
         int totalpage = totalpageProduct / 5;
         if (totalpageProduct % 5 != 0) {
@@ -64,20 +78,28 @@ public class BlogController extends HttpServlet {
         }
         //get offset from page to select 5 objects in database
         int offSet = (page - 1) * 5;
+
+        ArrayList<Blog> bList = new BlogDAO().listAllBlogByPage(bcID, offSet);
         //assign value to arraylist
-        if (request.getParameter("search") == null) {
-            //get value by blogcategoryID if search == null
-            bList = new BlogDAO().listAllBlogByPage(bcID, offSet);
-        } else {
+        if (request.getParameter("search") != null || request.getParameter("SearchWeek") != null) {
             //get value by search if search != null
-            bList = ListAllBlogBySearch(request, response, offSet);
+            bList = ListAllBlogBySearch(request, response, offSet, bcID);
         }
+
+        //Display the top 3 blogs with the most views by category
+        ListBlogCategoryMostView(request, response, bcID);
+
         //setAttribute
-        request.setAttribute("blogList", bList);
+        if (!bList.isEmpty()) {
+            //if the returned array is an array of size = 0 then do not 
+            //setAttribute "blogList" to return no value found (49 - 51 blog.jsp)
+            request.setAttribute("blogList", bList);
+        }
         request.setAttribute("page", page);
         request.setAttribute("totalpage", totalpage);
         request.setAttribute("search", request.getParameter("search"));
-        
+        request.setAttribute("searchweek", request.getParameter("SearchWeek"));
+
         //Set Attribute for url with bcid or with search and without bcid or search
         if (request.getParameter("bcid") != null) {
             request.setAttribute("bcid", request.getParameter("bcid"));
@@ -96,6 +118,13 @@ public class BlogController extends HttpServlet {
         ArrayList<BlogCategory> bcList = new ArrayList<>();
         bcList = new BlogCategoryDAO().getAllBlogCategory();
         request.setAttribute("bcList", bcList);
+    }
+
+    private void ListBlogCategoryMostView(HttpServletRequest request, HttpServletResponse response, int bcid) {
+        ArrayList<Blog> bcMostView = new ArrayList<>();
+        bcMostView = new BlogDAO().listBlogMostView(bcid);
+        request.setAttribute("bcMostView", bcMostView);
+        request.setAttribute("bcMost", bcMostView.get(0));
     }
 
     @Override

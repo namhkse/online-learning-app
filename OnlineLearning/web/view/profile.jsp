@@ -20,7 +20,7 @@
         <jsp:include page="base-view/headerUser.jsp"></jsp:include>
 
             <div id="container">
-                <form action="profile" method="POST" onsubmit="return submitForm()">
+                <form action="profile" method="POST" onsubmit="return submitForm()" enctype="multipart/form-data">
                     <div id="table-header">
                         <span>My profile</span>
                     </div>
@@ -90,8 +90,8 @@
                         <tr><td colspan="2"></td></tr>
 
                         <tr>
-                            <td>Avatar url</td>
-                            <td><input type="text" name="profilePictureUrl" value="${sessionScope.account.profilePictureUrl}"/></td>
+                            <td>Avatar</td>
+                            <td><input type="file" name="photo" value=""/></td>
                         </tr>
 
                         <tr>
@@ -102,13 +102,13 @@
             </form>
 
             <div id="avatar">
-                <img src="${sessionScope.account.profilePictureUrl!=null?sessionScope.account.profilePictureUrl:'https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg'}" alt="Avatar" width="250" height="250">
+                <img src="img/${account.profilePictureUrl}" alt="Avatar" width="250" height="250">
             </div>  
         </div>
 
         <jsp:include page="base-view/footerUser.jsp"></jsp:include>
 
-            
-        </body>
 
-    </html>
+    </body>
+
+</html>
