@@ -1,6 +1,6 @@
 package controller.login;
 
-import base.Base;
+import config.AppConfig;
 import dao.AccountDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -53,7 +53,7 @@ public class RegisterController extends HttpServlet {
                     + "    <h3>Welcome to join Elearning</h3>\n"
                     + "    <p>Please click here to verify your account</p>\n"
                     + "    \n"
-                    + "    <form id=\"myForm\" method=\"POST\" action=" + Base.LINK_VERIFY + ">\n"
+                    + "    <form id=\"myForm\" method=\"POST\" action=" + AppConfig.LINK_VERIFY + ">\n"
                     + "        <input type=\"hidden\" value=" + email + " id=\"email\" name=\"email\">\n"
                     + "        <input type=\"hidden\" value=" + fname + " id=\"f-name\" name=\"f-name\">\n"
                     + "        <input type=\"hidden\" value=" + lname + " id=\"l-name\" name=\"l-name\">\n"
@@ -69,7 +69,7 @@ public class RegisterController extends HttpServlet {
                     + "</body>\n"
                     + "</html>";
 
-            SendEmail.sendMail(email, subject, message, Base.USERNAME_EMAIL, Base.PASSWORD_EMAIL);
+            SendEmail.sendMail(email, subject, message, AppConfig.USERNAME_EMAIL, AppConfig.PASSWORD_EMAIL);
             request.setAttribute("success", "Verification link has been sent to your email");
             request.getRequestDispatcher("view/register.jsp").forward(request, response);
         }

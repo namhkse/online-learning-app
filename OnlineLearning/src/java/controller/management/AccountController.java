@@ -18,18 +18,11 @@ public class AccountController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/view/account-list.jsp");
-        
-        try {
-            List<Account> accounts = new AccountDAO().findAll();
-            req.setAttribute("accounts", accounts);
-            dispatcher.forward(req, resp);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/view/account-management.jsp");
+
+        dispatcher.forward(req, resp);
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

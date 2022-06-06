@@ -1,106 +1,40 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<!DOCTYPE html>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!doctype html>
 <html lang="en">
 
     <head>
-        <jsp:include page="base-view/baseTagAdmin.jsp"></jsp:include>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Manage Account</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <!--Font Awesome-->
+        <script src="https://kit.fontawesome.com/7b806b5ab9.js" crossorigin="anonymous"></script>
+        <!--Jquery-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    </head>
 
-            <title>Management Post</title>
-        </head>
-
-        <body>
-            <div class="display-flex min-height-100vh">
-
-            <jsp:include page="base-view/headerAdmin.jsp"></jsp:include>
-
-                <div class="width85">
-
-                <jsp:include page="base-view/dropDownAdmin.jsp"></jsp:include>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-2 min-vh-100 bg-dark p-0">
+                    <jsp:include page="sidenav.jsp?page=Manage Post"/>
+                </div>
+                <div class="col-sm-10 p-0">
+                    <jsp:include page="navbar-header.jsp?page=Manage Post"/>
 
                     <div class="container">
-                        <h1 class="container-title">Post</h1>
-                        <div class="container-table">
-                            <div class="table-header">Manager post</div>
-                            <div class="table-content">
-                                <div class="search">
-                                    <a class="margin-auto-0" id="add-blog" href="post-detail" ><i class="fa-solid fa-plus"></i> Add Blog</a>
-                                    
-                                        <form action="post-list" method="GET">
-                                        From <input type="date" name="fromDate">
-                                        To <input type="date" name="toDate">
-                                        <input id="submit" type="submit" value="Find"/>
-                                        </form>   
-                                    
-                                    <form action="post-list" method="GET"> 
-                                        Category: 
-                                        <select name="cid" class="select-tag">
-                                            <option value="-1" >Select category</option>
-                                            <c:forEach items="${allBlogCategory}" var="blogCate" >
-                                                <option value="${blogCate.blogCategoryID}" ${cid == blogCate.blogCategoryID ? "selected" : ""}>${blogCate.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                        Status: 
-                                            <select name="display" class="select-tag">
-                                                <option value="-1" >Select Status</option>
-                                                <option value="false" ${ display == "false" ? "selected" : ""}>Hidden</option>
-                                                <option value="true" ${ display == "true" ? "selected" : ""}>Display</option>                                       
-                                        </select>
-
-                                        <input id="submit" type="submit" value="Filter"/>
-                                    </form>
-                                        <div class="margin-top-20">
-                                    <form action="post-list" method="GET">
-                                        <input type="text" id="search" name="search">
-                                        <input id="submit" type="submit" value="Search"/>
-                                    </form>
-                                </div>
-                            </div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ID<i class="fa-solid fa-sort" onclick="sortTable(0)"></i></th>
-                                        <th>Thumbnail</th>
-                                        <th class="width350">Title<i class="fa-solid fa-sort" onclick="sortTable(2)"></i></th>
-                                        <th>Category<i class="fa-solid fa-sort" onclick="sortTable(3)"></i></th>
-                                        <th>Date Created<i class="fa-solid fa-sort" onclick="sortTable(4)"></i></th>
-                                        <th>Status<i class="fa-solid fa-sort" onclick="sortTable(5)"></i></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="myTable">
-
-                                    <c:forEach items="${listBlog}" var="blog" >
-                                        <tr>
-                                            <td>${blog.blogID}</td>
-                                            <td><img class="img-thumbnail-blog" src="../img/${blog.thumbnailUrl}"></td>
-                                            <td>${blog.title}</td>
-
-                                            <td>
-                                                <c:forEach items="${blog.getBlogCategories()}" var="blogCategory">
-                                                    ${blogCategory.name}
-                                                </c:forEach>
-                                            </td>
-
-                                            <td>${blog.createdDate}</td>
-                                            <td>${blog.display ? 'Display' : 'Hidden'}</td>
-                                            <td><a class="myTable-change myTable-change1" href="post-detail?bid=${blog.blogID}" >Edit</a></td>
-                                            <td><a class="myTable-change myTable-change2" href="#" onclick="deleteBlog(${blog.blogID})">Delete</a></td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                            <div class="table-paging">
-                                <ul class="pagging-list">                                
-                                    <%@include file="page.jsp"%>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div>          
+            </div>
         </div>
+
+        <!-- Bootstrap JavaScript -->    
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     </body>
 
 </html>

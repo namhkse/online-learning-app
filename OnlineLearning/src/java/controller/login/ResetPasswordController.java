@@ -1,6 +1,6 @@
 package controller.login;
 
-import base.Base;
+import config.AppConfig;
 import dao.AccountDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -39,7 +39,7 @@ public class ResetPasswordController extends HttpServlet {
                 + "<body style=\"color:#000;\">\n"
                 + "    <h3>Online learning system</h3>\n"
                 + "    <p>Please click here to change your password</p>\n"
-                + "    <form id=\"myForm\" method=\"POST\" action=" + Base.LINK_CHANGE_PASSWORD + ">\n"
+                + "    <form id=\"myForm\" method=\"POST\" action=" + AppConfig.LINK_CHANGE_PASSWORD + ">\n"
                 + "        <input type=\"hidden\" value=" + email + " id=\"email\" name=\"email\">\n"
                 + "        <input type=\"submit\" value=\"Change password\" \n"
                 + "            style=\"padding: 10px 15px;color: #fff;background-color: rgb(0, 149, 255);border-radius: 10px;border:none\">\n"
@@ -48,7 +48,7 @@ public class ResetPasswordController extends HttpServlet {
                 + "</body>\n"
                 + "</html>";
         
-        SendEmail.sendMail(email, subject, message, Base.USERNAME_EMAIL, Base.PASSWORD_EMAIL);
+        SendEmail.sendMail(email, subject, message, AppConfig.USERNAME_EMAIL, AppConfig.PASSWORD_EMAIL);
         new AccountDAO().updateDateModify(email);
         request.setAttribute("success", "Change password link has been sent to your email");
         }

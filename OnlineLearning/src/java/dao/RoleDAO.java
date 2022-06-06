@@ -38,16 +38,31 @@ public class RoleDAO extends DBContext {
         }
         return hm;
     }
-    
+
     public Role find(int id) throws SQLException {
         String sql = "select [RoleID], [Name] from Role where [RoleID] = ?";
         Role role = null;
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 role = new Role(rs.getInt("RoleID"), rs.getString("Name"));
             }
+        }
+        return role;
+    }
+
+    public Role findByName(String name) {
+        String sql = "select [RoleID], [Name] from Role where [Name] = ?";
+        Role role = null;
+        try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, name);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                role = new Role(rs.getInt("RoleID"), rs.getString("Name"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
         return role;
     }
