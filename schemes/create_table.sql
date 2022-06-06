@@ -1,0 +1,227 @@
+USE Online_Learning;
+
+CREATE TABLE [Role] (
+	RoleID INT IDENTITY(1, 1) PRIMARY KEY,
+	[Name] varchar(50) UNIQUE
+);
+
+CREATE TABLE Account (
+	AccountID INT IDENTITY(1, 1) PRIMARY KEY,
+	FirstName NVARCHAR(100),
+	LastName NVARCHAR(100),
+	Email VARCHAR(255) NOT NULL UNIQUE,
+	ProfilePictureUrl  VARCHAR(2083),
+	RoleID INT NOT NULL,
+	Balance DECIMAL(15, 2) NOT NULL CHECK(Balance >= 0),
+	CreatedTime DATETIME DEFAULT GETDATE(),
+	ModifiedTime DATETIME,
+	Phone VARCHAR(15),
+	[Address] VARCHAR(200),
+	Gender BIT NOT NULL,
+	CONSTRAINT FK_Account_Role_RoleID FOREIGN KEY (RoleID) REFERENCES [Role](RoleID)
+);
+
+create table [Password] (
+	AccountID int primary key,
+	PasswordHash varchar(128) NOT NULL,
+	CONSTRAINT FK_Password_Account_AccountID FOREIGN KEY (AccountID) REFERENCES Account(AccountID) ON DELETE CASCADE
+);
+
+CREATE TABLE SliderCollection  (
+	SliderCollectionID INT PRIMARY KEY IDENTITY(1, 1),
+	[Name] VARCHAR(200),
+	CreatedTime DATETIME DEFAULT GETDATE(),
+	UpdatedTime DATETIME,
+	[Order] INT UNIQUE NOT NULL,
+	OwnerID INT,
+	[Status] BIT NOT NULL,
+	CONSTRAINT FK_SliderCollection_Account_AccountID FOREIGN KEY (OwnerID) REFERENCES dbo.Account(AccountID) ON DELETE SET NULL
+);
+
+create TABLE Slider (
+	SliderID int identity(1, 1) primary key,
+	Title varchar(200),
+	SubTitle varchar(200),
+	[Description] Text,
+	NavigationLink VARCHAR(3000),
+	ImageUrl varchar(3000),
+	[Order] INT NOT NULL,
+	[Status] BIT NOT NULL,
+	SliderCollectionID int,
+	CONSTRAINT FK_Slider_SliderCollection_SliderCollectionID FOREIGN KEY (SliderCollectionID) REFERENCES dbo.SliderCollection(SliderCollectionID) ON DELETE CASCADE
+);
+
+create table BlogCategory (
+	BlogCategoryID int identity(1, 1) primary key,
+	[Name] varchar(200),
+	[Description] text,
+	IconUrl varchar(3000),
+	ThumbnailUrl varchar(3000)
+);
+
+create table Blog (
+	BlogID int identity(1, 1) primary key,
+	Title varchar(200),
+	[Description] text,
+	Content text,
+	CreatedDate date,
+	AuthorID int,
+	Display BIT NOT NULL,
+	ThumbnailUrl varchar(3000),
+	NumberOfView INT NOT NULL DEFAULT 0 CHECK(NumberOfView >= 0),
+	CONSTRAINT FK_Blog_Account_AccountID FOREIGN KEY (AuthorID) REFERENCES Account(AccountID) ON DELETE SET NULL
+);
+
+create table BlogCategoryBlog (
+	BlogID int,
+	BlogCategoryID int,
+	primary key (BlogID, BlogCategoryID),
+	CONSTRAINT FK_BlogCategoryBlog_Blog_BlogID FOREIGN KEY (BlogID) references Blog(BlogID) ON DELETE CASCADE,
+	CONSTRAINT FK_BlogCategoryBlog_BlogCategory_BlogCategoryID FOREIGN KEY (BlogCategoryID) references BlogCategory(BlogCategoryID) ON DELETE CASCADE
+);
+
+create table [Subject] (
+	SubjectID int identity(1, 1) primary KEY,
+	[Name] varchar(200)
+);
+
+create table Course (
+	CourseID int identity(1, 1) not null primary key,
+	[Name] varchar(200),
+	[Description] text,
+	InstructorID int,
+	TinyPictureUrl VARCHAR(3000),
+	ThumbnailUrl VARCHAR(3000),
+	CreatedDate DATE,
+	ModifiedDate DATE,
+	Price decimal(15, 2) NOT NULL CHECK (Price >= 0),
+	[Status] BIT NOT NULL,
+	CONSTRAINT FK_Course_Account_AccountID FOREIGN KEY (InstructorID) REFERENCES Account(AccountID) ON DELETE SET NULL
+);
+
+create table SubjectCourse (
+	SubjectID int,
+	CourseID int,
+	primary key (SubjectID, CourseID),
+	CONSTRAINT FK_SubjectCourse_Subject_SubjectID FOREIGN KEY (SubjectID) REFERENCES [Subject](SubjectID) ON DELETE CASCADE,
+	CONSTRAINT FK_SubjectCourse_Course_CourseID FOREIGN KEY (CourseID) REFERENCES Course(CourseID) ON DELETE CASCADE
+);
+
+CREATE TABLE TransactionHistory (
+	TransactionHistoryID INT PRIMARY KEY IDENTITY(1, 1),
+	AccountID INT,
+	CourseID INT,
+	Amount DECIMAL(15, 2) NOT NULL CHECK(Amount >= 0),
+	TrasactionTime DATETIME DEFAULT GETDATE() NOT NULL,
+	CONSTRAINT FK_TransactionHistory_Account_AccountID FOREIGN KEY (AccountID) REFERENCES dbo.Account(AccountID) ON DELETE SET	NULL,
+	CONSTRAINT FK_TransactionHistory_Course_CourseID FOREIGN KEY (CourseID) REFERENCES dbo.Course(CourseID) ON DELETE SET NULL
+);
+
+create table CourseAccount (
+	AccountID int,
+	CourseID int,
+	EnrollDate DATE DEFAULT GETDATE(),
+	Rating TINYINT,
+	primary key(AccountID, CourseID),
+	CONSTRAINT FK_CourseAccount_Account_AccountID FOREIGN KEY (AccountID) references Account(AccountID) ON DELETE CASCADE,
+	CONSTRAINT FK_CourseAccount_Course_CourseID FOREIGN KEY (CourseID) references Course(CourseID) ON DELETE CASCADE
+);
+
+create table LessonType (
+	LessonTypeID int identity(1, 1) primary key,
+	[Name] varchar(100)
+);
+
+CREATE TABLE Lesson (
+	LessonID INT IDENTITY(1, 1) PRIMARY KEY,
+	CourseID INT,
+	LessonTypeID INT,
+	[Name] varchar(200),
+	CreatedTime DATETIME,
+	UpdatedTime DATETIME,
+	WideImageUrl VARCHAR(3000),
+	TinyImageUrl VARCHAR(3000),
+	[Order] INT NOT NULL,
+	[Status] BIT NOT NULL,
+	CONSTRAINT FK_Lesson_Course_CourseID FOREIGN KEY (CourseID) REFERENCES Course(CourseID) ON DELETE CASCADE,
+	CONSTRAINT FK_Lesson_LessonType_LessonTypeID FOREIGN KEY (LessonTypeID) REFERENCES LessonType(LessonTypeID) ON DELETE NO ACTION
+);
+
+CREATE TABLE QuizLesson (
+	LessonID INT PRIMARY KEY,
+	Note TEXT,
+	PassScore TINYINT NOT NULL,
+	CONSTRAINT FK_QuizLesson_Lesson_LessonID FOREIGN KEY (LessonID) REFERENCES Lesson(LessonID) ON DELETE CASCADE
+);
+
+CREATE TABLE VideoLesson (
+	LessonID INT PRIMARY KEY,
+	VideoUrl VARCHAR(3000),
+	VideoUrlBak VARCHAR(3000),
+	CONSTRAINT FK_VideoLesson_Lesson_LessonID FOREIGN KEY (LessonID) REFERENCES Lesson(LessonID) ON DELETE CASCADE
+);
+
+CREATE TABLE QuestionLevel (
+	QuestionLevelID INT PRIMARY KEY IDENTITY(1, 1),
+	LevelName VARCHAR(15) UNIQUE
+);
+
+CREATE TABLE Question (
+	QuestionID INT primary key identity(1, 1),
+	QuestionText varchar(200),
+	QuestionImageUrl varchar(3000),
+	LessonID int,
+	QuestionLevelID INT,
+	[Order] INT NOT NULL,
+	[Status] BIT NOT NULL,
+	CONSTRAINT FK_Question_QuizLesson_QuizLessonID FOREIGN key (LessonID) 
+		REFERENCES QuizLesson(LessonID) ON DELETE CASCADE,
+	CONSTRAINT FK_Question_QuestionLevel_QuestionLevelID FOREIGN KEY (QuestionLevelID) 
+		REFERENCES dbo.QuestionLevel(QuestionLevelID) ON DELETE SET NULL
+);
+
+CREATE TABLE Answer (
+	AnswerID int primary key identity(1, 1),
+	AnswerText varchar(300),
+	Explain varchar(300),
+	[Status] BIT NOT NULL,
+	QuestionID int,
+ 	CONSTRAINT FK_Answer_Question_QuestionID
+		FOREIGN KEY (QuestionID) REFERENCES Question(QuestionID) ON DELETE CASCADE
+);
+
+CREATE TABLE CompletedLesson (
+	AccountID int ,
+	LessonID int ,
+	Score TINYINT,
+	[Status] BIT NOT NULL,
+	primary key(AccountID, LessonID),
+	CONSTRAINT FK_CompletedLesson_Account_AccountID
+		FOREIGN key (AccountID) references Account(AccountID) ON DELETE CASCADE,
+	CONSTRAINT FK_CompletedLesson_Lesson_LessonID
+		FOREIGN KEY (LessonID) references Lesson(LessonID) ON DELETE CASCADE
+);
+
+CREATE TABLE CompletedQuestion (
+	AccountID int,
+	QuestionID int,
+	SelectedAnswerID int,
+	[Status] BIT NOT NULL,
+	primary key(AccountID, QuestionID),
+	CONSTRAINT FK_CompletedQuestion_Account_AccountID
+		FOREIGN key (AccountID) references Account(AccountID) ON DELETE CASCADE,
+);
+
+CREATE TABLE PermissionRequest (
+	PermissionRequestID INT IDENTITY(1, 1) PRIMARY KEY,
+	Name VARCHAR(200),
+	RequestUrl VARCHAR(3000),
+	Method VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE RolePermissionRequest (
+	RoleID INT,
+	PermissionRequestID INT,
+	CONSTRAINT FK_Role_PermissionRequest_RoleID FOREIGN KEY (RoleID) REFERENCES dbo.Role(RoleID) ON DELETE CASCADE,
+	CONSTRAINT FK_Role_PermissionRequest_PermissionRequestID FOREIGN KEY (PermissionRequestID) REFERENCES dbo.PermissionRequest(PermissionRequestID) ON DELETE CASCADE,
+);
