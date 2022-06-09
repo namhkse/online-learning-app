@@ -24,7 +24,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link ${(param["page"] == "Manage Slide") ? "active" : ""}" href="./slide">
+                    <a class="nav-link ${(param["page"] == "Manage Slide") ? "active" : ""}" href="./slide-list">
                         <i class="fa-solid fa-bars-progress"></i>
                         Manage Slide
                     </a>

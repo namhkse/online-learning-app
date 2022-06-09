@@ -60,7 +60,7 @@
 
                                 </div>
                                 <h4>Link IMG post</h4>
-                                <input type="file" name="photo" class="title-post" id="" value="img/${Post.thumbnailUrl}" required>
+                                <input type="file" name="photo" class="title-post" id=""  accept="image/*" required>
                             <c:if test="${Post.thumbnailUrl != null}">
                                 <img src="../img/${Post.thumbnailUrl}" class="img-file">
                             </c:if>

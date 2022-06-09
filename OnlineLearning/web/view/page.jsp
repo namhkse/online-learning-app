@@ -15,7 +15,7 @@
                 </li>
                 <c:forEach begin="1" end="${totalpage}" var="p">
                     <li ${p==page?"class='pagging-active'":""}><a href="${request}page=${p}">${p}</a></li>
-                </c:forEach>
+                    </c:forEach>
                 <li class="next">
                     <a href="${request}page=${page+1>totalpage?totalpage:page+1}">Next</a>
                 </li>
