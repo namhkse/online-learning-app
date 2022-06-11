@@ -20,6 +20,8 @@ public class SliderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         SliderDAO sliderDAO = new SliderDAO();
         SliderCollectionDAO sliderCollectionDAO = new SliderCollectionDAO();
         if (request.getParameter("id-delete") != null) {

@@ -55,4 +55,4 @@ function sortTable(n) {
 
 $(function () {
     $("#collection").select2();
-}); 
+});
