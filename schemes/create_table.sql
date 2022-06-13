@@ -1,8 +1,20 @@
 USE Online_Learning;
 
+CREATE TABLE [Setting] (
+	SettingID INT IDENTITY(1, 1) PRIMARY KEY,
+	[id] int NOT NULL,
+	Name varchar(50),
+	[Order] int,
+	Status bit,
+	type varchar(200)
+);
+
 CREATE TABLE [Role] (
 	RoleID INT IDENTITY(1, 1) PRIMARY KEY,
-	[Name] varchar(50) UNIQUE
+	[Name] varchar(50) UNIQUE,
+	[Order] int,
+	Status bit,
+	type varchar(200)
 );
 
 CREATE TABLE Account (
@@ -56,7 +68,10 @@ create table BlogCategory (
 	[Name] varchar(200),
 	[Description] text,
 	IconUrl varchar(3000),
-	ThumbnailUrl varchar(3000)
+	ThumbnailUrl varchar(3000),
+	[Order] int,
+	Status bit,
+	type varchar(200)
 );
 
 create table Blog (
@@ -93,6 +108,8 @@ create table [Subject] (
 	[Status] [bit],
 	[Image] [varchar](3000),
 	[Description] [nvarchar](2000),
+	[Order] int,
+	type varchar(200),
 	CONSTRAINT [FK_Subject_SubjectCategory] FOREIGN KEY([CategoryID]) REFERENCES [dbo].[SubjectCategory] ([CategoryID]) ON DELETE CASCADE
 );
 
@@ -155,7 +172,10 @@ create table CourseAccount (
 
 create table LessonType (
 	LessonTypeID int identity(1, 1) primary key,
-	[Name] varchar(100)
+	[Name] varchar(100),
+	[Order] int,
+	Status bit,
+	type varchar(200)
 );
 
 CREATE TABLE Lesson (
@@ -189,7 +209,10 @@ CREATE TABLE VideoLesson (
 
 CREATE TABLE QuestionLevel (
 	QuestionLevelID INT PRIMARY KEY IDENTITY(1, 1),
-	LevelName VARCHAR(15) UNIQUE
+	LevelName VARCHAR(15) UNIQUE,
+	[Order] int,
+	Status bit,
+	type varchar(200)
 );
 
 CREATE TABLE Question (
