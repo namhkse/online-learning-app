@@ -80,9 +80,35 @@ create table BlogCategoryBlog (
 	CONSTRAINT FK_BlogCategoryBlog_BlogCategory_BlogCategoryID FOREIGN KEY (BlogCategoryID) references BlogCategory(BlogCategoryID) ON DELETE CASCADE
 );
 
+CREATE TABLE [dbo].[SubjectCategory](
+	[CategoryID] [int] IDENTITY(1,1) NOT NULL primary KEY,
+	[Name] [nvarchar](255)
+);
+
 create table [Subject] (
 	SubjectID int identity(1, 1) primary KEY,
-	[Name] varchar(200)
+	[Name] varchar(200),
+	[CategoryID] [int],
+	[Featured] [bit],
+	[Status] [bit],
+	[Image] [varchar](3000),
+	[Description] [nvarchar](2000),
+	CONSTRAINT [FK_Subject_SubjectCategory] FOREIGN KEY([CategoryID]) REFERENCES [dbo].[SubjectCategory] ([CategoryID]) ON DELETE CASCADE
+);
+
+CREATE TABLE [dbo].[DimensionType](
+	[TypeID] [int] IDENTITY(1,1) NOT NULL primary KEY,
+	[Name] [nvarchar](255)
+);
+
+CREATE TABLE [dbo].[Dimension](
+	[DimensionID] [int] IDENTITY(1,1) NOT NULL primary KEY,
+	[Name] [nvarchar](255),
+	[Description] [nvarchar](2000),
+	[TypeID] [int],
+	[SubjectID] [int],
+	CONSTRAINT [FK_Dimension_DimensionType] FOREIGN KEY([TypeID]) REFERENCES [dbo].[DimensionType] ([TypeID]) ON DELETE CASCADE,
+	CONSTRAINT [FK_Dimension_Subject] FOREIGN KEY([SubjectID]) REFERENCES [dbo].[Subject] ([SubjectID]) ON DELETE CASCADE
 );
 
 create table Course (
