@@ -80,9 +80,9 @@
                                                 <td class="toggle">
                                                     <c:if test="${slider.status == true}"><a id="display-toggle" href="../management/slide-list?id-hide=${slider.sliderID}"><i class="fa-solid fa-toggle-on"></i></a></c:if>
                                                     <c:if test="${slider.status == false}"><a id="display-toggle" href="../management/slide-list?id-show=${slider.sliderID}"><i class="fa-solid fa-toggle-off"></i></a></c:if>
-                                                    </td>
-                                                    <td><a class="myTable-change myTable-change2" href="../management/slide-detail?id=${slider.sliderID}">Edit</a></td>
-                                                    <td><a class="myTable-change myTable-change2" href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></td>
+                                                </td>
+                                                <td><a href="../management/slide-detail?id=${slider.sliderID}">Edit</a></td>
+                                                <td><a href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

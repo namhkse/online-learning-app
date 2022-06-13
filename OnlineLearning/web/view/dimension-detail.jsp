@@ -14,7 +14,7 @@
         <script src="https://kit.fontawesome.com/7b806b5ab9.js" crossorigin="anonymous"></script>
         <!--Jquery-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link href="../css/slide-detail.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/dimension-detail.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="../js/slide-management.js" type="text/javascript"></script>
@@ -24,34 +24,24 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-2 min-vh-100 bg-dark p-0">
-                    <jsp:include page="sidenav.jsp?page=Manage Slide"/>
+                    <jsp:include page="sidenav.jsp?page=Manage Subject"/>
                 </div>
                 <div class="col-sm-10 p-0">
-                    <jsp:include page="navbar-header.jsp?page=Slide Detail"/>
+                    <jsp:include page="navbar-header.jsp?page=Dimension Detail"/>
 
                     <div class="container">
                         <div class="container-table post">
-                            <form action="../management/slide-detail?id=${id}" method="post" class="form-submit" enctype="multipart/form-data">
+                            <form action="../management/dimension-detail?subjectID=${subjectID}&dimensionID=${dimensionID}" method="post" class="form-submit">
                                 <h4 class="title">Title</h4>
-                                <input type="text" name="title" maxlength="200" class="input-box" value="${slider.title}" required>
-                                <h4 class="title">Sub title</h4>
-                                <input type="text" name="subTitle" maxlength="200" class="input-box" value="${slider.subTitle}" required>
-                                <h4 class="title">Image</h4>
-                                <div class="upload-img">
-                                    <c:if test="${id != null}"><img src="../img/${slider.imageUrl}"></c:if>
-                                    <input type="file" name="photo" id="file" class="inputfile" data-multiple-caption="{count} files selected" accept="image/*" <c:if test="${id == null}">required</c:if> >
-                                </div>
+                                <input type="text" name="name" maxlength="200" class="input-box" value="${dimension.name}" required>
                                 <h4 class="title">Description</h4>
-                                <textarea name="description" class="input-box" rows="5" cols="50">${slider.description}</textarea>
-                                <h4 class="title">Backlink</h4>
-                                <input type="text" name="backlink" maxlength="3000" class="input-box" value="${slider.navigationLink}" required>
-                                <h4 class="title">Collection</h4>
-                                <select name="scid" id="collection" class="select-tag">
-                                    <c:forEach items="${allSliderCollections}" var="collection" >
-                                        <option value="${collection.sliderCollectionID}" ${slider.sliderCollectionID.sliderCollectionID == collection.sliderCollectionID ? "selected" : ""}>${collection.name}</option>
+                                <input type="text" name="description" maxlength="2000" class="input-box" value="${dimension.description}" required>
+                                <h4 class="title">Type</h4>
+                                <select name="type" id="collection" class="select-tag">
+                                    <c:forEach items="${allDimensionTypes}" var="type" >
+                                        <option value="${type.typeID}" ${dimension.typeID.typeID == type.typeID ? "selected" : ""}>${type.name}</option>
                                     </c:forEach>
                                 </select>
-
                                 <input type="submit" value="${action}" class="save" name="action">
                             </form>
                         </div>
