@@ -1,5 +1,3 @@
-USE Online_Learning;
-
 CREATE TABLE [Setting] (
 	SettingID INT IDENTITY(1, 1) PRIMARY KEY,
 	[id] int NOT NULL,
@@ -110,22 +108,22 @@ create table [Subject] (
 	[Description] [nvarchar](2000),
 	[Order] int,
 	type varchar(200),
-	CONSTRAINT [FK_Subject_SubjectCategory] FOREIGN KEY([CategoryID]) REFERENCES [dbo].[SubjectCategory] ([CategoryID]) ON DELETE CASCADE
+	CONSTRAINT [FK_Subject_SubjectCategory] FOREIGN KEY([CategoryID]) REFERENCES [SubjectCategory] ([CategoryID]) ON DELETE CASCADE
 );
 
-CREATE TABLE [dbo].[DimensionType](
+CREATE TABLE [DimensionType](
 	[TypeID] [int] IDENTITY(1,1) NOT NULL primary KEY,
 	[Name] [nvarchar](255)
 );
 
-CREATE TABLE [dbo].[Dimension](
+CREATE TABLE [Dimension](
 	[DimensionID] [int] IDENTITY(1,1) NOT NULL primary KEY,
 	[Name] [nvarchar](255),
 	[Description] [nvarchar](2000),
 	[TypeID] [int],
 	[SubjectID] [int],
-	CONSTRAINT [FK_Dimension_DimensionType] FOREIGN KEY([TypeID]) REFERENCES [dbo].[DimensionType] ([TypeID]) ON DELETE CASCADE,
-	CONSTRAINT [FK_Dimension_Subject] FOREIGN KEY([SubjectID]) REFERENCES [dbo].[Subject] ([SubjectID]) ON DELETE CASCADE
+	CONSTRAINT [FK_Dimension_DimensionType] FOREIGN KEY([TypeID]) REFERENCES [DimensionType] ([TypeID]) ON DELETE CASCADE,
+	CONSTRAINT [FK_Dimension_Subject] FOREIGN KEY([SubjectID]) REFERENCES [Subject] ([SubjectID]) ON DELETE CASCADE
 );
 
 create table Course (
@@ -178,6 +176,12 @@ create table LessonType (
 	type varchar(200)
 );
 
+CREATE TABLE SubLesson (
+	SubLessonID INT PRIMARY KEY IDENTITY(1,1),
+	CourseID INT FOREIGN KEY REFERENCES Course(CourseID) ON DELETE CASCADE,
+	Name VARCHAR(200)
+)
+
 CREATE TABLE Lesson (
 	LessonID INT IDENTITY(1, 1) PRIMARY KEY,
 	CourseID INT,
@@ -189,9 +193,21 @@ CREATE TABLE Lesson (
 	TinyImageUrl VARCHAR(3000),
 	[Order] INT NOT NULL,
 	[Status] BIT NOT NULL,
-	CONSTRAINT FK_Lesson_Course_CourseID FOREIGN KEY (CourseID) REFERENCES Course(CourseID) ON DELETE CASCADE,
+	VideoUrl VARCHAR(500),
+	StartLearningTime DATETIME,
+	SubLessonID INT FOREIGN KEY REFERENCES SubLesson(SubLessonID) ON DELETE CASCADE,
+	CONSTRAINT FK_Lesson_Course_CourseID FOREIGN KEY (CourseID) REFERENCES Course(CourseID) ON DELETE NO ACTION,
 	CONSTRAINT FK_Lesson_LessonType_LessonTypeID FOREIGN KEY (LessonTypeID) REFERENCES LessonType(LessonTypeID) ON DELETE NO ACTION
 );
+
+CREATE TABLE Note (
+	NoteID INT PRIMARY KEY IDENTITY(1,1),
+	LessonID INT FOREIGN KEY REFERENCES Lesson(LessonID) ON DELETE CASCADE,
+	NoteDescription TEXT,
+	CreatedTime DATETIME,
+	NoteTimeInVideo VARCHAR(50),
+	AccountID INT FOREIGN KEY REFERENCES Account(AccountID) ON DELETE CASCADE
+)
 
 CREATE TABLE QuizLesson (
 	LessonID INT PRIMARY KEY,
@@ -200,12 +216,12 @@ CREATE TABLE QuizLesson (
 	CONSTRAINT FK_QuizLesson_Lesson_LessonID FOREIGN KEY (LessonID) REFERENCES Lesson(LessonID) ON DELETE CASCADE
 );
 
-CREATE TABLE VideoLesson (
-	LessonID INT PRIMARY KEY,
-	VideoUrl VARCHAR(3000),
-	VideoUrlBak VARCHAR(3000),
-	CONSTRAINT FK_VideoLesson_Lesson_LessonID FOREIGN KEY (LessonID) REFERENCES Lesson(LessonID) ON DELETE CASCADE
-);
+CREATE TABLE LessonBeingLearned (
+	AccountID INT FOREIGN KEY REFERENCES dbo.Account(AccountID) ON DELETE CASCADE,
+	LessonID INT FOREIGN KEY REFERENCES dbo.Lesson(LessonID) ON DELETE CASCADE,
+	TimeContinue INT,
+	PRIMARY KEY(AccountID, LessonID)
+)
 
 CREATE TABLE QuestionLevel (
 	QuestionLevelID INT PRIMARY KEY IDENTITY(1, 1),
