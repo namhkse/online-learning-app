@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Set;
+
 public class Question {
 
     private int id;
@@ -9,6 +11,7 @@ public class Question {
     private QuestionLevel level;
     private int order;
     private boolean active;
+    private Set<Answer> answers;
 
     public Question() {
     }
@@ -67,6 +70,39 @@ public class Question {
 
     public boolean isActive() {
         return active;
+    }
+
+    public Set<Answer> getAnswers() {
+        return this.answers;
+    }
+
+    public void setAnswers(Set<Answer> answers) {
+        this.answers = answers;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Question other = (Question) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
 
 }

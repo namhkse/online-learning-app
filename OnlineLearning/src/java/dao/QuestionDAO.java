@@ -31,9 +31,9 @@ public class QuestionDAO extends DBContext {
                 + "q.Status, l.LevelName FROM Question AS q LEFT JOIN QuestionLevel AS l "
                 + "ON q.QuestionLevelID = l.QuestionLevelID";
 
-        try ( Statement stmt = connection.createStatement();
+        try (Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
-            LOG.info(stmt.toString());
+            LOG.info(sql);
             while (rs.next()) {
                 QuestionLevel level = QuestionLevelDAO.mapping(new QuestionLevel(), rs);
                 Question question = mapping(new Question(), rs);
@@ -57,9 +57,9 @@ public class QuestionDAO extends DBContext {
                 + "q.Status, l.LevelName FROM Question AS q LEFT JOIN QuestionLevel AS l "
                 + "ON q.QuestionLevelID = l.QuestionLevelID WHERE QuestionID = ?";
         Question question = null;
-        try ( PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
-            LOG.info(stmt.toString());
+            LOG.info(sql);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 QuestionLevel level = QuestionLevelDAO.mapping(new QuestionLevel(), rs);
@@ -70,5 +70,27 @@ public class QuestionDAO extends DBContext {
             ex.printStackTrace();
         }
         return question;
+    }
+
+    public List<Question> findByLessonId(int id) {
+        AnswerDAO answerDAO = new AnswerDAO();
+        List<Question> questions = new ArrayList<>();
+        String sql = "SELECT q.QuestionID, q.QuestionText, q.QuestionImageUrl, q.LessonID, q.QuestionLevelID, q.[Order], "
+                + "q.Status, l.LevelName FROM Question AS q LEFT JOIN QuestionLevel AS l "
+                + "ON q.QuestionLevelID = l.QuestionLevelID where LessonID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            LOG.info(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Question q = new Question();
+                mapping(q, rs);
+                q.setAnswers(answerDAO.findByQuestionId(q.getId()));
+                questions.add(q);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return questions;
     }
 }
