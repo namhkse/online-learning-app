@@ -271,8 +271,8 @@ CREATE TABLE CompletedQuestion (
 	AccountID int,
 	QuestionID int,
 	SelectedAnswerID int,
-	[Status] BIT NOT NULL,
-	primary key(AccountID, QuestionID),
+	[Status] BIT,
+	primary key(AccountID, QuestionID,SelectedAnswerID),
 	CONSTRAINT FK_CompletedQuestion_Account_AccountID
 		FOREIGN key (AccountID) references Account(AccountID) ON DELETE CASCADE,
 );
