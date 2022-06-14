@@ -36,7 +36,7 @@ public class Account {
         this.gender = gender;
         this.password = password;
     }
-
+    @Deprecated
     public int getAccountID() {
         return accountID;
     }
@@ -141,4 +141,7 @@ public class Account {
         this.password = password;
     }   
     
+    public int getId() {
+        return this.accountID;
+    }
 }
