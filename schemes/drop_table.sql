@@ -23,4 +23,6 @@ drop table BlogCategory;
 drop table Blog;
 drop table [Password]
 drop table Account;
-drop table [Role]
+drop table [Role];
+DROP TABLE PermissionRequest;
+DROP TABLE dbo.QuizSession

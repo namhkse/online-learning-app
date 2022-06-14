@@ -292,3 +292,16 @@ CREATE TABLE RolePermissionRequest (
 	CONSTRAINT FK_Role_PermissionRequest_RoleID FOREIGN KEY (RoleID) REFERENCES dbo.Role(RoleID) ON DELETE CASCADE,
 	CONSTRAINT FK_Role_PermissionRequest_PermissionRequestID FOREIGN KEY (PermissionRequestID) REFERENCES dbo.PermissionRequest(PermissionRequestID) ON DELETE CASCADE,
 );
+
+
+CREATE TABLE QuizSession (
+	SessionID INT PRIMARY KEY IDENTITY(1, 1),
+	AccountID INT,
+	QuizLessonID INT,
+	StartTime DATETIME,
+	ExpiredTime DATETIME
+);
+
+
+/* External query */
+ALTER TABLE dbo.QuizLesson ADD QuizTimeInMinute INT DEFAULT(5)
