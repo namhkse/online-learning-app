@@ -260,6 +260,8 @@ CREATE TABLE CompletedLesson (
 	LessonID int ,
 	Score TINYINT,
 	[Status] BIT NOT NULL,
+	StartTime datetime,
+	EndTime datetime,
 	primary key(AccountID, LessonID),
 	CONSTRAINT FK_CompletedLesson_Account_AccountID
 		FOREIGN key (AccountID) references Account(AccountID) ON DELETE CASCADE,
