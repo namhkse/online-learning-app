@@ -1,6 +1,7 @@
 package service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -46,8 +47,9 @@ public class QuestionService {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll(@PathParam("id") int id) {
+        Gson restrictGson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         Question question = questionDAO.findById(id);
-        return Response.ok().entity(gson.toJson(question)).build();
+        return Response.ok().entity(restrictGson.toJson(question)).build();
     }
 
     @GET
@@ -67,8 +69,9 @@ public class QuestionService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getByLessonId(@QueryParam("lesson") int id) {
+        Gson restrictGson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         List<Question> questions = questionDAO.findByLessonId(id);
-        return Response.ok().entity(gson.toJson(questions)).build();
+        return Response.ok().entity(restrictGson.toJson(questions)).build();
     }
 
     @POST
@@ -83,6 +86,7 @@ public class QuestionService {
         Map<String, String> msg = new HashMap<>();
         try {
             new QuizSessionDAO().finishQuiz(SessionUtil.getAccount(req).getId(), quizId, LocalDateTime.now());
+            questionDAO.saveAnswer(SessionUtil.getAccount(req).getId(), jsonElement);
         } catch (Exception ex) {
             ex.printStackTrace();
             msg.put("message", ex.getMessage());

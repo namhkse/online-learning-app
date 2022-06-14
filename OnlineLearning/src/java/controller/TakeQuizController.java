@@ -14,18 +14,8 @@ import model.QuizLesson;
 import model.QuizSession;
 import util.SessionUtil;
 
-@WebServlet(name = "TakeQuizController", urlPatterns = {"/quiz"})
+@WebServlet(name = "TakeQuizController", urlPatterns = {"/takequiz"})
 public class TakeQuizController extends HttpServlet {
-
-    private LocalDateTime startTimeTakeQuiz(HttpServletRequest req, Account account, QuizLesson quiz) {
-        HttpSession session = req.getSession();
-        LocalDateTime time = (LocalDateTime) session.getAttribute("quiz." + quiz.getId());
-        if (time == null) {
-            time = LocalDateTime.now();
-            session.setAttribute("quiz." + quiz.getId(), time);
-        }
-        return time;
-    }
 
     private boolean canUserTakeQuiz(Account account, QuizLesson quiz) {
         QuizSessionDAO quizSessionDAO = new QuizSessionDAO();

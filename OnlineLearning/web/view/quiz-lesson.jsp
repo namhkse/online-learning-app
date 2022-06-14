@@ -10,7 +10,7 @@
         <h1>Account: ${account.id}  QuizID: ${quiz.id}</h1>
         <h2>Start time: ${completedQuizTime.StartTime}</h2>
         <h2>EndTime time: ${completedQuizTime.EndTime}</h2>
-        <a href="./lesson?id=${quiz.id}&redo-quiz=true">
+        <a href="./quiz?id=${quiz.id}&redo-quiz=true">
             ${empty completedQuizTime.EndTime ? "Do quiz" : "Redo"}
         </a>
     </body>

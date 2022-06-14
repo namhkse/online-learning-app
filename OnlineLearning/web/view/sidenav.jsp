@@ -30,9 +30,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link ${(param["page"] == "Manage Subject") ? "active" : ""}" href="./subject-list">
+                        <i class="fa-solid fa-bars-progress"></i>
+                        Manage Subject
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link ${(param["page"] == "Manage Account") ? "active" : ""}" href="./account">
                         <i class="fa-solid fa-user"></i>
                         Manage Account
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ${(param["page"] == "Setting") ? "active" : ""}" href="./setting">
+                        <i class="fa-solid fa-gears"></i>
+                        Setting
                     </a>
                 </li>
                 <li class="nav-item">

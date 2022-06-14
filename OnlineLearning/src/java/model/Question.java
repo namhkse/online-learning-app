@@ -1,17 +1,18 @@
 package model;
 
+import com.google.gson.annotations.Expose;
 import java.util.Set;
 
 public class Question {
 
-    private int id;
-    private String text;
+    @Expose private int id;
+    @Expose private String text;
     private String imageUrl;
     private int lessonId;
-    private QuestionLevel level;
-    private int order;
+    @Expose private QuestionLevel level;
+    @Expose private int order;
     private boolean active;
-    private Set<Answer> answers;
+    @Expose private Set<Answer> answers;
 
     public Question() {
     }

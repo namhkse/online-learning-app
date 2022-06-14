@@ -10,7 +10,6 @@ const btnNextQuestion = document.getElementById("btn_next");
 const btnPreviousQuestion = document.getElementById("btn_previous");
 const btnScoreExam = document.getElementById("btn_score");
 const bntReviewProgress = document.getElementById("btn_review_question");
-const questionTextDescription = document.getElementById("question_text");
 const btnMark = document.getElementById("btn_mark");
 const countDown = document.getElementById("countDown");
 let counter;
@@ -38,7 +37,15 @@ function isMarkedQuestion(number) {
     return markedQuestions.includes(number);
 }
 
-let questionApi = "http://localhost:8080/OnlineLearning/api/question?lesson=6";
+function checkAnsweredQuestion(questionId) {
+    let answer = userAnswers.find(s => s.questionId == questionId);
+    if (!answer) {
+        return false;
+    }
+
+    return answer.answerIds.length != 0;
+
+}
 
 class Answer {
     constructor(questionId) {
@@ -99,17 +106,6 @@ function initQuestion() {
 
 
 initQuestion();
-
-
-function saveAnswer(questionId, answerId) {
-    let answer = userAnswers.find(s => s.questionId == questionId);
-    if (answer) {
-
-    } else {
-
-    }
-
-}
 
 function clearQuestionOption() {
     let options = document.querySelectorAll(".question-answer");
@@ -177,7 +173,7 @@ function loadQuestion(questionNo, questions) {
         btnScoreExam.style.display = "none";
     }
 
-    questionTextDescription.innerText = currentQuestion.text;
+    document.getElementById("question_text").innerHTML = currentQuestion.text;
     clearQuestionOption();
 
     document.getElementById("number_question").innerText = `${questionNo + 1}/${questions.length}`;
@@ -245,12 +241,17 @@ function loadQuestionBox(questions) {
 
     questions.forEach((_, index) => {
         let btn = document.createElement("button");
+
         if (isMarkedQuestion(index)) {
-            btn.className = "small-question-box marked-question-box";
+            btn.className = "small-question-box marked-question-box ";
             btn.innerHTML = `<i class="fa-solid fa-bookmark" ></i >${index + 1}`;
         } else {
             btn.innerHTML = index + 1;
             btn.className = "small-question-box";
+        }
+
+        if (checkAnsweredQuestion(availableQuestions[index].id)) {
+            btn.className += " answered";
         }
 
         btn.addEventListener('click', () => {
@@ -278,6 +279,8 @@ function submitAnswer() {
             contentType: 'application/json',
             success: function (data, textStatus, jqXHR) {
                 console.log(data.message);
+                document.querySelectorAll(".btn-score-exam").forEach(e => e.disabled = true);
+
                 clearInterval(counter);
                 countDown.innerHTML = "SUBMITED";
             },
@@ -288,6 +291,28 @@ function submitAnswer() {
     }
 }
 
-$(window).on("beforeunload", function () {
-    return inFormOrLink ? "Do you really want to close?" : null;
+document.getElementById("btn_submit_answer").addEventListener("click", () => {
+    submitAnswer()
+});
+
+document.querySelectorAll(".btn-score-exam").forEach(e => {
+    e.addEventListener('click', () => {
+        let total = 0;
+        for (let a of availableQuestions) {
+            total += checkAnsweredQuestion(a.id) ? 1 : 0;
+        }
+
+        let msg1 = "You have not answered any questions. By clicking on the [Exit Exam] button below, you will complete your current exam and be returned to the dashboard";
+        let msg2 = "By clicking on the [Score Exam] button below, you will complete your current exam and receive your score. You will not be able to change any answers after this point";
+
+        let numberOfQuestion = availableQuestions.length;
+        let header = (total == 0) ? "Exit Exam?" : "Score Exam";
+        let str1 = (total > 0 && total < numberOfQuestion) ? `${total} of ${numberOfQuestion} Questions Answered` : ""
+        let str2 = (total == 0) ? msg1 : msg2;
+        $("#scoreExamModalLabel").text(header);
+        $("#notAnsweredQuestion").text(str1);
+        $("#notAnsweredQuestion").css('color', 'red');
+        $("#helpMessage").text(str2);
+
+    });
 });
