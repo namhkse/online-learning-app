@@ -1,6 +1,9 @@
 package service;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import dao.QuestionDAO;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -75,6 +78,12 @@ public class QuestionService {
     @Path("/submit")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response submitAnswer(String json) {
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse(json);
+        JsonObject jsonObject = (JsonObject) jsonElement;
+        int quizId = jsonObject.get("quizId").getAsInt();
+        System.out.println("==== Clear start exam time ");
+        SessionUtil.removeAttribute(req, "quiz." + quizId);
         System.out.println(json);
         return Response.ok().build();
     }

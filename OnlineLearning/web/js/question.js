@@ -1,3 +1,4 @@
+
 let availableQuestions = [];
 let questionCounter = 0;
 let userAnswers = [];
@@ -12,6 +13,7 @@ const bntReviewProgress = document.getElementById("btn_review_question");
 const questionTextDescription = document.getElementById("question_text");
 const btnMark = document.getElementById("btn_mark");
 const countDown = document.getElementById("countDown");
+let counter;
 
 function removeItemInArray(array, item) {
     let index = array.indexOf(item);
@@ -45,6 +47,15 @@ class Answer {
     }
 }
 
+function getQuizId() {
+    let url = new URL(window.location.href);
+    let quizId = url.searchParams.get("id");
+
+    if (!quizId) {
+        throw new Error("Lack param id in query string");
+    }
+    return quizId;
+}
 
 function initQuestion() {
     let url = new URL(window.location.href);
@@ -69,7 +80,7 @@ function initQuestion() {
             .then(resp => resp.json())
             .then(data => {
                 endTime = new Date(data.finish);
-                let x = setInterval(() => {
+                counter = setInterval(() => {
                     let distance = endTime - new Date();
 
                     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -77,9 +88,9 @@ function initQuestion() {
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                     countDown.innerHTML = `${hours}:${minutes}:${seconds}`;
-                    if (distance < 0) {
-                        clearInterval(x);
-                        countDown.innerHTML = "EXPIRED";
+                    if (distance < 2) {
+                        clearInterval(counter);
+                        submitAnswer();
                     }
                 }, 1000);
             });
@@ -251,15 +262,23 @@ function loadQuestionBox(questions) {
 }
 
 function submitAnswer() {
-    let json = localStorage.getItem("userAnswers");
-    if (json) {
+//    let json = localStorage.getItem("userAnswers");
+    localStorage.removeItem("markedQuetions");
+    localStorage.removeItem("userAnswers");
+    let data = {
+        quizId: getQuizId(),
+        answers: userAnswers
+    }
+    if (data) {
         $.ajax({
             url: `http://localhost:8080/OnlineLearning/api/question/submit`,
             type: 'POST',
-            data: json,
+            data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (data, textStatus, jqXHR) {
                 console.log("Submit OK");
+                clearInterval(counter);
+                countDown.innerHTML = "SUBMITED";
             },
             error: function () {
                 console.log('Submit Failed');
@@ -268,3 +287,6 @@ function submitAnswer() {
     }
 }
 
+$(window).on("beforeunload", function () {
+    return inFormOrLink ? "Do you really want to close?" : null;
+});

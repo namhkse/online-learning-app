@@ -14,4 +14,8 @@ public class SessionUtil {
     public static LocalDateTime getStartQuiz(HttpServletRequest req, String str) {
         return (LocalDateTime) req.getSession().getAttribute(str);
     }
+    
+    public static void removeAttribute(HttpServletRequest req, String str) {
+        req.getSession().removeAttribute(str);
+    }
 }
