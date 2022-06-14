@@ -13,16 +13,20 @@ import model.QuizSession;
 
 public class QuizSessionDAO extends DBContext {
 
-    public QuizSession find(Account account, QuizLesson quiz) {
+    public QuizSession find(Account account , QuizLesson quiz) {
+        return find(account.getId(), quiz.getId());
+    }
+    
+    public QuizSession find(int accountId, int quizId) {
         QuizSession session = null;
         String sql = "select top 1 * from QuizSession where AccountID = ? and QuizLessonID = ? order by SessionID";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, account.getId());
-            stmt.setInt(2, quiz.getId());
+            stmt.setInt(1, accountId);
+            stmt.setInt(2, quizId);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                session = new QuizSession(rs.getInt("QuizSessionID"),
+                session = new QuizSession(rs.getInt("SessionID"),
                         rs.getInt("AccountID"),
                         rs.getInt("QuizLessonID"),
                         rs.getTimestamp("StartTime").toLocalDateTime(),
@@ -68,7 +72,7 @@ public class QuizSessionDAO extends DBContext {
      * @return
      */
     public Map<String, LocalDateTime> getTimeDoQuiz(Account account, QuizLesson quiz) {
-        String sql = "select StartTime from CompletedLesson where AccountID = ? and LessonID = ?";
+        String sql = "select StartTime, EndTime from CompletedLesson where AccountID = ? and LessonID = ?";
         Map<String, LocalDateTime> time = new HashMap<>();
         time.put("StartTime", null);
         time.put("EndTime", null);
@@ -115,6 +119,8 @@ public class QuizSessionDAO extends DBContext {
             } else {
                 rs.moveToInsertRow();
                 rs.updateInt("Score", 0);
+                rs.updateInt("AccountID", account.getId());
+                rs.updateInt("LessonID", quiz.getId());
                 rs.updateBoolean("Status", false);
                 rs.updateTimestamp("StartTime", Timestamp.valueOf(start));
                 rs.updateTimestamp("EndTime", null);
@@ -128,23 +134,25 @@ public class QuizSessionDAO extends DBContext {
             }
         }
     }
-
-    public void finishQuiz(Account account, QuizLesson quiz, LocalDateTime endTime) throws SQLException {
+    
+    public void finishQuiz(int accountId, int quizId, LocalDateTime endTime) throws SQLException {
         String sql = "UPDATE dbo.CompletedLesson SET EndTime = ? WHERE AccountID = ? AND LessonID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setTimestamp(1, Timestamp.valueOf(endTime));
-            stmt.setInt(2, account.getId());
-            stmt.setInt(3, quiz.getId());
+            stmt.setInt(2, accountId);
+            stmt.setInt(3, quizId);
+            stmt.executeUpdate();
         }
     }
-
-    public static void main(String[] args) throws SQLException {
-        QuizSessionDAO dao = new QuizSessionDAO();
-        Account a = new Account();
-        QuizLesson q = new QuizLesson();
-        a.setAccountID(1);
-        q.setId(21);
-
-        dao.startQuizTime(a, q);
-    }
+    
+    
+//    public static void main(String[] args) throws SQLException {
+//        QuizSessionDAO dao = new QuizSessionDAO();
+//        Account a = new Account();
+//        QuizLesson q = new QuizLesson();
+//        a.setAccountID(1);
+//        q.setId(21);
+//
+//        dao.startQuizTime(a, q);
+//    }
 }

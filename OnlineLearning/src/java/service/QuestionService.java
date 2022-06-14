@@ -5,16 +5,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import dao.QuestionDAO;
-import java.time.Duration;
+import dao.QuizSessionDAO;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
@@ -27,6 +23,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Context;
 import model.Question;
+import model.Account;
+import model.QuizLesson;
+import model.QuizSession;
 import util.SessionUtil;
 
 @Path("/question")
@@ -52,19 +51,17 @@ public class QuestionService {
     }
 
     @GET
-    @Path("/remaintime/{id}")
+    @Path("/session/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRemainTime(@PathParam("id") int id) {
-        Map<String, String> msg = new HashMap<>();
-        LocalDateTime startTime = SessionUtil.getStartQuiz(req, "quiz." + id);
-        if (startTime == null) {
-            msg.put("time", null);
-        } else {
-            LocalDateTime endTime = startTime.plusMinutes(30);
-            msg.put("start", startTime.format(DateTimeFormatter.ISO_DATE_TIME));
-            msg.put("finish", endTime.format(DateTimeFormatter.ISO_DATE_TIME));
-        }
-        return Response.ok().entity(gson.toJson(msg)).build();
+        Account account = SessionUtil.getAccount(req);
+        QuizSession quizSession = new dao.QuizSessionDAO().find(account.getId(), id);
+
+        Map<String, String> time = new HashMap<>();
+        time.put("startTime", quizSession.getStartTime().format(DateTimeFormatter.ISO_DATE_TIME));
+        time.put("expiredTime", quizSession.getExpiredTime().format(DateTimeFormatter.ISO_DATE_TIME));
+
+        return Response.ok().entity(gson.toJson(time)).build();
     }
 
     @GET
@@ -83,8 +80,16 @@ public class QuestionService {
         JsonObject jsonObject = (JsonObject) jsonElement;
         int quizId = jsonObject.get("quizId").getAsInt();
         System.out.println("==== Clear start exam time ");
-        SessionUtil.removeAttribute(req, "quiz." + quizId);
+        Map<String, String> msg = new HashMap<>();
+        try {
+            new QuizSessionDAO().finishQuiz(SessionUtil.getAccount(req).getId(), quizId, LocalDateTime.now());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            msg.put("message", ex.getMessage());
+            return Response.serverError().entity(gson.toJson(msg)).build();
+        }
         System.out.println(json);
-        return Response.ok().build();
+        msg.put("message", "Submit Successfully");
+        return Response.ok().entity(gson.toJson(msg)).build();
     }
 }

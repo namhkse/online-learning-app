@@ -76,10 +76,11 @@ function initQuestion() {
                 loadQuestion(questionCounter, availableQuestions);
             });
 
-    fetch(`http://localhost:8080/OnlineLearning/api/question/remaintime/${lessonId}`)
+    fetch(`http://localhost:8080/OnlineLearning/api/question/session/${lessonId}`)
             .then(resp => resp.json())
             .then(data => {
-                endTime = new Date(data.finish);
+                console.log(data.expiredTime);
+                endTime = new Date(data.expiredTime);
                 counter = setInterval(() => {
                     let distance = endTime - new Date();
 
@@ -276,12 +277,12 @@ function submitAnswer() {
             data: JSON.stringify(data),
             contentType: 'application/json',
             success: function (data, textStatus, jqXHR) {
-                console.log("Submit OK");
+                console.log(data.message);
                 clearInterval(counter);
                 countDown.innerHTML = "SUBMITED";
             },
             error: function () {
-                console.log('Submit Failed');
+                console.log('Submit Failed: ' + data.message);
             }
         });
     }
