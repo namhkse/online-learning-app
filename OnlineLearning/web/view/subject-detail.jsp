@@ -61,8 +61,9 @@
                                                 <td>${dimension.dimensionID}</td>
                                                 <td>${dimension.typeID.name}</td>
                                                 <td>${dimension.name}</td>
-                                                <td><a href="../management/dimension-detail?subjectID=${subjectID}&dimensionID=${dimension.dimensionID}">Edit</a></td>
-                                                <td><a href="../management/subject-detail?subjectID=${subjectID}&id-delete=${dimension.dimensionID}" onclick="deleteDimension(this)">Delete</a></td>
+                                                <td><button class="action-btn first"><i class="fa-solid fa-pencil"></i><a href="../management/dimension-detail?subjectID=${subjectID}&dimensionID=${dimension.dimensionID}">Edit</a></button></td>
+                                                <td><button class="action-btn second" onclick="deleteDimension(${dimension.dimensionID}, this)"><i class="fa-solid fa-trash-can"></i> Delete</button></td>
+
                                             </tr>
                                         </c:forEach>
                                     </tbody>

@@ -19,22 +19,17 @@ function openCity(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
-function deleteDimension(element) {
-//    if (confirm('Are you sure you want to delete this dimension?')) {
-        var idDimensionDelete = element.href.split("=")[2];
-        var elementParentDelete = element.parentNode.parentNode;
+function deleteDimension(id, btn) {
+    if (confirm('Are you sure you want to delete this dimension?')) {
         $(function () {
             $.ajax({
-                type: "post",
-                url: "subject-detail",
+                type: "delete",
+                url: `subject-detail?dimensionID=${id}`,
                 cache: false,
-                data: {
-                    dimensionID: idDimensionDelete
-                },
                 success: function () {
-                    elementParentDelete.remove();
+                    $(btn).closest('tr').fadeOut("slow");
                 }
             });
         });
-//    }
+    }
 }

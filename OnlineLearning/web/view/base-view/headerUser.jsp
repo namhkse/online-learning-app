@@ -26,7 +26,7 @@
                 <div class="navbar-nav">
                     <a href="home" class="nav-item nav-link active">Home</a>
                     <a href="#" class="nav-item nav-link">Courses</a>
-                    <a href="#" class="nav-item nav-link">My Courses</a>
+                    <a href="my-course" class="nav-item nav-link">My Courses</a>
                     <a href="blog" class="nav-item nav-link">Blog</a>
                 </div>
                 <div id="top-bar">

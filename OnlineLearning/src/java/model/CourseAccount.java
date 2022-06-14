@@ -8,16 +8,28 @@ public class CourseAccount {
     private Course courseId;
     private Date enrollDate;
     private int rating;
-
+    private int process;
+    
     public CourseAccount() {
     }
 
-    public CourseAccount(Account accountId, Course courseId, Date enrollDate, int rating) {
+    public CourseAccount(Account accountId, Course courseId, Date enrollDate, int rating, int process) {
         this.accountId = accountId;
         this.courseId = courseId;
         this.enrollDate = enrollDate;
         this.rating = rating;
+        this.process = process;
     }
+
+    public int getProcess() {
+        return process;
+    }
+
+    public void setProcess(int process) {
+        this.process = process;
+    }
+
+    
 
     public Account getAccountId() {
         return accountId;

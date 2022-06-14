@@ -42,6 +42,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link ${(param["page"] == "Setting") ? "active" : ""}" href="./setting">
+                        <i class="fa-solid fa-gears"></i>
+                        Setting
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link ${(param["page"] == "Manage Access") ? "active" : ""}" href="./rolepermission">
                         <i class="fa-solid fa-gears"></i>
                         Manage Access And Request

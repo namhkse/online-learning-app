@@ -32,8 +32,15 @@ public class SubjectDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         int idDelete = Integer.parseInt(request.getParameter("dimensionID"));
         new DimensionDAO().deleteDimension(idDelete);
+        response.setStatus(200);
+        response.flushBuffer();
     }
 
     @Override

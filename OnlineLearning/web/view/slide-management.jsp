@@ -81,8 +81,8 @@
                                                     <c:if test="${slider.status == true}"><a id="display-toggle" href="../management/slide-list?id-hide=${slider.sliderID}"><i class="fa-solid fa-toggle-on"></i></a></c:if>
                                                     <c:if test="${slider.status == false}"><a id="display-toggle" href="../management/slide-list?id-show=${slider.sliderID}"><i class="fa-solid fa-toggle-off"></i></a></c:if>
                                                 </td>
-                                                <td><a href="../management/slide-detail?id=${slider.sliderID}">Edit</a></td>
-                                                <td><a href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></td>
+                                                <td><button class="action-btn first"><i class="fa-solid fa-pencil"></i><a href="../management/slide-detail?id=${slider.sliderID}">Edit</a></button></td>
+                                                <td><button class="action-btn second"><i class="fa-solid fa-trash-can"></i><a href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></button></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

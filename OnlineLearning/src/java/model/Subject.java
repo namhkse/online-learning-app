@@ -9,11 +9,13 @@ public class Subject {
     private boolean status;
     private String image;
     private String description;
+    private int order;
+    private String type;
 
     public Subject() {
     }
 
-    public Subject(int subjectId, String name, SubjectCategory categoryID, boolean featured, boolean status, String image, String description) {
+    public Subject(int subjectId, String name, SubjectCategory categoryID, boolean featured, boolean status, String image, String description, int order, String type) {
         this.subjectId = subjectId;
         this.name = name;
         this.categoryID = categoryID;
@@ -21,6 +23,20 @@ public class Subject {
         this.status = status;
         this.image = image;
         this.description = description;
+        this.order = order;
+        this.type = type;
+    }
+
+    public Subject(int subjectId, String name, int order, boolean status, String type) {
+        this.subjectId = subjectId;
+        this.name = name;
+        this.categoryID = categoryID;
+        this.featured = featured;
+        this.status = status;
+        this.image = image;
+        this.description = description;
+        this.order = order;
+        this.type = type;
     }
 
     public int getSubjectId() {
@@ -77,6 +93,22 @@ public class Subject {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
 }
