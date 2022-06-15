@@ -23,36 +23,36 @@ public class SettingDeleteController extends HttpServlet {
         int sid = Integer.parseInt(request.getParameter("sid"));
         int id = Integer.parseInt(request.getParameter("id"));
         String type = request.getParameter("type");
+        System.out.println("sid" + sid);
+        System.out.println("id" + id);
+        System.out.println("sid" + type);
+
         SettingDAO settingDAO = new SettingDAO();
+        settingDAO.deleteSetting(sid);
         if (type.equalsIgnoreCase("USER_ROLE")) {
             RoleDAO roleDAO = new RoleDAO();
             roleDAO.deleteRole(id);
-            settingDAO.deleteSetting(sid);
-            request.getRequestDispatcher("../view/setting.jsp").forward(request, response);
+            response.sendRedirect("../management/setting");
         }
         if (type.equalsIgnoreCase("CATEGORY_SUBJECT")) {
             SubjectDAO subjectDAO = new SubjectDAO();
             subjectDAO.deleteSubject(id);
-            settingDAO.deleteSetting(sid);
-            request.getRequestDispatcher("../view/setting.jsp").forward(request, response);
+            response.sendRedirect("../management/setting");
         }
         if (type.equalsIgnoreCase("LEVEL_QUESTION")) {
             QuestionLevelDAO questionLevelDAO = new QuestionLevelDAO();
             questionLevelDAO.deleteQuestionLevel(id);
-            settingDAO.deleteSetting(sid);
-            request.getRequestDispatcher("../view/setting.jsp").forward(request, response);
+            response.sendRedirect("../management/setting");
         }
         if (type.equalsIgnoreCase("TYPE_LESSON")) {
             LessonTypeDAO lessonTypeDAO = new LessonTypeDAO();
             lessonTypeDAO.deleteLessonType(id);
-            settingDAO.deleteSetting(sid);
-            request.getRequestDispatcher("../view/setting.jsp").forward(request, response);
+            response.sendRedirect("../management/setting");
         }
         if (type.equalsIgnoreCase("CATEGORY_POST")) {
             BlogCategoryDAO blogCategoryDAO = new BlogCategoryDAO();
             blogCategoryDAO.deleteBlogCategory(id);
-            settingDAO.deleteSetting(sid);
-            request.getRequestDispatcher("../view/setting.jsp").forward(request, response);
+            response.sendRedirect("../management/setting");
         }
     }
 

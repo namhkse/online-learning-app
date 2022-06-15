@@ -33,7 +33,9 @@ public class SettingController extends HttpServlet {
         }
 
         String value = request.getParameter("search");
-
+        if (value == "") {
+            value = null;
+        }
         String page_raw = request.getParameter("page");
         if (page_raw == null || page_raw.length() == 0) {
             page_raw = "1";

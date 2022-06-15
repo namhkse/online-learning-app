@@ -62,10 +62,10 @@ public class SettingAddController extends HttpServlet {
             RoleDAO RoleDAO = new RoleDAO();
             Role roleLast = RoleDAO.getRoleLast();
             RoleDAO.insertRole(role);
-            setting.setId(roleLast.getId()+1);
+            setting.setId(roleLast.getId() + 1);
             settingDAO.insertSetting(setting);
         }
-        if(type.equalsIgnoreCase("CATEGORY_SUBJECT")){
+        if (type.equalsIgnoreCase("CATEGORY_SUBJECT")) {
             Subject subject = new Subject();
             subject.setName(name);
             subject.setOrder(order);
@@ -74,10 +74,10 @@ public class SettingAddController extends HttpServlet {
             SubjectDAO subjectDAO = new SubjectDAO();
             Subject subjectLast = subjectDAO.getSubjectLast();
             subjectDAO.insertSubject(subject);
-            setting.setId(subjectLast.getSubjectId()+1);
+            setting.setId(subjectLast.getSubjectId() + 1);
             settingDAO.insertSetting(setting);
         }
-        if(type.equalsIgnoreCase("LEVEL_QUESTION")){
+        if (type.equalsIgnoreCase("LEVEL_QUESTION")) {
             QuestionLevel questionLevel = new QuestionLevel();
             questionLevel.setLevelName(name);
             questionLevel.setOrder(order);
@@ -86,10 +86,10 @@ public class SettingAddController extends HttpServlet {
             QuestionLevelDAO questionLevelDAO = new QuestionLevelDAO();
             QuestionLevel QuestionLevelLast = questionLevelDAO.getQuestionLevelLast();
             questionLevelDAO.insertQuestionLevel(questionLevel);
-            setting.setId(QuestionLevelLast.getId()+1);
+            setting.setId(QuestionLevelLast.getId() + 1);
             settingDAO.insertSetting(setting);
         }
-        if(type.equalsIgnoreCase("TYPE_LESSON")){
+        if (type.equalsIgnoreCase("TYPE_LESSON")) {
             LessonType lessonType = new LessonType();
             lessonType.setName(name);
             lessonType.setOrder(order);
@@ -98,10 +98,10 @@ public class SettingAddController extends HttpServlet {
             LessonTypeDAO lessonTypeDAO = new LessonTypeDAO();
             LessonType LessonTypeLast = lessonTypeDAO.getLessonTypeLast();
             lessonTypeDAO.insertLessonType(lessonType);
-            setting.setId(LessonTypeLast.getLessonTypeID()+1);
+            setting.setId(LessonTypeLast.getLessonTypeID() + 1);
             settingDAO.insertSetting(setting);
         }
-        if(type.equalsIgnoreCase("CATEGORY_POST")){
+        if (type.equalsIgnoreCase("CATEGORY_POST")) {
             BlogCategory blogCategory = new BlogCategory();
             blogCategory.setName(name);
             blogCategory.setOrder(order);
@@ -110,12 +110,11 @@ public class SettingAddController extends HttpServlet {
             BlogCategoryDAO blogCategoryDAO = new BlogCategoryDAO();
             BlogCategory BlogCategoryLast = blogCategoryDAO.getBlogCategoryLast();
             blogCategoryDAO.insertBlogCategory(blogCategory);
-            setting.setId(BlogCategoryLast.getBlogCategoryID()+1);
+            setting.setId(BlogCategoryLast.getBlogCategoryID() + 1);
             settingDAO.insertSetting(setting);
         }
-        request.getRequestDispatcher("../view/setting-insert.jsp").forward(request, response);
+        response.sendRedirect("../management/setting");
     }
-
 
     @Override
     public String getServletInfo() {

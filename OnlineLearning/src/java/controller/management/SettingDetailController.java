@@ -97,7 +97,7 @@ public class SettingDetailController extends HttpServlet {
             blogCategory.setType(type);
             BlogCategoryDAO.updateBlogCategory(blogCategory);
         }
-        request.getRequestDispatcher("../view/setting-detail.jsp").forward(request, response);
+        response.sendRedirect("../management/setting");
     }
 
     @Override

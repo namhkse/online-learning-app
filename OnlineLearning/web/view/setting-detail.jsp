@@ -51,6 +51,7 @@
                                             <option selected>Choose a Type</option>
                                             <c:forEach items="${allSettings_DistinctType}" var="setting">
                                                 <option
+                                                    ${(searchby_value.type eq setting.type)?"selected=\"selected\"":""}
                                                     value="${setting.type}">${setting.type}</option>
                                             </c:forEach>
                                         </select>
