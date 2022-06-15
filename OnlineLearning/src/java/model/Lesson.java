@@ -47,11 +47,12 @@ public class Lesson {
     }
     
     
-
+    @Deprecated
     public int getLessonID() {
         return lessonID;
     }
 
+    @Deprecated
     public void setLessonID(int lessonID) {
         this.lessonID = lessonID;
     }
@@ -143,5 +144,12 @@ public class Lesson {
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }  
+
+    public int getId() {
+        return this.lessonID;
+    } 
     
+    public void setId(int id) {
+        this.lessonID = id;
+    }
 }

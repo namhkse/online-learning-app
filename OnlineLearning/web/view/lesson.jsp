@@ -20,41 +20,6 @@
     </head>
 
     <body>
-    <c:if test="${lessonBeingLearned != null}">
-        <div id="overlay-continue" onclick="closeNoticeContinue()"></div>
-        <div id="notice-continue">
-            <div id="notice-continue-header">
-                <span>Notification</span>
-                <i class="fa-solid fa-x" id="closeNotice-icon" onclick="closeNoticeContinue()"></i>
-            </div>
-
-            <%
-                LessonBeingLearned lessonBeing = (LessonBeingLearned) request.getAttribute("lessonBeingLearned");
-                int time = lessonBeing.getTimeContinue();
-                String minute = "";
-                if (time / 60 < 10) {
-                    minute = "0" + (int) (time / 60);
-                } else {
-                    minute = (int) (time / 60) + "";
-                }
-                String second = "";
-                if (time % 60 < 10) {
-                    second = "0" + (int) (time % 60);
-                } else {
-                    second = (int) (time % 60) + "";
-                }
-            %>
-
-            <div id="notice-continue-body">
-                <h4> The previous lesson you are studying is at <span><%= minute%>:<%= second%></span>. Do you want to continue?</h4>
-                <i class="fa-brands fa-youtube" id="icon-youtube"></i>
-            </div>
-            <div id="notice-continue-footer">
-                <h4 id="notice-continue-footer-continue" onclick="continueVideo(${lessonBeingLearned.timeContinue})">Continue</h4>
-                <h4 id="notice-continue-footer-again"  onclick="continueVideo(0)">Start Again</h4>
-            </div>
-        </div>
-    </c:if>
     <!-- Lesson Header Start -->
     <div class="lesson-header">
         <div class="lesson-header-left">
@@ -145,7 +110,7 @@
                                                     <c:if test="${lessonComp.lessonID.lessonID == lesson.lessonID 
                                                                   || lesson.lessonTypeID.lessonTypeID == 2
                                                                   || lesson.lessonID == lessonLearning.lessonID                 
-                                                        }">
+                                                          }">
                                                         <c:set var="isAllow" value="${true}" />
                                                     </c:if>
                                                 </c:forEach>
