@@ -18,6 +18,10 @@ public class MyCourseController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
+        if (account == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You need to login first");
+            return;
+        }
         int accountID = account.getAccountID();
         ArrayList<CourseAccount> listCourseAccount = new CourseAccountDAO().getListCourseAccount(accountID);
         

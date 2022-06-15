@@ -121,5 +121,22 @@ public class CourseAccountDAO extends DBContext {
         }
         return listCourseAccount;
     }
+    
+    public boolean isRegisterCourse(int accountID, int courseID) {
+        try {
+            String sql = "SELECT * FROM CourseAccount \n"
+                    + "WHERE AccountID = ? AND CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, accountID);
+            stm.setInt(2, courseID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
 }

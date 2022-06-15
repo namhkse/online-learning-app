@@ -1,6 +1,7 @@
 package controller.myCourse;
 
 import dao.CompletedLessonDAO;
+import dao.CourseAccountDAO;
 import dao.LessonBeingLearnedDAO;
 import dao.LessonDAO;
 import java.io.IOException;
@@ -24,11 +25,20 @@ public class LessonController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
-
+        if (account == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You need to login first");
+            return;
+        }
         LessonDAO lessonDao = new LessonDAO();
         int courseID = Integer.parseInt(request.getParameter("id"));
 
         int accountID = account.getAccountID();
+        
+        boolean isRegisterCourse = new CourseAccountDAO().isRegisterCourse(accountID, courseID);
+        if(isRegisterCourse == false) {
+            response.setStatus(403);
+            return;
+        }
         int numTotalLesson = lessonDao.getNumberLessonInCourse(courseID);
         int numLearningLesson = lessonDao.getNumberLessonLearningInCourse(accountID, courseID);
 
