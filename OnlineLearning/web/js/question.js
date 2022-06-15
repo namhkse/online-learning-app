@@ -261,7 +261,7 @@ function submitAnswer() {
                 document.querySelectorAll(".btn-score-exam").forEach(e => e.disabled = true);
                 clearInterval(counter);
                 countDown.innerHTML = "Submited";
-                
+                document.getElementById("reviewLink").hidden = false;
                 $("#notAnsweredQuestion").text("");
                 $("#helpMessage").text(jqXHR.responseJSON.message);
             },
