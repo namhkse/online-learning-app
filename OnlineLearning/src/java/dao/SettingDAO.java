@@ -68,6 +68,7 @@ public class SettingDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Setting setting = new Setting();
+                setting.setSettingID(rs.getInt("SettingID"));
                 setting.setId(rs.getInt("id"));
                 setting.setName(rs.getString("Name"));
                 setting.setOrder(rs.getInt("Order"));
@@ -162,6 +163,7 @@ public class SettingDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Setting setting = new Setting();
+                setting.setSettingID(rs.getInt("SettingID"));
                 setting.setId(rs.getInt("id"));
                 setting.setName(rs.getString("Name"));
                 setting.setOrder(rs.getInt("Order"));
