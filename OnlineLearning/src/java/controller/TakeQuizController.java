@@ -23,7 +23,7 @@ public class TakeQuizController extends HttpServlet {
         QuizSessionDAO quizSessionDAO = new QuizSessionDAO();
         LocalDateTime current = LocalDateTime.now();
         QuizSession session = quizSessionDAO.find(account, quiz);
-
+        
         if (current.isBefore(session.getExpiredTime())) {
             return true;
         }
