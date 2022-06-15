@@ -30,6 +30,11 @@ public class QuizController extends HttpServlet {
         }
 
         QuizLesson quiz = new QuizLessonDAO().findById(quizId);
+        
+        if (quiz == null) {
+            response.sendError(404);
+            return;
+        }
         // Must fix this line below
         String quizName = new LessonDAO().getLessonByID(quizId).getName();
         quiz.setName(quizName);

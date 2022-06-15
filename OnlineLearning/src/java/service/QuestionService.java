@@ -76,24 +76,47 @@ public class QuestionService {
 
     @POST
     @Path("/submit")
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response submitAnswer(String json) {
         JsonParser jsonParser = new JsonParser();
         JsonElement jsonElement = jsonParser.parse(json);
         JsonObject jsonObject = (JsonObject) jsonElement;
         int quizId = jsonObject.get("quizId").getAsInt();
-        System.out.println("==== Clear start exam time ");
-        Map<String, String> msg = new HashMap<>();
+
+        QuizSessionDAO quizSessionDAO = new QuizSessionDAO();
+        LocalDateTime current = LocalDateTime.now();
+        Account account = SessionUtil.getAccount(req);
+
+        if (account == null) {
+            return Response.status(401).build();
+        }
+
+        QuizSession quizSession = quizSessionDAO.find(account.getId(), quizId);
+        
+        
+        if (quizSession == null || quizSession.getExpiredTime() == null) {
+            return Response.status(403)
+                    .entity("{\"message\": \"There is no session\"}")
+                    .build();
+        }
+
+        if (current.isAfter(quizSession.getExpiredTime())) {
+            return Response.status(403)
+                    .entity("{\"message\": \"Expired session\"}")
+                    .build();
+        }
+        
         try {
-            new QuizSessionDAO().finishQuiz(SessionUtil.getAccount(req).getId(), quizId, LocalDateTime.now());
+            quizSessionDAO.finishQuiz(SessionUtil.getAccount(req).getId(), quizId, current);
             questionDAO.saveAnswer(SessionUtil.getAccount(req).getId(), jsonElement);
         } catch (Exception ex) {
             ex.printStackTrace();
-            msg.put("message", ex.getMessage());
-            return Response.serverError().entity(gson.toJson(msg)).build();
+            return Response.serverError().build();
         }
         System.out.println(json);
-        msg.put("message", "Submit Successfully");
-        return Response.ok().entity(gson.toJson(msg)).build();
+        return Response.ok()
+                    .entity("{\"message\": \"Submit successfuly\"}")
+                    .build();
     }
 }

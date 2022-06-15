@@ -41,9 +41,7 @@ function checkAnsweredQuestion(questionId) {
     if (!answer) {
         return false;
     }
-
     return answer.answerIds.length != 0;
-
 }
 
 class Answer {
@@ -85,7 +83,6 @@ function initQuestion() {
     fetch(`http://localhost:8080/OnlineLearning/api/question/session/${lessonId}`)
             .then(resp => resp.json())
             .then(data => {
-                console.log(data.expiredTime);
                 endTime = new Date(data.expiredTime);
                 counter = setInterval(() => {
                     let distance = endTime - new Date();
@@ -264,9 +261,14 @@ function submitAnswer() {
                 document.querySelectorAll(".btn-score-exam").forEach(e => e.disabled = true);
                 clearInterval(counter);
                 countDown.innerHTML = "Submited";
+                
+                $("#notAnsweredQuestion").text("");
+                $("#helpMessage").text(jqXHR.responseJSON.message);
             },
-            error: function () {
-                console.log('Submit Failed: ' + data.message);
+            error: function (jqXHR, textStatus) {
+                $("#notAnsweredQuestion").text("");
+                $("#helpMessage").text('Submit fail: ' + jqXHR.responseJSON.message);
+                console.log(jqXHR.responseJSON.message);
             }
         });
     }
