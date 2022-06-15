@@ -1,4 +1,3 @@
-
 let availableQuestions = [];
 let questionCounter = 0;
 let userAnswers = [];
@@ -9,7 +8,7 @@ let endTime = 0;
 const btnNextQuestion = document.getElementById("btn_next");
 const btnPreviousQuestion = document.getElementById("btn_previous");
 const btnScoreExam = document.getElementById("btn_score");
-const bntReviewProgress = document.getElementById("btn_review_question");
+const btnReviewProgress = document.getElementById("btn_review_question");
 const btnMark = document.getElementById("btn_mark");
 const countDown = document.getElementById("countDown");
 let counter;
@@ -111,23 +110,6 @@ function clearQuestionOption() {
     let options = document.querySelectorAll(".question-answer");
     options.forEach(o => o.remove());
 }
-
-function scanSelectedAnswer() {
-    let questionId = availableQuestions[questionCounter].id;
-    let selectedAnswerIds = getSelectedAnswerIds();
-    let solved = userAnswers.find(s => s.questionId == questionId);
-
-    if (solved) {
-        solved.answerIds = selectedAnswerIds;
-        console.log(`Update ${questionId} with ${selectedAnswerIds}`);
-    } else {
-        console.log(`Create ${questionId} with ${selectedAnswerIds}`);
-        userAnswers.push(new UserAnswer(questionId, ...selectedAnswerIds));
-    }
-
-    localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
-}
-
 
 function getSelectedAnswerIds() {
     let ids = [];
@@ -231,7 +213,7 @@ btnPreviousQuestion.addEventListener('click', () => {
     }
 });
 
-bntReviewProgress.addEventListener('click', function () {
+btnReviewProgress.addEventListener('click', function () {
     loadQuestionBox(availableQuestions);
 });
 
@@ -264,13 +246,11 @@ function loadQuestionBox(questions) {
 }
 
 function submitAnswer() {
-//    let json = localStorage.getItem("userAnswers");
-    localStorage.removeItem("markedQuetions");
-    localStorage.removeItem("userAnswers");
     let data = {
         quizId: getQuizId(),
         answers: userAnswers
     }
+
     if (data) {
         $.ajax({
             url: `http://localhost:8080/OnlineLearning/api/question/submit`,
@@ -279,10 +259,11 @@ function submitAnswer() {
             contentType: 'application/json',
             success: function (data, textStatus, jqXHR) {
                 console.log(data.message);
+                localStorage.removeItem("markedQuetions");
+                localStorage.removeItem("userAnswers");
                 document.querySelectorAll(".btn-score-exam").forEach(e => e.disabled = true);
-
                 clearInterval(counter);
-                countDown.innerHTML = "SUBMITED";
+                countDown.innerHTML = "Submited";
             },
             error: function () {
                 console.log('Submit Failed: ' + data.message);
@@ -295,11 +276,11 @@ document.getElementById("btn_submit_answer").addEventListener("click", () => {
     submitAnswer()
 });
 
-document.querySelectorAll(".btn-score-exam").forEach(e => {
-    e.addEventListener('click', () => {
+document.querySelectorAll(".btn-score-exam").forEach(btn => {
+    btn.addEventListener('click', () => {
         let total = 0;
-        for (let a of availableQuestions) {
-            total += checkAnsweredQuestion(a.id) ? 1 : 0;
+        for (let question of availableQuestions) {
+            total += checkAnsweredQuestion(question.id) ? 1 : 0;
         }
 
         let msg1 = "You have not answered any questions. By clicking on the [Exit Exam] button below, you will complete your current exam and be returned to the dashboard";
@@ -311,8 +292,6 @@ document.querySelectorAll(".btn-score-exam").forEach(e => {
         let str2 = (total == 0) ? msg1 : msg2;
         $("#scoreExamModalLabel").text(header);
         $("#notAnsweredQuestion").text(str1);
-        $("#notAnsweredQuestion").css('color', 'red');
         $("#helpMessage").text(str2);
-
     });
 });

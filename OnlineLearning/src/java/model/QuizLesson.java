@@ -1,7 +1,8 @@
 package model;
 
 public class QuizLesson {
-
+    
+    private String name;
     private int lessonID;
     private String note;
     private int passScore;
@@ -17,6 +18,13 @@ public class QuizLesson {
         this.passScore = PassScore;
     }
     
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    public String getName() {
+        return this.name;
+    }
     /**
      * Use getId()
      * @return

@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Quiz</title>
         <link href="./node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <!--Jquery-->
@@ -116,25 +116,26 @@
 
     <body>
         <div class="container-fluid min-vh-100 p-0 page-content">
-            <div class="row fs-4 justify-content-end quiz-time m-1 pb-1 pt-1 text-center">
-                <div id="number_question" class="p-1 col-1"></div>
-                <div id="countDown" class="p-1 col-1 bg-info"></div>
+            <div class="row justify-content-end quiz-time m-1 p-1">
+                <p id="number_question" class=" col-1 fs-4 m-0"></p>
+                <p id="countDown" class="text-center col-1 bg-info fs-5 m-0 p-1"></p>
             </div>
 
             <div class="">
-                <div class="row bg-dark text-light m-1">
+                <div class="row bg-dark text-light m-1 p-1">
                     <div class="col-4">
-                        <h4 id="current_question_no"></h4>
+                        <!--Question Counter-->
+                        <h4 id="current_question_no" class="m-0"></h4>
                     </div>
                     <div class="col-4 offset-4">
-                        <h4 id="current_question_id" class="text-end"></h4>
+                        <h4 id="current_question_id" class="text-end m-0"></h4>
                     </div>
                 </div>
             </div>
 
             <div class="row justify-content-center">
-                <div id="question_content" class="col-10 vh-70">
-                    <p id="question_text">a
+                <div id="question_content" class="col-10">
+                    <p id="question_text" class="mt-2">a
                     </p>
                     <!--Answers go in here-->
                 </div>
@@ -151,7 +152,7 @@
                     </div>
                     <div class="row bg-success p-3">
                         <div class="col">
-                            <button id="btn_review_question" class="btn-green" data-bs-toggle="modal"
+                            <button id="btn_review_question" class="btn btn-green" data-bs-toggle="modal"
                                     data-bs-target="#review-process-modal">
                                 Review Progress
                             </button>
@@ -202,9 +203,9 @@
                                     <button id="btn_unanswered" class="btn btn-white">
                                         <i class="fa-regular fa-square"></i>UNANSWERED</button>
                                     <button id="btn_marked" class="btn btn-white"><i
-                                            class="fa-solid fa-bookmark"></i>MARKED</button>
+                                            class="fa-solid fa-bookmark text-warning"></i>MARKED</button>
                                     <button id="btn_answered" class="btn btn-white">
-                                        <i class="fa-solid fa-square"></i>ANSWERED
+                                        <i class="fa-solid fa-square text-success"></i>ANSWERED
                                     </button>
                                 </div>
                                 <div class="col d-flex justify-content-end">
@@ -214,14 +215,13 @@
                                         SCORE EXAM NOW</button>
                                 </div>
                                 <div id="question_review">
+                                    <!--Question boxes go here.-->
                                     <!-- <button class="small-question-box">1</button>
                                     <button class="small-question-box marked-question-box">
                                         <i class="fa-solid fa-bookmark"></i>2
                                     </button> -->
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer">
                         </div>
                     </div>
                 </div>

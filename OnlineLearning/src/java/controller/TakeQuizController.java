@@ -1,8 +1,10 @@
 package controller;
 
+import dao.QuizLessonDAO;
 import dao.QuizSessionDAO;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,20 +34,30 @@ public class TakeQuizController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        /* Sample Data */
         Account account = SessionUtil.getAccount(req);
-        QuizLesson quiz = new QuizLesson();
-        quiz.setId(Integer.parseInt(req.getParameter("id")));
+        int quizId = Integer.parseInt(req.getParameter("id"));
+        QuizLesson quiz = new QuizLessonDAO().findById(quizId);
         
         if(account == null) {
             resp.sendError(401);
             return;
         }
         
+        if(quiz == null) {
+            resp.sendError(404);
+            return;
+        }
+        
+        Map<String, LocalDateTime> quizCompletedTime = new QuizSessionDAO().getTimeDoQuiz(account, quiz);
+        if(quizCompletedTime.get("EndTime") != null) {
+            resp.sendRedirect("./quiz?id=" + quizId);
+            return;
+        }
+        
         if (canUserTakeQuiz(account, quiz)) {
             req.getRequestDispatcher("./view/question.jsp").forward(req, resp);
         } else {
-            resp.sendError(403, "You can not do this quiz because out of time");
+            resp.sendError(403, "You can not do this quiz");
         }
 
     }

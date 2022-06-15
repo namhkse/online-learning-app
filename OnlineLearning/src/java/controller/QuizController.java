@@ -1,9 +1,11 @@
 package controller;
 
+import dao.LessonDAO;
 import dao.QuizLessonDAO;
 import dao.QuizSessionDAO;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,8 +21,8 @@ public class QuizController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int quizId = Integer.parseInt(request.getParameter("id"));
         Account account = SessionUtil.getAccount(request);
+        int quizId = Integer.parseInt(request.getParameter("id"));
 
         if (account == null) {
             response.sendError(401);
@@ -28,17 +30,25 @@ public class QuizController extends HttpServlet {
         }
 
         QuizLesson quiz = new QuizLessonDAO().findById(quizId);
+        // Must fix this line below
+        String quizName = new LessonDAO().getLessonByID(quizId).getName();
+        quiz.setName(quizName);
+        
+        QuizSessionDAO quizSessionDAO = new QuizSessionDAO();
 
         if ("true".equals(request.getParameter("redo-quiz"))) {
             try {
-                new QuizSessionDAO().startQuizTime(account, quiz);
+                quizSessionDAO.startQuizTime(account, quiz);
                 response.sendRedirect("./takequiz?id=" + quiz.getId());
-            } catch (IOException | SQLException ex) {
+            } catch (Exception ex) {
                 response.sendError(500);
                 ex.printStackTrace();
             }
         } else {
-            Map completedQuizTime = new QuizSessionDAO().getTimeDoQuiz(account, quiz);
+            Map completedQuizTime = quizSessionDAO.getTimeDoQuiz(account, quiz);
+            String dueTime = LocalDateTime.now().plusMinutes(quiz.getExamTimeInMinute())
+                        .format(DateTimeFormatter.ofPattern("MMM, dd hh:mm a"));
+            request.setAttribute("dueTime", dueTime);
             request.setAttribute("quiz", quiz);
             request.setAttribute("completedQuizTime", completedQuizTime);
             request.getRequestDispatcher("./view/quiz-lesson.jsp").forward(request, response);

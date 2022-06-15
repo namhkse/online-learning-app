@@ -3,15 +3,60 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quiz</title>
+        <jsp:include page="base-view/baseTag.jsp"></jsp:include>
+
+        <link href="./node_modules/bootstrap/dist/css/bootstrap-grid.min.css" rel="stylesheet">
+        <link href="./node_modules/bootstrap/dist/css/bootstrap-utilities.min.css" rel="stylesheet">
+        <style>
+            .btn-redo {
+                background-color: #20c997;
+                padding: 20px;
+                display: inline-block;
+                width: 150px;
+                text-align: center;
+                color: white;
+                font-weight: bold;
+                border-radius: 5px;
+            }
+        </style>
     </head>
+    
     <body>
-        <h1>Account: ${account.id}  QuizID: ${quiz.id}</h1>
-        <h2>Start time: ${completedQuizTime.StartTime}</h2>
-        <h2>EndTime time: ${completedQuizTime.EndTime}</h2>
-        <a href="./quiz?id=${quiz.id}&redo-quiz=true">
-            ${empty completedQuizTime.EndTime ? "Do quiz" : "Redo"}
-        </a>
+        <jsp:include page="base-view/headerUser.jsp"></jsp:include>
+
+            <div class="container-fluid p-5">
+                <div class="mt-5">
+                    <h1 class="">${quiz.name}</h1>
+                <p class="mt-2 mb-4"><strong>Quiz Time: </strong>${quiz.examTimeInMinute}min</p>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-9 mt-4">
+                    <h4 class="mb-2">Submit your assignment</h4>
+                    <p><strong>Due </strong> ${dueTime}</p>
+                </div>
+
+                <div class="col-3 position-relative">
+                    <a class="btn-redo position-absolute end-0" 
+                       href="./quiz?id=${quiz.id}&redo-quiz=true">
+                        ${empty completedQuizTime.EndTime ? "Start Quiz" : "Take the Quiz Again"}
+                    </a>
+                </div>
+            </div>
+                    
+            <div class="mt-4">
+                <hr>
+            </div>
+                    
+            <div class="mt-5">
+                <h4 class="mt-5">Receive grade</h4>
+                <p class="mt-2 mb-4"><strong>To Pass </strong>${quiz.passScore} true answers or more.</p>
+                <hr>
+            </div>
+        </div>
     </body>
 </html>

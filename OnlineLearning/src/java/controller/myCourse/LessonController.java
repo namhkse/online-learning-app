@@ -3,8 +3,6 @@ package controller.myCourse;
 import dao.CompletedLessonDAO;
 import dao.LessonBeingLearnedDAO;
 import dao.LessonDAO;
-import dao.QuizLessonDAO;
-import dao.QuizSessionDAO;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
@@ -13,12 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.SubLessonDAO;
-import java.util.Map;
 import model.Account;
 import model.CompletedLesson;
 import model.Lesson;
 import model.LessonBeingLearned;
-import model.QuizLesson;
 import model.SubLesson;
 
 @WebServlet(name = "LessonController", urlPatterns = {"/lesson"})
