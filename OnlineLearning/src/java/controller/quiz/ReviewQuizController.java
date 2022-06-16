@@ -2,6 +2,8 @@ package controller.quiz;
 
 import dao.AnswerDAO;
 import dao.CompletedQuestionDAO;
+import dao.CourseDAO;
+import dao.LessonDAO;
 import dao.QuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,8 +13,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Account;
 import model.Answer;
 import model.CompletedQuestion;
+import model.Course;
+import model.Lesson;
 import model.Question;
 
 @WebServlet(name = "ReviewQuizController", urlPatterns = {"/reviewquiz"})
@@ -27,16 +32,25 @@ public class ReviewQuizController extends HttpServlet {
 
     private void getQuestion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int lessonID = Integer.parseInt(request.getParameter("lID"));
-        int AccountID = 12;
-        ArrayList<CompletedQuestion> list = new CompletedQuestionDAO().listAllQuizReview(AccountID, lessonID);
+        Account account = (Account)request.getSession().getAttribute("account");
+        if (account == null) {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You need to login first");
+            return;
+        }
+        int accountID = account.getAccountID();
+        ArrayList<CompletedQuestion> list = new CompletedQuestionDAO().listAllQuizReview(accountID, lessonID);
         ArrayList<Answer> answerList = new AnswerDAO().listAllAnsByQues(lessonID, list.get(0).getQuestionID().getId());
         ArrayList<Question> total = new QuestionDAO().total(lessonID);
         resultColor(request, response, total);
 
-        ArrayList<CompletedQuestion> selectedQues = new CompletedQuestionDAO().listSelectedByQuiz(AccountID, lessonID, list.get(0).getQuestionID().getId());
+        ArrayList<CompletedQuestion> selectedQues = new CompletedQuestionDAO().listSelectedByQuiz(accountID, lessonID, list.get(0).getQuestionID().getId());
 
+        Lesson lesson = new LessonDAO().getLessonByID(lessonID);
+        request.setAttribute("lesson", lesson);
         request.setAttribute("selectAns", selectedQues);
         
+        Course course = new CourseDAO().getCourseByLessonID(lessonID);
+        request.setAttribute("course", course);
         
         float average = 10/(float)total.size();
         request.setAttribute("average", average);
@@ -169,9 +183,10 @@ public class ReviewQuizController extends HttpServlet {
                 + "                                <ul>");
         if (selectedQues.size() != 0) {
             for (Answer ans : answerList) {
+                out.println("                                            <li ");
                 for (CompletedQuestion selectedQue : selectedQues) {
-                    out.println("                                            <li class=\""+(ans.getAnswerID() == selectedQue.getSelectedAnswerID() && ans.getStatus() == 0 ? "wrong-choice" : "")+""
-                            +                                                               (ans.getStatus() == 1 ? "right-choice" : "")+"\"");
+                    out.println((ans.getAnswerID() == selectedQue.getSelectedAnswerID() && ans.getStatus() == 0 ? "class='wrong-choice'" : "")
+                            +                                                               (ans.getStatus() == 1 ? "class='right-choice'" : ""));
                 }
                     out.println(">\n"
                             + "                                                <input type=\"radio\" ");

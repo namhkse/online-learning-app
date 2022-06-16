@@ -92,7 +92,7 @@ function initQuestion() {
                     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                     countDown.innerHTML = `${hours}:${minutes}:${seconds}`;
-                    if (distance < 2) {
+                    if (distance < 1000) {
                         clearInterval(counter);
                         submitAnswer();
                     }

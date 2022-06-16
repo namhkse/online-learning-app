@@ -52,9 +52,22 @@
                 <hr>
             </div>
                     
-            <div class="mt-5">
-                <h4 class="mt-5">Receive grade</h4>
-                <p class="mt-2 mb-4"><strong>To Pass </strong>${quiz.passScore} true answers or more.</p>
+            <div class="row mt-5">
+                <div class="col-9 mt-4">
+                    <h4 class="mb-2">Receive grade</h4>
+                    <p><strong>To Pass </strong>${quiz.passScore} true answers or more.</p>
+                </div>
+
+                <div class="col-3 position-relative">
+                    <c:if test = "${completedQuizTime.EndTime != null}">
+                        <a class="btn-redo position-absolute end-0" 
+                       href="./reviewquiz?lID=${param['id']}" hidden="${empty completedQuizTime.EndTime ? "true" : ""}">
+                        Review
+                        </a>
+                    </c:if>
+                </div>
+            </div>
+            <div class="mt-4">
                 <hr>
             </div>
         </div>

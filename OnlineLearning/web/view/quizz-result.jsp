@@ -84,25 +84,57 @@
                             </td>
 
                         </tr>
+
                         <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+
+                                <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                            <tr>
+                                                <th scope="col" class="px-6 py-3">
+                                                    RESULT BY THE GROUP
+                                                </th>
+                                                <th scope="col" class="px-6 py-3">
+                                                    RESULT BY THE DOMAIN
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                                <td class="px-6 py-4">
+                                                    <c:forEach items="${dimensionDetails}" var="group">
+                                                        <c:if test="${group.typeID == 2}">
+                                                            <c:out value = "${group.dimensionName}: ${(group.numberCorrect/group.number)*100}%"/>
+                                                            <br/>
+                                                        </c:if>
+
+                                                    </c:forEach>
+                                                </td>
+                                                <td class="px-6 py-4">
+                                                    <c:forEach items="${dimensionDetails}" var="domain">
+                                                        <c:if test="${domain.typeID == 1}">
+                                                            <c:out value = "${domain.dimensionName}: ${(domain.numberCorrect/domain.number)*100}%"/>
+                                                            <br/>
+                                                        </c:if>
+
+                                                    </c:forEach>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
 
                             </th>
                             <td class="px-6 py-4">
                                 <c:if test="${checkPass}">
-                                    <span style="color:green;">PASSED THE EXAM</span>
+                                    <h6 style="color:green;">PASSED THE EXAM</h6>
                                 </c:if> 
                                 <c:if test="${!checkPass}">
-                                    <span style="color:red;">FAILED THE EXAM</span> 
+                                    <h6 style="color:red;">FAILED THE EXAM</h6> 
                                 </c:if> 
-                            </td>
-
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                                <br/>
                                 <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 button"><a href="reviewquiz?lID=${lessonID}">Review Test</a></button>
-                            </th>
-                            <td class="px-6 py-4">
                                 <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 button"><a href="#">Redo Test</a></button>
                             </td>
 

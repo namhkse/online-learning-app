@@ -3,6 +3,7 @@ package controller.quiz;
 import dao.AnswerDAO;
 import dao.CompletedLessonDAO;
 import dao.CompletedQuestionDAO;
+import dao.DimensionDetailDAO;
 import dao.QuestionDAO;
 import dao.QuizDAO;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import model.Account;
 import model.Answer;
 import model.CompletedLesson;
 import model.CompletedQuestion;
+import model.DimensionDetail;
 import model.Question;
 import model.QuizLesson;
 
@@ -54,6 +56,9 @@ public class QuizzResultController extends HttpServlet {
         LocalTime timenow = java.time.LocalTime.now();
         float timeDo1Ques = 0;
 
+        DimensionDetailDAO dimensionDetailDAO = new DimensionDetailDAO();
+        ArrayList<DimensionDetail> dimensionDetails = dimensionDetailDAO.getDimensionDetail(lessonID);
+        
         CompletedLesson CompletedLesson = completedLessonDAO.CompletedLesson(lessonID);
         Timestamp startTime = CompletedLesson.getStartTime();
         int start = startTime.getHours() * 3600 + startTime.getMinutes() * 60 + startTime.getSeconds();
@@ -61,6 +66,7 @@ public class QuizzResultController extends HttpServlet {
         int end = endTime.getHours() * 3600 + endTime.getMinutes() * 60 + endTime.getSeconds();
         int timeDoing = end - start;
         timeDo1Ques = (float) timeDoing / count;
+        request.setAttribute("dimensionDetails", dimensionDetails);
         request.setAttribute("lessonID", lessonID);
         request.setAttribute("AnswerQuiz", answerList);
         request.setAttribute("FirstQuiz", list.get(0));

@@ -8,10 +8,8 @@
         ArrayList<String> type = (ArrayList<String>) request.getAttribute("type");
     %>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--        <link rel="stylesheet" href="css/quizreview.css">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
-        <title>JSP Page</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+        <title>${lesson.name}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
@@ -27,13 +25,13 @@
     <body>
         <div class="lesson-header">
             <div class="lesson-header-left">
-                <a href="course-detail.html"><i class="fa-solid fa-angle-left"></i></a>
-                <h4>Web Design</h4>
+                <a href="quiz?id=${lessonID}"><i class="fa-solid fa-angle-left"></i></a>
+                <h4>${course.name}</h4>
             </div>
         </div>
         <div class="review-container">
             <h1 class="review-title">
-                <span>Probability and Statistics - MAS291</span>
+                <span>${lesson.name}</span>
             </h1>
             <div class="reivew-container-child">
                 <div class="review-container-left" id="review-container-left">
@@ -52,11 +50,11 @@
                             <div class="answer">
                                 <ul>
                                     <c:forEach items="${AnswerQuiz}" var="an">
+                                            <li
                                         <c:forEach items="${selectAns}" var="se">
-                                            <li class="${an.getAnswerID()==se.getSelectedAnswerID()&&an.getStatus()==0?"wrong-choice":""}
-                                                ${an.getStatus()==1?"right-choice":""}"
-                                        </c:forEach>
-                                                >
+                                                ${an.getStatus()==1?"class='right-choice'":""} 
+                                                ${an.getAnswerID()==se.getSelectedAnswerID()&&an.getStatus()==0?"class='wrong-choice'":""}
+                                        </c:forEach>>
                                                 <input type="radio" <c:forEach items="${selectAns}" var="se">${an.getAnswerID()==se.getSelectedAnswerID()?"checked":""}</c:forEach> disabled>
                                                 <label>${an.getAnswerText()}</label>
                                             </li>
@@ -82,7 +80,7 @@
                             </c:forEach>
                     </div>
 
-                    <a href="#">Finish review</a>
+                    <a href="quiz?id=${lessonID}">Finish review</a>
                 </div>
             </div>
         </div>

@@ -5,9 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Course;
 
 public class CourseDAO extends DBContext {
-    
+
     public int getNumberAllLessonInCourse(int accountID, int courseID) {
         int numLesson = -1;
         try {
@@ -21,13 +22,13 @@ public class CourseDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 numLesson = rs.getInt("NumAllLesson");
-            }     
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return numLesson;
     }
-    
+
     public int getNumberLessonLearning(int accountID, int courseID) {
         int numCurrentLesson = 0;
         try {
@@ -47,5 +48,24 @@ public class CourseDAO extends DBContext {
         }
         return numCurrentLesson;
     }
-    
+
+    public Course getCourseByLessonID(int lessonID) {
+        try {
+            String sql = "select c.Name from lesson l join sublesson sl\n"
+                    + "on l.SubLessonID = sl.SubLessonID join course c\n"
+                    + "on c.CourseID = sl.CourseID where l.LessonID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, lessonID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Course course = new Course();
+                course.setName(rs.getString("Name"));
+                return course;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }
