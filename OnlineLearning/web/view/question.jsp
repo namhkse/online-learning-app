@@ -181,7 +181,7 @@
                             <p id="helpMessage"></p>
                         </div>
                         <div class="modal-footer">
-                            <a id="reviewLink" href="./reviewquiz?lID=${param['id']}" class="btn btn-primary" hidden>Review</a>
+                            <a id="reviewLink" href="./quizz-result?lID=${param['id']}" class="btn btn-primary" hidden>Review</a>
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
                             <button id="btn_submit_answer" type="button" class="btn btn-success">Score Exam</button>
                         </div>
