@@ -122,7 +122,11 @@ CREATE TABLE [Dimension](
 	[Description] [nvarchar](2000),
 	[TypeID] [int],
 	[SubjectID] [int],
+	[QuestionID] [int] ,
+	[LessonID] [int] ,
 	CONSTRAINT [FK_Dimension_DimensionType] FOREIGN KEY([TypeID]) REFERENCES [DimensionType] ([TypeID]) ON DELETE CASCADE,
+	CONSTRAINT [FK_Dimension_Question] FOREIGN KEY([QuestionID]) REFERENCES [Question] ([QuestionID]) ON DELETE CASCADE,
+	CONSTRAINT [FK_Dimension_Lesson] FOREIGN KEY([LessonID]) REFERENCES [Lesson] ([LessonID]) ON DELETE CASCADE,
 	CONSTRAINT [FK_Dimension_Subject] FOREIGN KEY([SubjectID]) REFERENCES [Subject] ([SubjectID]) ON DELETE CASCADE
 );
 
