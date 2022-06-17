@@ -111,25 +111,6 @@ create table [Subject] (
 	CONSTRAINT [FK_Subject_SubjectCategory] FOREIGN KEY([CategoryID]) REFERENCES [SubjectCategory] ([CategoryID]) ON DELETE CASCADE
 );
 
-CREATE TABLE [DimensionType](
-	[TypeID] [int] IDENTITY(1,1) NOT NULL primary KEY,
-	[Name] [nvarchar](255)
-);
-
-CREATE TABLE [Dimension](
-	[DimensionID] [int] IDENTITY(1,1) NOT NULL primary KEY,
-	[Name] [nvarchar](255),
-	[Description] [nvarchar](2000),
-	[TypeID] [int],
-	[SubjectID] [int],
-	[QuestionID] [int] ,
-	[LessonID] [int] ,
-	CONSTRAINT [FK_Dimension_DimensionType] FOREIGN KEY([TypeID]) REFERENCES [DimensionType] ([TypeID]) ON DELETE CASCADE,
-	CONSTRAINT [FK_Dimension_Question] FOREIGN KEY([QuestionID]) REFERENCES [Question] ([QuestionID]) ON DELETE CASCADE,
-	CONSTRAINT [FK_Dimension_Lesson] FOREIGN KEY([LessonID]) REFERENCES [Lesson] ([LessonID]) ON DELETE CASCADE,
-	CONSTRAINT [FK_Dimension_Subject] FOREIGN KEY([SubjectID]) REFERENCES [Subject] ([SubjectID]) ON DELETE CASCADE
-);
-
 create table Course (
 	CourseID int identity(1, 1) not null primary key,
 	[Name] varchar(200),
@@ -297,6 +278,24 @@ CREATE TABLE RolePermissionRequest (
 	CONSTRAINT FK_Role_PermissionRequest_PermissionRequestID FOREIGN KEY (PermissionRequestID) REFERENCES dbo.PermissionRequest(PermissionRequestID) ON DELETE CASCADE,
 );
 
+CREATE TABLE [DimensionType](
+	[TypeID] [int] IDENTITY(1,1) NOT NULL primary KEY,
+	[Name] [nvarchar](255)
+);
+
+CREATE TABLE [Dimension](
+	[DimensionID] [int] IDENTITY(1,1) NOT NULL primary KEY,
+	[Name] [nvarchar](255),
+	[Description] [nvarchar](2000),
+	[TypeID] [int],
+	[SubjectID] [int],
+	[QuestionID] [int] ,
+	[LessonID] [int] ,
+	CONSTRAINT [FK_Dimension_DimensionType] FOREIGN KEY([TypeID]) REFERENCES [DimensionType] ([TypeID]) ON DELETE CASCADE,
+	CONSTRAINT [FK_Dimension_Question] FOREIGN KEY([QuestionID]) REFERENCES [Question] ([QuestionID]),
+	CONSTRAINT [FK_Dimension_Lesson] FOREIGN KEY([LessonID]) REFERENCES [Lesson] ([LessonID]),
+	CONSTRAINT [FK_Dimension_Subject] FOREIGN KEY([SubjectID]) REFERENCES [Subject] ([SubjectID]) ON DELETE CASCADE
+);
 
 CREATE TABLE QuizSession (
 	SessionID INT PRIMARY KEY IDENTITY(1, 1),
