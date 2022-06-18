@@ -6,8 +6,8 @@
     <head>
         <jsp:include page="base-view/baseTag.jsp"></jsp:include> 
             <link rel="stylesheet" href="css/home.css"/>
-            <link rel="stylesheet" href="css/courses.css">
-
+            <link rel="stylesheet" href="css/my-course.css">
+            
             <title>My Courses</title>
         </head>
 
@@ -25,43 +25,120 @@
             </div>
 
             <!-- Intro End -->
-            <div class="container-my-course">
-            <c:forEach items="${listCourseAccount}" var="ca">
-                <div class="my-course">    
-                    <div class="my-course-item">
-                        <div class="tiny-picture">
-                            <img src="${ca.courseId.thumbnailUrl}" alt="">
-                            <div><a href="lesson?id=${ca.courseId.courseId}">Continue</a></div>
+
+
+            <div id="my-course-header">
+                <form id="form-search-info">
+                    <input type="date" class="selected-tag"/>
+                    <select class="selected-tag">
+                        <option>All</option>
+                        <option>In Progress</option>
+                        <option>Not Learning</option>>
+                    </select>
+                    <div class="display-flex">
+                        <input type="text" id="search-my-course" placeholder="Search for course..." onkeyup="searchCourse()">
+                        <button type="submit" id="search-icon"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                    <div class="display-flex position-relative afterTemp">
+                        <p class="fa-solid fa-filter icon-filter"></p>
+                        <div id="search-category">
+                            <form>
+                                <div id="holder-search-input">
+                                    <input type="text" id="holder-search-category" onkeyup="searchCategory()"
+                                           placeholder="Search for category...">
+                                </div>
+                                <div id="form-select-category">
+                                    <div class="search-category-item">
+                                        <div class="search-category-name">
+                                            <input type="checkbox" id="id-category-1">
+                                            <label for="id-category-1">Design and Graphics Design and Graphics Design and
+                                                Graphics</label>
+                                        </div>
+                                        <div class="search-sub-category">
+                                            <div class="search-sub-category-name">
+                                                <input type="checkbox" id="id-sub-category-1">
+                                                <label for="id-sub-category-1">Design and Graphics Design and Graphics
+                                                    Design and Graphics</label>
+                                            </div>
+                                            <div class="search-sub-category-name">
+                                                <input type="checkbox" id="id-sub-category-1">
+                                                <label for="id-sub-category-1">Design and Graphics</label>
+                                            </div>
+                                            <div class="search-sub-category-name">
+                                                <input type="checkbox" id="id-sub-category-1">
+                                                <label for="id-sub-category-1">Design and Graphics</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="search-category-item">
+                                        <div class="search-category-name">
+                                            <input type="checkbox" id="id-category-1">
+                                            <label for="id-category-1">Design and Graphics</label>
+                                        </div>
+                                        <div class="search-sub-category">
+                                            <div class="search-sub-category-name">
+                                                <input type="checkbox" id="id-sub-category-1">
+                                                <label for="id-sub-category-1">Design and Graphics</label>
+                                            </div>
+                                            <div class="search-sub-category-name">
+                                                <input type="checkbox" id="id-sub-category-1">
+                                                <label for="id-sub-category-1">Design and Graphics</label>
+                                            </div>
+                                            <div class="search-sub-category-name">
+                                                <input type="checkbox" id="id-sub-category-1">
+                                                <label for="id-sub-category-1">Design and Graphics</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
                         </div>
-                        <div class="desc-best-course"> 
-                            <h2>${ca.courseId.price} $</h2>
-                            <div class="rated-star">
-                                <i class="fa-solid fa-star voted"></i>
-                                <i class="fa-solid fa-star voted"></i>
-                                <i class="fa-solid fa-star voted"></i>
-                                <i class="fa-solid fa-star voted"></i>
-                                <i class="fa-regular fa-star voted"></i>                
-                            </div>
-                            <h3>${ca.courseId.name}</h3>
+
+
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="my-course"> 
+            <c:forEach items="${listCourseAccount}" var="course">
+                <div class="my-course-item">
+                    <div class="my-course-item-img">
+                        <p class="option-course">
+                            <i class="fa-solid fa-ellipsis-vertical "></i>
+                        <div class="notice-unenroll">
+                            <p>Unenroll this course?</p>
+                            <form>
+                                <div class="holder-button-delete">
+                                    <input type="hidden" value="CourseID" class="id-course-delete">
+                                    <button type="button" class="btn-unenroll" onclick="">Unenroll</button>
+                                    <button type="button" class="btn-cancel" onclick="">Cancel</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="progress">
-                            <span class="progress-value">${ca.process} %</span>
-                            <progress class="progress-bar" value="${ca.process}" max="100"> </progress>
-                        </div>
-                        <div class="display-flex">
-                            <div class="item-desc">
-                                <i class="fa-solid fa-user-tie"></i>
-                                <span>${ca.courseId.instructorId.firstName} ${ca.courseId.instructorId.lastName}</span>
-                            </div>         
+                        </p>
+
+                        <img src="${course.courseId.tinyPictureUrl}" alt="">
+                        <div class="overlay-img">               
+                            <a href="lesson?id=${course.courseId.courseId}" class="btn-continue">
+                                ${course.process <= 0 ? "Start Learning" : "Continue"}
+                            </a>
                         </div>
                     </div>
+                    <div class="my-course-item-desc">
+                        <div class="my-course-item-title">${course.courseId.name}</div>
+                        <p class="my-course-item-date">${course.enrollDate}</p>
+                        <div class="my-course-progress" style="--progress: ${course.process}%"></div>
+                        <p class="text-progress">${course.process}% Complete</p>
+                    </div>
                 </div> 
-            </c:forEach>        
-        </div>
+            </c:forEach>
+            </div>
 
         <jsp:include page="base-view/footerUser.jsp"></jsp:include>
 
-
+        <script type="text/javascript" src="js/my-course.js"></script>
     </body>
 
 </html>

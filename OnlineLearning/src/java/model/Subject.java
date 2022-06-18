@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Subject {
 
     private int subjectId;
@@ -11,6 +13,15 @@ public class Subject {
     private String description;
     private int order;
     private String type;
+    private ArrayList<SubjectCategory> listCategory;
+
+    public ArrayList<SubjectCategory> getListCategory() {
+        return listCategory;
+    }
+
+    public void setListCategory(ArrayList<SubjectCategory> listCategory) {
+        this.listCategory = listCategory;
+    }
 
     public Subject() {
     }
@@ -26,6 +37,8 @@ public class Subject {
         this.order = order;
         this.type = type;
     }
+    
+    
 
     public Subject(int subjectId, String name, int order, boolean status, String type) {
         this.subjectId = subjectId;

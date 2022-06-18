@@ -110,6 +110,9 @@ public class CourseAccountDAO extends DBContext {
                 try {
                     double numTemp = (double) numLessonLearning / numAllLesson;
                     process = (int) (numTemp * 100);
+                    if(process > 100) {
+                        process = 100;
+                    }
                 } catch (Exception e) {
                     process = 0;
                 }
