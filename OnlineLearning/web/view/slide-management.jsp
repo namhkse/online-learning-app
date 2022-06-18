@@ -33,7 +33,7 @@
                         <div class="container-table">
                             <div class="table-content">
                                 <div class="search">
-                                    <a class="margin-auto-0" id="add-blog" href="slide-detail" ><i class="fa-solid fa-plus"></i> Add Slide</a>
+                                    <a class="margin-auto-0" id="add-blog" href="slide-edit" ><i class="fa-solid fa-plus"></i> Add Slide</a>
 
                                     <form action="slide-list" method="GET" class="search-form">
                                         <input type="text" id="search" name="search" placeholder="Search by title or backlink">
@@ -41,13 +41,7 @@
                                     </form> 
 
                                     <form action="slide-list" method="GET"> 
-                                        Collection: 
-                                        <select name="scid" id="collection" class="select-tag" onchange="this.form.submit()">
-                                            <option value="-1" >All collection</option>
-                                            <c:forEach items="${allSliderCollections}" var="collection" >
-                                                <option value="${collection.sliderCollectionID}" ${scid == collection.sliderCollectionID ? "selected" : ""}>${collection.name}</option>
-                                            </c:forEach>
-                                        </select>
+                                        
                                         Status: 
                                         <select name="display" class="select-tag" onchange="this.form.submit()">
                                             <option value="-1" >All Status</option>
@@ -62,9 +56,9 @@
                                             <th>ID<i class="fa-solid fa-sort" onclick="sortTable(0)"></i></th>
                                             <th>Image</th>
                                             <th class="title-slide">Title<i class="fa-solid fa-sort" onclick="sortTable(2)"></i></th>
-                                            <th>Slider collection<i class="fa-solid fa-sort" onclick="sortTable(3)"></i></th>
                                             <th class="backlink-slide">Backlink</th>
                                             <th>Display</th>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -75,14 +69,14 @@
                                                 <td>${slider.sliderID}</td>
                                                 <td><img class="img-thumbnail-blog" src="../img/${slider.imageUrl}"></td>
                                                 <td class="title-slide">${slider.title}</td>
-                                                <td>${slider.sliderCollectionID.name}</td>
                                                 <td class="backlink-slide">${slider.navigationLink}</td>
                                                 <td class="toggle">
                                                     <c:if test="${slider.status == true}"><a id="display-toggle" href="../management/slide-list?id-hide=${slider.sliderID}" onclick="return confirm('Are you sure you want to hide this slide?');"><i class="fa-solid fa-toggle-on"></i></a></c:if>
                                                     <c:if test="${slider.status == false}"><a id="display-toggle" href="../management/slide-list?id-show=${slider.sliderID}" onclick="return confirm('Are you sure you want to show this slide?');"><i class="fa-solid fa-toggle-off"></i></a></c:if>
                                                 </td>
-                                                <td><button class="action-btn first"><i class="fa-solid fa-pencil"></i><a href="../management/slide-detail?id=${slider.sliderID}">Edit</a></button></td>
-                                                <td><button class="action-btn second"><i class="fa-solid fa-trash-can"></i><a href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></button></td>
+                                                <td><button class="action-btn first"><i class="fa-solid fa-eye"></i><a href="../management/slide-view?id=${slider.sliderID}">View</a></button></td>
+                                                <td><button class="action-btn second"><i class="fa-solid fa-pencil"></i><a href="../management/slide-edit?id=${slider.sliderID}">Edit</a></button></td>
+                                                <td><button class="action-btn third"><i class="fa-solid fa-trash-can"></i><a href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></button></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

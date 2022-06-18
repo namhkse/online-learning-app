@@ -44,7 +44,14 @@
                             </div>
 
                             <div id="Dimension" class="tabcontent active">
-                                <a class="margin-auto-0" id="add-dimension" href="../management/dimension-detail?subjectID=${subjectID}" ><i class="fa-solid fa-plus"></i> Add Dimension</a>
+                                <div class="add-search">
+                                    <a class="margin-auto-0" id="add-dimension" href="../management/dimension-detail?subjectID=${subjectID}" ><i class="fa-solid fa-plus"></i> Add Dimension</a>
+                                    <form action="subject-detail" method="GET" class="search-form">                                        
+                                        <input type="hidden" name="subjectID" value="${subjectID}">
+                                        <input type="text" id="search" name="search" placeholder="Search by name">
+                                        <input id="submit" type="submit" value="Search"/>
+                                    </form> 
+                                </div>
                                 <table>
                                     <thead>
                                         <tr>
