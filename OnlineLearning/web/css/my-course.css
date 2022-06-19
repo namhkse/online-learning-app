@@ -1,4 +1,4 @@
-.my-course {
+#my-course-list {
     display: flex;
     flex-wrap: wrap;
     padding: 30px;
@@ -18,6 +18,11 @@
 .my-course-item-img {
     width: 100%;
     position: relative;
+}
+
+.my-course-item-img:hover > .overlay-img {
+    opacity: 1;
+    z-index: 1;
 }
 
 .my-course-item-img img {
@@ -319,4 +324,31 @@
 
 .selected-tag * {
     padding: 10px;
+}
+
+#no-course {
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#no-course > a {
+    padding: 15px 25px;
+    background-color: #06bbcc;
+    margin-top: 40px;
+    display: inline-block;
+    color: #fff;
+    border-radius: 23px;
+    font-weight: bold;
+}
+
+#clear-btn {
+    margin-left: 15px;
+    padding: 5px 8px;
+    background-color: #06bbcc;
+    color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
 }

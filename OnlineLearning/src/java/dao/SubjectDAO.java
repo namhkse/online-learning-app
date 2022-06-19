@@ -7,32 +7,35 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Subject;
+import model.SubjectCategory;
 
 public class SubjectDAO extends DBContext {
 
     public ArrayList<Subject> getAllSubjects() {
         ArrayList<Subject> subjects = new ArrayList<>();
         try {
-            String sql = "SELECT [SubjectID]\n"
-                    + "      ,[Name], [Order], Status\n"
-                    + "  FROM [Subject]";
+            String sql = "select * from [subject]";
 
             PreparedStatement stm = connection.prepareStatement(sql);
 
             ResultSet rs = stm.executeQuery();
 
             while (rs.next()) {
+                SubjectCategory sc = new SubjectCategory();
+                sc.setCategoryID(rs.getInt("CategoryID"));
+                
                 Subject subject = new Subject();
                 subject.setSubjectId(rs.getInt("SubjectID"));
-                subject.setName(rs.getString("Name"));
+                subject.setName(rs.getString("Name"));           
+                subject.setCategoryID(sc);
+                subject.setFeatured(rs.getBoolean("Featured"));
+                subject.setStatus(rs.getBoolean("Status"));
+                subject.setImage(rs.getString("Image"));
+                subject.setDescription(rs.getString("Description"));
                 subject.setOrder(rs.getInt("Order"));
-                if (rs.getInt("Status") == 1) {
-                    subject.setStatus(true);
-                } else {
-                    subject.setStatus(false);
-                }
+                subject.setType(rs.getString("type"));
+                
                 subjects.add(subject);
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,7 +80,6 @@ public class SubjectDAO extends DBContext {
                 }
             }
         }
-
     }
 
     public void updateSubject(Subject s) {
@@ -165,5 +167,12 @@ public class SubjectDAO extends DBContext {
             Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    } 
+    }
+    
+    public static void main(String[] args) {
+        ArrayList<Subject> list = new SubjectDAO().getAllSubjects();
+        for (Subject subject : list) {
+            System.out.println(subject.getName());
+        }
+    }
 }

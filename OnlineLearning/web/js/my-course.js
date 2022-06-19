@@ -3,30 +3,15 @@ var filterIcon = document.getElementsByClassName("afterTemp")[0];
 filterIcon.onmouseover = function () {
     var searchCategory = document.getElementById("search-category");
     searchCategory.style.display = "block";
-}
+};
 
 filterIcon.onmouseout = function () {
     var searchCategory = document.getElementById("search-category");
     searchCategory.style.display = "none";
-}
-
-var listCourse = document.querySelectorAll(".my-course-item-img");
-var overlayImg = document.querySelectorAll(".overlay-img");
-listCourse.forEach(function (course, index) {
-    course.onmouseover = function () {
-        overlayImg[index].style.opacity = 1;
-        overlayImg[index].style.zIndex = 1;
-    }
-    course.onmouseout = function () {
-        overlayImg[index].style.opacity = 0;
-        overlayImg[index].style.zIndex = -1;
-    }
-})
-
+};
 
 function searchCategory() {
 
-    // Declare variables
     var input, filter, ul, li, a, i, txtValue;
     input = document.getElementById('holder-search-category');
 
@@ -45,34 +30,118 @@ function searchCategory() {
     }
 }
 
-function searchCourse() {
-    var input = document.getElementById("search-my-course");
-    var filter = input.value.toUpperCase();
-    var listCourse = document.querySelectorAll(".my-course-item");
-    listCourse.forEach(function (course) {
-        var titleCourse = course.childNodes[3].childNodes[1].innerText.toUpperCase();
-        if (titleCourse.indexOf(filter) > -1) {
-            course.style.display = "";
-        } else {
-            course.style.display = "none";
-        }
-    })
+function openOption(element) {
+    var noticeUnenroll = element.parentNode.childNodes[2];
+    noticeUnenroll.style.opacity = 1;
+    noticeUnenroll.style.zIndex = 3;
 }
 
-var options = document.querySelectorAll(".option-course");
-var noticeUnenroll = document.querySelectorAll(".notice-unenroll");
-var btnCancels = document.querySelectorAll(".btn-cancel");
-options.forEach(function (option, index) {
-    option.onclick = function () {
-        noticeUnenroll[index].style.opacity = 1;
-        noticeUnenroll[index].style.zIndex = 3;
-    }
+function closeNotice(element) {
+    var noticeUnenroll = element.parentNode.parentNode.parentNode;
+    noticeUnenroll.style.opacity = 0;
+    noticeUnenroll.style.zIndex = -1;
+}
 
-})
-btnCancels.forEach(function (cancel, index) {
-    cancel.onclick = function () {
-        noticeUnenroll[index].style.opacity = 0;
-        noticeUnenroll[index].style.zIndex = -1;
-    }
+function searchByValue() {
+    var datas = document.querySelectorAll(".search-sub-category-name input");
+    var arraySearchId = [];
+    datas.forEach(function (data) {
+        if (data.checked === true) {
+            arraySearchId.push(data.value);
+        }
+    });
+    var data = arraySearchId.join();
+    var pageNum = document.getElementById("page-num").value;
+    $(function () {
+        $.ajax({
+            type: "POST",
+            url: "my-course",
+            cache: false,
+            data: {
+                datejoin: document.getElementById("date-join").value,
+                progress: document.getElementById("progress-bar").value,
+                txtSearch: document.getElementById("search-my-course").value,
+                arraySearchId: data,
+                pageNum: pageNum
+            },
+            success: function (result) {
+                document.getElementsByClassName("my-course")[0].innerHTML = "";
+                document.getElementsByClassName("my-course")[0].innerHTML += result;
+            }
+        });
+    });
+}
 
-})
+function unenrollCourse(element) {
+    $(function () {
+        $.ajax({
+            type: "DELETE",
+            url: "./my-course?courseId=" + element.parentNode.childNodes[1].value,
+            success: function (result) {
+                element.parentNode.parentNode.parentNode.parentNode.parentNode.remove();
+            }
+        });
+    });
+}
+
+function checkedCategory(element) {
+    var listSubCate = element.parentNode.parentNode.childNodes[3].getElementsByClassName("search-sub-category-name");
+    for (i = 0; i < listSubCate.length; i++) {
+        if (element.checked === true)
+            listSubCate[i].childNodes[1].checked = true;
+        else {
+            listSubCate[i].childNodes[1].checked = false;
+        }
+    }
+    searchByValue();
+}
+
+function checkedSubCategory(element) {
+    var category = element.parentNode.parentNode.parentNode.childNodes[1].childNodes[1];
+    var isChecked = false;
+    var subCategories = element.parentNode.parentNode.getElementsByClassName("search-sub-category-name");
+    for (var i = 0; i < subCategories.length; i++) {
+        if (subCategories[i].childNodes[1].checked === true) {
+            isChecked = true;
+            category.checked = true;
+        }
+    }
+    if (isChecked === false) {
+        category.checked = false;
+    }
+    searchByValue();
+}
+
+var text = document.getElementById("form-select-category").innerHTML;
+
+function clearValueSearch() {
+    var holderSearchCate = document.getElementById("holder-search-category");
+    holderSearchCate.value = "";
+
+    document.getElementById("form-select-category").innerHTML = text;
+    var checkhbox = document.querySelectorAll("input[type='checkbox']");
+    checkhbox.forEach(function (check) {
+        check.checked = false;
+    });
+
+    var holderSearchCourse = document.getElementById("search-my-course");
+    holderSearchCourse.value = "";
+
+    var dateJoin = document.getElementById("date-join");
+    dateJoin.value = "";
+
+    var progress = document.getElementById("All");
+    progress.selected = true;
+    searchByValue();
+}
+
+function pagination(page) {
+    window.scroll({
+        top: 350,
+        behavior: 'smooth'
+    });
+    var pageNum = document.getElementById("page-num");
+    pageNum.value = page;
+    searchByValue();
+
+}
