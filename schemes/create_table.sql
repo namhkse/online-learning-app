@@ -148,6 +148,7 @@ create table CourseAccount (
 	CourseID int,
 	EnrollDate DATE DEFAULT GETDATE(),
 	Rating TINYINT,
+	Progress INT,
 	primary key(AccountID, CourseID),
 	CONSTRAINT FK_CourseAccount_Account_AccountID FOREIGN KEY (AccountID) references Account(AccountID) ON DELETE CASCADE,
 	CONSTRAINT FK_CourseAccount_Course_CourseID FOREIGN KEY (CourseID) references Course(CourseID) ON DELETE CASCADE
