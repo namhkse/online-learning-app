@@ -107,6 +107,14 @@
                         </div>
                         <div class="my-course-item-desc">
                             <div class="my-course-item-title">${course.courseId.name}</div>
+                            <ul class="ratings">
+                                <c:forEach begin="1" end="${course.rating}">
+                                    <li class="star selected" onclick="voteStar(this, ${course.courseId.courseId})"></li>
+                                </c:forEach>
+                                <c:forEach begin="${course.rating + 1}" end="5">
+                                    <li class="star" onclick="voteStar(this, ${course.courseId.courseId})"></li>
+                                </c:forEach>        
+                            </ul>
                             <p class="my-course-item-date">${course.enrollDate}</p>
                             <div class="my-course-progress" style="--progress: ${course.progress}%"></div>
                             <p class="text-progress">${course.progress}% Complete</p>

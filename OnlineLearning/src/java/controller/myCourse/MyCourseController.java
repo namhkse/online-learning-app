@@ -180,11 +180,11 @@ public class MyCourseController extends HttpServlet {
                     + "                <a href=\"#\">Join a new course</a>\n"
                     + "            </div>");
             response.getWriter().write("</div>");
-            response.getWriter().write("<input type=\"hidden\" id=\"page-num\" value=\""+ pageNum +"\">");
+            response.getWriter().write("<input type=\"hidden\" id=\"page-num\" value=\"" + pageNum + "\">");
         } else {
             response.getWriter().write("<div id=\"my-course-list\">");
             for (CourseAccount courseAccount : listCourseCurrentInPage) {
-                
+
                 response.getWriter().write("<div class=\"my-course-item\">\n"
                         + "                    <div class=\"my-course-item-img\">\n"
                         + "                        <p class=\"option-course\" onclick=\"openOption(this)\">\n"
@@ -208,6 +208,15 @@ public class MyCourseController extends HttpServlet {
                         + "                    </div>\n"
                         + "                    <div class=\"my-course-item-desc\">\n"
                         + "                        <div class=\"my-course-item-title\">" + courseAccount.getCourseId().getName() + "</div>\n"
+                        + "                             <ul class=\"ratings\">\n");
+                for (int i = 1; i <= courseAccount.getRating(); i++) {
+                    response.getWriter().write("<li class=\"star selected\" onclick=\"voteStar(this, " + courseAccount.getCourseId().getCourseId() + ")\"></li>");
+                }
+                for (int i = courseAccount.getRating() + 1; i <= 5; i++) {
+                    response.getWriter().write("<li class=\"star\" onclick=\"voteStar(this, " + courseAccount.getCourseId().getCourseId() + ")\"></li>");
+                }
+                response.getWriter().write("                            </ul>\n"
+                        + ""
                         + "                        <p class=\"my-course-item-date\">" + courseAccount.getEnrollDate() + "</p>\n"
                         + "                        <div class=\"my-course-progress\" style=\"--progress: " + courseAccount.getProgress() + "%\"></div>\n"
                         + "                        <p class=\"text-progress\">" + courseAccount.getProgress() + "% Complete</p>\n"
@@ -222,7 +231,7 @@ public class MyCourseController extends HttpServlet {
                     + "                    </li>\n");
             for (int i = 1; i <= totalpage; i++) {
                 response.getWriter().write("<li>\n"
-                        + "                            <button onclick=\"pagination("+ i +")\" "+ (i == pageNum ? ("class = \"paging-active page-num\"") : ("class=\"page-num\"")) +">"+i+"</button>\n"
+                        + "                            <button onclick=\"pagination(" + i + ")\" " + (i == pageNum ? ("class = \"paging-active page-num\"") : ("class=\"page-num\"")) + ">" + i + "</button>\n"
                         + "                        </li>");
             }
 

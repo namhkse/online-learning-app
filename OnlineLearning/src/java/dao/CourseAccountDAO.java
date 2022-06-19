@@ -402,11 +402,9 @@ public class CourseAccountDAO extends DBContext {
             for (int i = 0; i < listSearchId.size(); i++) {
                 if (i == 0) {
                     sql += " AND ( s.SubjectID = ? ";
-                }
-                else if(i == listSearchId.size() - 1 ) {
+                } else if (i == listSearchId.size() - 1) {
                     sql += " OR s.SubjectID = ? )";
-                }
-                else {
+                } else {
                     sql += " OR s.SubjectID = ? ";
                 }
             }
@@ -428,5 +426,21 @@ public class CourseAccountDAO extends DBContext {
         }
         return listCourseAccount;
     }
-    
+
+    public void votedCourse(int accountID, int courseId, int star) {
+        try {
+            String sql = "UPDATE [CourseAccount]\n"
+                    + "SET [Rating] = ?\n"
+                    + "WHERE AccountID = ? AND CourseID = ?";
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, star);
+            ps.setInt(2, accountID);
+            ps.setInt(3, courseId);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

@@ -143,5 +143,41 @@ function pagination(page) {
     var pageNum = document.getElementById("page-num");
     pageNum.value = page;
     searchByValue();
+}
 
+function voteStar(element, courseId) {
+
+    var index = 0;
+    var parentStar = element.parentNode;
+    var listStar = parentStar.getElementsByClassName('star');
+
+    for (var i = 0; i < listStar.length; i++) {
+        if (listStar[i].classList.contains('selected'))
+            listStar[i].classList.remove('selected');
+    }
+
+    for (var i = 0; i < listStar.length; i++) {
+        if (listStar[i] === element) {
+            index = i + 1;
+        }
+    }
+
+    for (var i = 0; i < index; i++) {
+        if (listStar[i].classList.contains('selected') === false)
+            listStar[i].classList.add('selected');
+    }
+    
+    $(function () {
+        $.ajax({
+            type: "POST",
+            url: "voted",
+            data: {
+                star: index,
+                courseId: courseId
+            },
+            success: function (result) {
+                console.log(ok);
+            }
+        });
+    });
 }
