@@ -2,6 +2,7 @@ package controller.myCourse;
 
 import dao.CompletedLessonDAO;
 import dao.CourseAccountDAO;
+import dao.CourseDAO;
 import dao.LessonBeingLearnedDAO;
 import dao.LessonDAO;
 import java.io.IOException;
@@ -33,13 +34,13 @@ public class LessonController extends HttpServlet {
         int courseID = Integer.parseInt(request.getParameter("id"));
 
         int accountID = account.getAccountID();
-        
+
         boolean isRegisterCourse = new CourseAccountDAO().isRegisterCourse(accountID, courseID);
-        if(isRegisterCourse == false) {
+        if (isRegisterCourse == false) {
             response.setStatus(403);
             return;
         }
-        int numTotalLesson = lessonDao.getNumberLessonInCourse(courseID);
+        int numTotalLesson = lessonDao.getNumberLessonInCourse(accountID, courseID);
         int numLearningLesson = lessonDao.getNumberLessonLearningInCourse(accountID, courseID);
 
         String lessonID_raw = request.getParameter("lid");
@@ -95,6 +96,17 @@ public class LessonController extends HttpServlet {
         if (lessonNext != null) {
             lessonIDNext = lessonNext.getLessonID();
         }
+        int numAllLesson = new CourseDAO().getNumberAllLessonInCourse(accountID, courseID);
+        int numLessonLearning = new CourseDAO().getNumberLessonLearning(accountID, courseID);
+        int process = 0;
+        try {
+            double numTemp = (double) numLessonLearning / numAllLesson;
+            process = (int) (numTemp * 100);
+        } catch (NumberFormatException e) {
+            process = 0;
+        }
+        new CourseAccountDAO().updateProgress(accountID, courseID, process);
+        
         new LessonDAO().insertCompletedLesson(accountID, lessonID);
 
         response.setContentType("application/json");

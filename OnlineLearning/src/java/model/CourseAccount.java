@@ -8,28 +8,18 @@ public class CourseAccount {
     private Course courseId;
     private Date enrollDate;
     private int rating;
-    private int process;
-    
+    private int progress;
+
     public CourseAccount() {
     }
 
-    public CourseAccount(Account accountId, Course courseId, Date enrollDate, int rating, int process) {
+    public CourseAccount(Account accountId, Course courseId, Date enrollDate, int rating, int progress) {
         this.accountId = accountId;
         this.courseId = courseId;
         this.enrollDate = enrollDate;
         this.rating = rating;
-        this.process = process;
+        this.progress = progress;
     }
-
-    public int getProcess() {
-        return process;
-    }
-
-    public void setProcess(int process) {
-        this.process = process;
-    }
-
-    
 
     public Account getAccountId() {
         return accountId;
@@ -62,5 +52,13 @@ public class CourseAccount {
     public void setRating(int rating) {
         this.rating = rating;
     }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }  
 
 }

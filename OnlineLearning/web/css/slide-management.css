@@ -99,6 +99,9 @@ th i {
 ul {
     list-style: none;
 }
+.table-paging {
+    width: 100%;
+}
 
 .pagging-list {
     display: flex;

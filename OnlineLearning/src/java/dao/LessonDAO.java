@@ -220,14 +220,15 @@ public class LessonDAO extends DBContext {
         }
     }
 
-    public int getNumberLessonInCourse(int courseID) {
+    public int getNumberLessonInCourse(int accountID, int courseID) {
         try {
             String sql = "SELECT COUNT(*) AS TotalNumLesson FROM dbo.Lesson l JOIN dbo.Course c\n"
                     + "ON l.CourseID = c.CourseID JOIN dbo.CourseAccount ca\n"
                     + "ON ca.CourseID = c.CourseID \n"
-                    + "WHERE c.CourseID = ? AND l.LessonTypeID = 1";
+                    + "WHERE ca.accountID = ? AND c.CourseID = ? AND l.LessonTypeID = 1 ";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, courseID);
+            stm.setInt(1, accountID);
+            stm.setInt(2, courseID);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
                 return rs.getInt("TotalNumLesson");

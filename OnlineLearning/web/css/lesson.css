@@ -549,3 +549,13 @@ body {
 #notice-not-start {
     padding: 50px;
 }
+
+#my-course-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    justify-content: start;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 652px;
+}
