@@ -97,6 +97,7 @@ th i {
     text-decoration: none;
     padding: 8px 12px;
     border-radius: 10px;
+    margin-bottom: 24px;
 }
 
 .search-form{
@@ -136,6 +137,7 @@ th i {
 }
 .action-btn.second{
     width: 80px;
+    background: #ff3737;
 }
 
 .action-btn a{

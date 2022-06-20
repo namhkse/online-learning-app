@@ -35,54 +35,17 @@ public class SliderController extends HttpServlet {
             display = request.getParameter("display");
         }
         ArrayList<Slider> allSliders;
-        int totalpage, totalpageProduct;
-        int page = 1;
         String search = null;
-        totalpageProduct = sliderDAO.countAllSliders();
         if (!display.equals("-1")) {
-            totalpageProduct = sliderDAO.countSlidersByStatus(display);
-        } 
-        if (request.getParameter("search") != null) {
-            search = request.getParameter("search");
-            totalpageProduct = sliderDAO.countSlidersByTitleOrBacklink(search);
-        }
-
-        totalpage = totalpageProduct / 5;
-        if (totalpageProduct % 5 != 0) {
-            totalpage += 1;
-        }
-        if (request.getParameter("page") != null) {
-            try {
-                page = Integer.parseInt(request.getParameter("page"));
-
-            } catch (NumberFormatException e) {
-                page = 1;
-            }
-            if (page < 1 || page > totalpage) {
-                page = 1;
-            }
-        }
-        int offSet = (page - 1) * 5;
-        if (!display.equals("-1")) {
-            allSliders = sliderDAO.getSlidersByStatus(display, offSet);
+            allSliders = sliderDAO.getSlidersByStatus(display);
         } else {
-            allSliders = sliderDAO.getAllSliders(offSet);
+            allSliders = sliderDAO.getAllSliders();
         }
         if (search != null) {
-            allSliders = sliderDAO.getSlidersByTitleOrBacklink(search, offSet);
+            allSliders = sliderDAO.getSlidersByTitleOrBacklink(search);
         }
         request.setAttribute("display", display);
         request.setAttribute("allSliders", allSliders);
-        request.setAttribute("page", page);
-        request.setAttribute("totalpage", totalpage);
-        if (!display.equals("-1")) {
-            request.setAttribute("request", request.getRequestURI() + "?display=" + display + "&");
-        } else {
-            request.setAttribute("request", request.getRequestURI() + "?");
-        }
-        if (search != null) {
-            request.setAttribute("request", request.getRequestURI() + "?search=" + search + "&");
-        }
         request.getRequestDispatcher("/view/slide-management.jsp").forward(request, response);
     }
 

@@ -16,8 +16,13 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <link href="../css/subject-detail.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="../js/subject-detail.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+        
     </head>
 
     <body>
@@ -46,13 +51,8 @@
                             <div id="Dimension" class="tabcontent active">
                                 <div class="add-search">
                                     <a class="margin-auto-0" id="add-dimension" href="../management/dimension-detail?subjectID=${subjectID}" ><i class="fa-solid fa-plus"></i> Add Dimension</a>
-                                    <form action="subject-detail" method="GET" class="search-form">                                        
-                                        <input type="hidden" name="subjectID" value="${subjectID}">
-                                        <input type="text" id="search" name="search" placeholder="Search by name">
-                                        <input id="submit" type="submit" value="Search"/>
-                                    </form> 
                                 </div>
-                                <table>
+                                <table class="table table-striped" id="table">
                                     <thead>
                                         <tr>
                                             <th>ID</th>

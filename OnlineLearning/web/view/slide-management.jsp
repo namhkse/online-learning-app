@@ -18,6 +18,9 @@
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="../js/slide-management.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     </head>
 
     <body>
@@ -35,11 +38,6 @@
                                 <div class="search">
                                     <a class="margin-auto-0" id="add-blog" href="slide-edit" ><i class="fa-solid fa-plus"></i> Add Slide</a>
 
-                                    <form action="slide-list" method="GET" class="search-form">
-                                        <input type="text" id="search" name="search" placeholder="Search by title or backlink">
-                                        <input id="submit" type="submit" value="Search"/>
-                                    </form> 
-
                                     <form action="slide-list" method="GET"> 
                                         
                                         Status: 
@@ -50,13 +48,13 @@
                                         </select>
                                     </form>
                                 </div>
-                                <table>
+                                <table class="table table-striped" id="table">
                                     <thead>
                                         <tr>
-                                            <th>ID<i class="fa-solid fa-sort" onclick="sortTable(0)"></i></th>
+                                            <th>ID</th>
                                             <th>Image</th>
-                                            <th class="title-slide">Title<i class="fa-solid fa-sort" onclick="sortTable(2)"></i></th>
-                                            <th class="backlink-slide">Backlink</th>
+                                            <th>Title</th>
+                                            <th>Backlink</th>
                                             <th>Display</th>
                                             <th></th>
                                             <th></th>
@@ -81,11 +79,7 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <div class="table-paging">
-                                    <ul class="pagging-list">                                
-                                        <%@include file="page.jsp"%>
-                                    </ul>
-                                </div>
+                                
                             </div>
                         </div>
 

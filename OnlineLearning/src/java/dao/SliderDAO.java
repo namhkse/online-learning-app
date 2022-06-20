@@ -34,12 +34,11 @@ public class SliderDAO extends DBContext {
         return sliders;
     }
 
-    public ArrayList<Slider> getAllSliders(int page) {
+    public ArrayList<Slider> getAllSliders() {
         ArrayList<Slider> sliders = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM dbo.Slider ORDER BY SliderID DESC OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+            String sql = "SELECT * FROM dbo.Slider ORDER BY SliderID DESC";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, page);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Slider slider = new Slider();
@@ -97,13 +96,12 @@ public class SliderDAO extends DBContext {
         return slider;
     }
 
-    public ArrayList<Slider> getSlidersByStatus(String status, int page) {
+    public ArrayList<Slider> getSlidersByStatus(String status) {
         ArrayList<Slider> sliders = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM dbo.Slider WHERE Status = ? ORDER BY SliderID DESC OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+            String sql = "SELECT * FROM dbo.Slider WHERE Status = ? ORDER BY SliderID DESC";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setBoolean(1, Boolean.parseBoolean(status));
-            stm.setInt(2, page);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Slider slider = new Slider();
@@ -138,14 +136,13 @@ public class SliderDAO extends DBContext {
         return 0;
     }
 
-    public ArrayList<Slider> getSlidersByTitleOrBacklink(String text, int page) {
+    public ArrayList<Slider> getSlidersByTitleOrBacklink(String text) {
         ArrayList<Slider> sliders = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM dbo.Slider WHERE Title LIKE ? OR NavigationLink LIKE ? ORDER BY SliderID DESC OFFSET ? ROWS FETCH NEXT 5 ROWS ONLY";
+            String sql = "SELECT * FROM dbo.Slider WHERE Title LIKE ? OR NavigationLink LIKE ? ORDER BY SliderID DESC";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, "%" + text + "%");
             stm.setString(2, "%" + text + "%");
-            stm.setInt(3, page);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Slider slider = new Slider();

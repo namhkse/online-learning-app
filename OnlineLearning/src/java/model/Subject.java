@@ -13,6 +13,7 @@ public class Subject {
     private String description;
     private int order;
     private String type;
+    private Account ownerID;
     private ArrayList<SubjectCategory> listCategory;
 
     public ArrayList<SubjectCategory> getListCategory() {
@@ -37,8 +38,14 @@ public class Subject {
         this.order = order;
         this.type = type;
     }
-    
-    
+
+    public Account getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(Account ownerID) {
+        this.ownerID = ownerID;
+    }
 
     public Subject(int subjectId, String name, int order, boolean status, String type) {
         this.subjectId = subjectId;
