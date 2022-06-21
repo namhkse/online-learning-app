@@ -18,6 +18,7 @@
 .input-box{
     width: 50%;
     margin-bottom: 20px;
+    display: block;
 }
 
 .save {

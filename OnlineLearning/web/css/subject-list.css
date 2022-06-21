@@ -42,7 +42,7 @@
 }
 
 .search label {
-    color: #858796;
+    color: #000;
     font-size: 16px;
 }
 
@@ -99,9 +99,6 @@ th i {
 ul {
     list-style: none;
 }
-.table-paging {
-    width: 100%;
-}
 
 .pagging-list {
     display: flex;
@@ -143,14 +140,6 @@ ul {
     height: 30px;
 }
 
-.backlink-slide{
-    width: 385px;
-}
-
-.title-slide{
-    width: 200px;
-}
-
 .action-btn{
     border: 0;
     border-radius: 8px;
@@ -179,4 +168,68 @@ ul {
 .action-btn a{
     color: #fff;
     text-decoration: none;
+}
+
+#filter-icon{
+    color: #365dcd;
+}
+
+.filter-category{
+    position: relative;
+}
+
+.filter-category::after{
+    content: "";
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    right: -17px;
+    bottom: -40px;
+}
+
+#filter-category-box{
+    height: 400px;
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0 0 15px rgb(0 0 0 / 50%);
+    position: absolute;
+    z-index: 4;
+    top: 117%;
+    right: -4px;
+    padding: 15px;
+    border-radius: 10px;
+    overflow-y: scroll;
+    display: none;
+    flex-direction: column;
+}
+
+#search-category-box{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+#filter-category-box input{
+    border-radius: 30px;
+    padding: 8px 15px;
+    outline-color: #365dcd;
+    border: 1px solid #ccc;
+    color: #111827;
+}
+
+label{
+    color: #000;
+}
+
+.filter-status{
+    margin-right: 24px;
+}
+
+.main-category{
+    margin-top: 16px;
+}
+
+.category{
+    margin-left: 24px;
 }

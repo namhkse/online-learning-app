@@ -86,12 +86,38 @@ th i {
     text-align: center;
 }
 
+.add-search{
+    display: flex;
+    justify-content: space-between;
+}
+
 #add-dimension {
     background-color: rgb(54, 93, 205);
     color: rgb(255, 255, 255);
     text-decoration: none;
     padding: 8px 12px;
     border-radius: 10px;
+    margin-bottom: 24px;
+}
+
+.search-form{
+    display: flex;
+}
+
+#search{
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 10px 0 0 10px;
+    border: 1px solid #ccc;
+}
+
+#submit{
+    background-color: rgb(54, 93, 205);
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 0 10px 10px 0;
+    border: 0;
 }
 
 .action-btn{
@@ -111,6 +137,7 @@ th i {
 }
 .action-btn.second{
     width: 80px;
+    background: #ff3737;
 }
 
 .action-btn a{

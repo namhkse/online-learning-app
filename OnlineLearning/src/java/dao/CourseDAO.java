@@ -15,7 +15,7 @@ public class CourseDAO extends DBContext {
             String sql = "SELECT COUNT(*) as NumAllLesson FROM Lesson l JOIN Course c\n"
                     + "ON c.CourseID = l.CourseID JOIN CourseAccount ca\n"
                     + "ON ca.CourseID = c.CourseID \n"
-                    + "WHERE ca.AccountID = ? AND c.CourseID = ? AND l.LessonTypeID != 2";
+                    + "WHERE ca.AccountID = ? AND c.CourseID = ? AND l.LessonTypeID = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, accountID);
             stm.setInt(2, courseID);
@@ -35,7 +35,7 @@ public class CourseDAO extends DBContext {
             String sql = "SELECT COUNT(*) as NumCurrentLesson FROM CompletedLesson cl JOIN Lesson l\n"
                     + "ON l.LessonID = cl.LessonID JOIN Course c\n"
                     + "ON c.CourseID = l.CourseID \n"
-                    + "WHERE cl.AccountID = ? AND c.CourseID = ?";
+                    + "WHERE cl.AccountID = ? AND c.CourseID = ? AND l.lessonTypeID = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, accountID);
             stm.setInt(2, courseID);

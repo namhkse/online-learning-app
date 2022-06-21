@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Subject {
 
     private int subjectId;
@@ -11,6 +13,16 @@ public class Subject {
     private String description;
     private int order;
     private String type;
+    private Account ownerID;
+    private ArrayList<SubjectCategory> listCategory;
+
+    public ArrayList<SubjectCategory> getListCategory() {
+        return listCategory;
+    }
+
+    public void setListCategory(ArrayList<SubjectCategory> listCategory) {
+        this.listCategory = listCategory;
+    }
 
     public Subject() {
     }
@@ -25,6 +37,14 @@ public class Subject {
         this.description = description;
         this.order = order;
         this.type = type;
+    }
+
+    public Account getOwnerID() {
+        return ownerID;
+    }
+
+    public void setOwnerID(Account ownerID) {
+        this.ownerID = ownerID;
     }
 
     public Subject(int subjectId, String name, int order, boolean status, String type) {

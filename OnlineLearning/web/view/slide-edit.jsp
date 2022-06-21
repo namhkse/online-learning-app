@@ -31,7 +31,8 @@
 
                     <div class="container">
                         <div class="container-table post">
-                            <form action="../management/slide-detail?id=${id}" method="post" class="form-submit" enctype="multipart/form-data">
+                            <a class="back" href="../management/slide-list"><i class="fa-solid fa-angle-left"></i>Back</a>
+                            <form action="../management/slide-edit?id=${id}" method="post" class="form-submit" enctype="multipart/form-data">
                                 <h4 class="title">Title</h4>
                                 <input type="text" name="title" maxlength="200" class="input-box" value="${slider.title}" required>
                                 <h4 class="title">Sub title</h4>
@@ -40,17 +41,11 @@
                                 <div class="upload-img">
                                     <c:if test="${id != null}"><img src="../img/${slider.imageUrl}"></c:if>
                                     <input type="file" name="photo" id="file" class="inputfile" data-multiple-caption="{count} files selected" accept="image/*" <c:if test="${id == null}">required</c:if> >
-                                </div>
-                                <h4 class="title">Description</h4>
-                                <textarea name="description" class="input-box" rows="5" cols="50">${slider.description}</textarea>
+                                    </div>
+                                    <h4 class="title">Description</h4>
+                                    <textarea name="description" class="input-box" rows="5" cols="50">${slider.description}</textarea>
                                 <h4 class="title">Backlink</h4>
                                 <input type="text" name="backlink" maxlength="3000" class="input-box" value="${slider.navigationLink}" required>
-                                <h4 class="title">Collection</h4>
-                                <select name="scid" id="collection" class="select-tag">
-                                    <c:forEach items="${allSliderCollections}" var="collection" >
-                                        <option value="${collection.sliderCollectionID}" ${slider.sliderCollectionID.sliderCollectionID == collection.sliderCollectionID ? "selected" : ""}>${collection.name}</option>
-                                    </c:forEach>
-                                </select>
 
                                 <input type="submit" value="${action}" class="save" name="action">
                             </form>

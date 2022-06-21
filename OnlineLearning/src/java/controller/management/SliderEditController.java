@@ -1,6 +1,5 @@
 package controller.management;
 
-import dao.SliderCollectionDAO;
 import dao.SliderDAO;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,15 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import model.Slider;
-import model.SliderCollection;
 
-@WebServlet(name = "SliderDetailController", urlPatterns = {"/management/slide-detail"})
+@WebServlet(name = "SliderDetailController", urlPatterns = {"/management/slide-edit"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 10,
         maxFileSize = 1024 * 1024 * 50,
         maxRequestSize = 1024 * 1024 * 100
 )
-public class SliderDetailController extends HttpServlet {
+public class SliderEditController extends HttpServlet {
 
     private static final long SerialVersionUID = 1L;
     private static final String UPLOAD_DIR = "img";
@@ -37,8 +35,6 @@ public class SliderDetailController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         SliderDAO sliderDAO = new SliderDAO();
-        SliderCollectionDAO sliderCollectionDAO = new SliderCollectionDAO();
-        ArrayList<SliderCollection> allSliderCollections = sliderCollectionDAO.getAllSliderCollections();
         String action = "";
         if (request.getParameter("id") == null) {
             action = "ADD";
@@ -51,9 +47,8 @@ public class SliderDetailController extends HttpServlet {
             request.setAttribute("id", request.getParameter("id"));
         }
 
-        request.setAttribute("allSliderCollections", allSliderCollections);
         request.setAttribute("action", action);
-        request.getRequestDispatcher("/view/slide-detail.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/slide-edit.jsp").forward(request, response);
     }
 
     @Override
@@ -86,7 +81,6 @@ public class SliderDetailController extends HttpServlet {
             img = uploadFile(request);
         }
         String backlink = request.getParameter("backlink");
-        int scid = Integer.parseInt(request.getParameter("scid"));
 
         slider.setSliderID(id);
         slider.setTitle(title);
@@ -94,9 +88,6 @@ public class SliderDetailController extends HttpServlet {
         slider.setDescription(description);
         slider.setImageUrl(img);
         slider.setNavigationLink(backlink);
-        SliderCollection sliderCollection = new SliderCollection();
-        sliderCollection.setSliderCollectionID(scid);
-        slider.setSliderCollectionID(sliderCollection);
 
         SliderDAO sliderDAO = new SliderDAO();
         sliderDAO.updateSlider(slider);
@@ -111,15 +102,12 @@ public class SliderDetailController extends HttpServlet {
         String description = request.getParameter("description");
         String img = uploadFile(request);
         String backlink = request.getParameter("backlink");
-        int scid = Integer.parseInt(request.getParameter("scid"));
+        
         slider.setTitle(title);
         slider.setSubTitle(subTitle);
         slider.setDescription(description);
         slider.setImageUrl(img);
         slider.setNavigationLink(backlink);
-        SliderCollection sliderCollection = new SliderCollection();
-        sliderCollection.setSliderCollectionID(scid);
-        slider.setSliderCollectionID(sliderCollection);
 
         SliderDAO sliderDAO = new SliderDAO();
         sliderDAO.insertSlider(slider);

@@ -22,10 +22,14 @@ public class SubjectDetailController extends HttpServlet {
 
         int subjectID = Integer.parseInt(request.getParameter("subjectID"));
         DimensionDAO dimensionDAO = new DimensionDAO();
-        ArrayList<Dimension> dimensionsBySubjectID = dimensionDAO.getDimensionsBySubjectID(subjectID);
-        request.setAttribute("dimensionsBySubjectID", dimensionsBySubjectID);
-        request.setAttribute("subjectID", subjectID);
+        ArrayList<Dimension> dimensions = dimensionDAO.getDimensionsBySubjectID(subjectID);
 
+        if (request.getParameter("search") != null) {
+            dimensions = dimensionDAO.getDimensionsByNameAndSubjectID(request.getParameter("search"), subjectID);
+        }
+
+        request.setAttribute("dimensionsBySubjectID", dimensions);
+        request.setAttribute("subjectID", subjectID);
         request.getRequestDispatcher("/view/subject-detail.jsp").forward(request, response);
     }
 

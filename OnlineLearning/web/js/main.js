@@ -5,7 +5,6 @@ function deletePermissionById(id, btn) {
             url: `./permission?id=${id}`,
             type: 'DELETE',
             success: function (data, textStatus, jqXHR) {
-                console.log("delete ok");
                 $(btn).closest('tr').fadeOut("slow");
             }
         });

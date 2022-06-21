@@ -43,3 +43,17 @@ img{
     flex-direction: column;
     margin-bottom: 20px;
 }
+
+.back{
+    color: rgb(54, 93, 205);
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px 0 0 20px;
+    display: flex;
+    align-items: center;
+}
+
+.back i{
+    margin-right: 4px;
+}

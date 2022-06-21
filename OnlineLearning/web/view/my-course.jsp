@@ -6,9 +6,12 @@
     <head>
         <jsp:include page="base-view/baseTag.jsp"></jsp:include> 
             <link rel="stylesheet" href="css/home.css"/>
-            <link rel="stylesheet" href="css/courses.css">
-
+            <link rel="stylesheet" href="css/my-course.css">
+            <script src="https://code.jquery.com/jquery-1.10.0.min.js" 
+                    integrity="sha256-2+LznWeWgL7AJ1ciaIG5rFP7GKemzzl+K75tRyTByOE=" crossorigin="anonymous">
+            </script> 
             <title>My Courses</title>
+
         </head>
 
         <body>
@@ -25,43 +28,123 @@
             </div>
 
             <!-- Intro End -->
-            <div class="container-my-course">
-            <c:forEach items="${listCourseAccount}" var="ca">
-                <div class="my-course">    
-                    <div class="my-course-item">
-                        <div class="tiny-picture">
-                            <img src="${ca.courseId.thumbnailUrl}" alt="">
-                            <div><a href="lesson?id=${ca.courseId.courseId}">Continue</a></div>
-                        </div>
-                        <div class="desc-best-course"> 
-                            <h2>${ca.courseId.price} $</h2>
-                            <div class="rated-star">
-                                <i class="fa-solid fa-star voted"></i>
-                                <i class="fa-solid fa-star voted"></i>
-                                <i class="fa-solid fa-star voted"></i>
-                                <i class="fa-solid fa-star voted"></i>
-                                <i class="fa-regular fa-star voted"></i>                
-                            </div>
-                            <h3>${ca.courseId.name}</h3>
-                        </div>
-                        <div class="progress">
-                            <span class="progress-value">${ca.process} %</span>
-                            <progress class="progress-bar" value="${ca.process}" max="100"> </progress>
-                        </div>
-                        <div class="display-flex">
-                            <div class="item-desc">
-                                <i class="fa-solid fa-user-tie"></i>
-                                <span>${ca.courseId.instructorId.firstName} ${ca.courseId.instructorId.lastName}</span>
-                            </div>         
-                        </div>
+
+
+            <div id="my-course-header">
+                <div id="form-search-info">
+                    <input type="date" class="selected-tag" id="date-join" name="date-join" onchange="searchByValue()"/>
+                    <select class="selected-tag" name="progress" id="progress-bar" onchange="searchByValue()">
+                        <option id="All">All</option>
+                        <option id="In-Progress">In Progress</option>
+                        <option id="Completed">Completed</option>>
+                    </select>
+                    <div class="display-flex">
+                        <input type="text" id="search-my-course" placeholder="Search for course..." onkeyup="searchByValue()">
+                        <button type="button" id="search-icon" onclick="searchByValue()">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
                     </div>
-                </div> 
-            </c:forEach>        
+                    <div class="display-flex position-relative afterTemp">
+                        <p class="fa-solid fa-filter icon-filter"></p>
+                        <div id="search-category">
+                            <form>
+                                <div id="holder-search-input">
+                                    <input type="text" id="holder-search-category" onkeyup="searchCategory()"
+                                           placeholder="Search for category...">
+                                    <button type="button" id="clear-btn" onclick="clearValueSearch()">Clear</button>
+                                </div>
+                                <div id="form-select-category">  
+                                <c:forEach items="${listSC}" var="sc">
+                                    <div class="search-category-item">
+                                        <div class="search-category-name">
+                                            <input type="checkbox" id="id-category-${sc.categoryID}" onchange="checkedCategory(this)">
+                                            <label for="id-category-${sc.categoryID}">${sc.name}</label>
+                                        </div>
+                                        <div class="search-sub-category">
+                                            <c:forEach items="${listSubject}" var="subject">
+                                                <c:if test="${subject.categoryID.categoryID == sc.categoryID}">
+                                                    <div class="search-sub-category-name">
+                                                        <input type="checkbox" id="id-sub-category-${subject.subjectId}" onchange="checkedSubCategory(this)" name="search-category" value="${subject.subjectId}">
+                                                        <label for="id-sub-category-${subject.subjectId}">${subject.name}</label>
+                                                    </div>
+                                                </c:if>                                            
+                                            </c:forEach>                 
+                                        </div>
+                                    </div>  
+                                </c:forEach>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="my-course"> 
+            <div id="my-course-list">
+                <c:forEach items="${listCourseAccount}" var="course">
+                    <div class="my-course-item">
+                        <div class="my-course-item-img">
+                            <p class="option-course" onclick="openOption(this)">
+                                <i class="fa-solid fa-ellipsis-vertical "></i>
+                            <div class="notice-unenroll">
+                                <p>Unenroll this course?</p>
+                                <form>
+                                    <div class="holder-button-delete">
+                                        <input type="hidden" value="${course.courseId.courseId}" class="id-course-delete">
+                                        <button type="button" class="btn-unenroll" onclick="unenrollCourse(this)">Unenroll</button>
+                                        <button type="button" class="btn-cancel" onclick="closeNotice(this)">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                            </p>
+
+                            <img src="${course.courseId.tinyPictureUrl}" alt="">
+                            <div class="overlay-img">               
+                                <a href="lesson?id=${course.courseId.courseId}" class="btn-continue">
+                                    Get Started
+                                </a>
+                            </div>
+                        </div>
+                        <div class="my-course-item-desc">
+                            <div class="my-course-item-title">${course.courseId.name}</div>
+                            <ul class="ratings">
+                                <c:forEach begin="1" end="${course.rating}">
+                                    <li class="star selected" onclick="voteStar(this, ${course.courseId.courseId})"></li>
+                                </c:forEach>
+                                <c:forEach begin="${course.rating + 1}" end="5">
+                                    <li class="star" onclick="voteStar(this, ${course.courseId.courseId})"></li>
+                                </c:forEach>        
+                            </ul>
+                            <p class="my-course-item-date">${course.enrollDate}</p>
+                            <div class="my-course-progress" style="--progress: ${course.progress}%"></div>
+                            <p class="text-progress">${course.progress}% Complete</p>
+                        </div>
+                    </div> 
+                </c:forEach> 
+            </div>
+            <div id="pagination-page">
+                <div class="pagination">
+                    <ul class="pagination-list">
+                        <li>
+                            <button onclick="pagination(${page-1==0?1:page-1})" class="previous-btn">Previous</button>
+                        </li>
+                        <c:forEach begin="1" end="${totalpage}" var="p">
+                            <li>
+                                <button onclick="pagination(${p})" ${p==page?"class='paging-active page-num'":"class='page-num'"} >${p}</button>
+                            </li>
+                        </c:forEach>
+                        <li>
+                            <button onclick="pagination(${page+1>totalpage?totalpage:page+1})" class="next-btn" >Next</button>
+                        </li>
+                    </ul>
+                    <input type="hidden" id="page-num" value="${page}">
+                </div>    
+            </div>
         </div>
 
         <jsp:include page="base-view/footerUser.jsp"></jsp:include>
 
-
+        <script src="js/my-course.js"></script>
     </body>
 
 </html>

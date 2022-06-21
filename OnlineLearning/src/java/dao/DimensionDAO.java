@@ -74,6 +74,39 @@ public class DimensionDAO extends DBContext {
         }
         return null;
     }
+    
+    public ArrayList<Dimension> getDimensionsByNameAndSubjectID(String name, int id) {
+        ArrayList<Dimension> dimensions = new ArrayList<>();
+        try {
+            String sql = "SELECT DimensionID, Dimension.Name, Description, Dimension.TypeID, DimensionType.Name Type, SubjectID\n" +
+"                    FROM dbo.Dimension JOIN dbo.DimensionType ON DimensionType.TypeID = Dimension.TypeID\n" +
+"                    WHERE SubjectID = ? AND Dimension.Name LIKE ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.setString(2, "%" + name + "%");
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Dimension dimension = new Dimension();
+                dimension.setDimensionID(rs.getInt("DimensionID"));
+                dimension.setName(rs.getString("Name"));
+                dimension.setDescription(rs.getString("Description"));
+
+                DimensionType dimensionType = new DimensionType();
+                dimensionType.setTypeID(rs.getInt("TypeID"));
+                dimensionType.setName(rs.getString("Type"));
+
+                Subject subject = new Subject();
+                subject.setSubjectId(rs.getInt("SubjectID"));
+
+                dimension.setTypeID(dimensionType);
+                dimension.setSubjectID(subject);
+                dimensions.add(dimension);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DimensionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return dimensions;
+    }
 
     public void deleteDimension(int dimensionID) {
         try {

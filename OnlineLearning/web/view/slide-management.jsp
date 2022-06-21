@@ -18,6 +18,9 @@
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="../js/slide-management.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
     </head>
 
     <body>
@@ -33,21 +36,10 @@
                         <div class="container-table">
                             <div class="table-content">
                                 <div class="search">
-                                    <a class="margin-auto-0" id="add-blog" href="slide-detail" ><i class="fa-solid fa-plus"></i> Add Slide</a>
-
-                                    <form action="slide-list" method="GET" class="search-form">
-                                        <input type="text" id="search" name="search" placeholder="Search by title or backlink">
-                                        <input id="submit" type="submit" value="Search"/>
-                                    </form> 
+                                    <a class="margin-auto-0" id="add-blog" href="slide-edit" ><i class="fa-solid fa-plus"></i> Add Slide</a>
 
                                     <form action="slide-list" method="GET"> 
-                                        Collection: 
-                                        <select name="scid" id="collection" class="select-tag" onchange="this.form.submit()">
-                                            <option value="-1" >All collection</option>
-                                            <c:forEach items="${allSliderCollections}" var="collection" >
-                                                <option value="${collection.sliderCollectionID}" ${scid == collection.sliderCollectionID ? "selected" : ""}>${collection.name}</option>
-                                            </c:forEach>
-                                        </select>
+                                        
                                         Status: 
                                         <select name="display" class="select-tag" onchange="this.form.submit()">
                                             <option value="-1" >All Status</option>
@@ -56,15 +48,15 @@
                                         </select>
                                     </form>
                                 </div>
-                                <table>
+                                <table class="table table-striped" id="table">
                                     <thead>
                                         <tr>
-                                            <th>ID<i class="fa-solid fa-sort" onclick="sortTable(0)"></i></th>
+                                            <th>ID</th>
                                             <th>Image</th>
-                                            <th class="title-slide">Title<i class="fa-solid fa-sort" onclick="sortTable(2)"></i></th>
-                                            <th>Slider collection<i class="fa-solid fa-sort" onclick="sortTable(3)"></i></th>
-                                            <th class="backlink-slide">Backlink</th>
+                                            <th>Title</th>
+                                            <th>Backlink</th>
                                             <th>Display</th>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -75,23 +67,19 @@
                                                 <td>${slider.sliderID}</td>
                                                 <td><img class="img-thumbnail-blog" src="../img/${slider.imageUrl}"></td>
                                                 <td class="title-slide">${slider.title}</td>
-                                                <td>${slider.sliderCollectionID.name}</td>
                                                 <td class="backlink-slide">${slider.navigationLink}</td>
                                                 <td class="toggle">
                                                     <c:if test="${slider.status == true}"><a id="display-toggle" href="../management/slide-list?id-hide=${slider.sliderID}" onclick="return confirm('Are you sure you want to hide this slide?');"><i class="fa-solid fa-toggle-on"></i></a></c:if>
                                                     <c:if test="${slider.status == false}"><a id="display-toggle" href="../management/slide-list?id-show=${slider.sliderID}" onclick="return confirm('Are you sure you want to show this slide?');"><i class="fa-solid fa-toggle-off"></i></a></c:if>
                                                 </td>
-                                                <td><button class="action-btn first"><i class="fa-solid fa-pencil"></i><a href="../management/slide-detail?id=${slider.sliderID}">Edit</a></button></td>
-                                                <td><button class="action-btn second"><i class="fa-solid fa-trash-can"></i><a href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></button></td>
+                                                <td><button class="action-btn first"><i class="fa-solid fa-eye"></i><a href="../management/slide-view?id=${slider.sliderID}">View</a></button></td>
+                                                <td><button class="action-btn second"><i class="fa-solid fa-pencil"></i><a href="../management/slide-edit?id=${slider.sliderID}">Edit</a></button></td>
+                                                <td><button class="action-btn third"><i class="fa-solid fa-trash-can"></i><a href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></button></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <div class="table-paging">
-                                    <ul class="pagging-list">                                
-                                        <%@include file="page.jsp"%>
-                                    </ul>
-                                </div>
+                                
                             </div>
                         </div>
 

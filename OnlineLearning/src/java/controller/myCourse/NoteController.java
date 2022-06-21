@@ -78,7 +78,7 @@ public class NoteController extends HttpServlet {
         Timestamp createdTime = new Timestamp(System.currentTimeMillis());
         String noteTimeInVideo = request.getParameter("timeVideoNote");
         String isSuccess = new NoteDAO().insertNote(accountID, lessonID, noteDescription, createdTime, noteTimeInVideo);
-
+      
         if ("true".equalsIgnoreCase(isSuccess)) {
             PrintWriter out = response.getWriter();
             response.setContentType("application/json");
