@@ -2,7 +2,7 @@ CREATE TABLE [Setting] (
 	SettingID INT IDENTITY(1, 1) PRIMARY KEY,
 	[id] int NOT NULL,
 	Name varchar(50),
-	[Order] int,
+	[Order] int IDENTITY(1, 1) PRIMARY KEY,,
 	Status bit,
 	type varchar(200)
 );
