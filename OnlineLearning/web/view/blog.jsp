@@ -2,13 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html translate="no">
+<html>
     <head>
+        <title>Blog</title>
         <jsp:include page="base-view/baseTag.jsp"></jsp:include>
-
-            <link href="css/blog.css" rel="stylesheet" type="text/css" />
-            <title>Blog</title>
-        </head>
+        <link href="css/blog.css" rel="stylesheet" type="text/css">
+    </head>
 
         <body>
 
@@ -48,7 +47,7 @@
                                     <a href="blog?bcid=${bc.getBlogCategoryID()}" class="${bc.getBlogCategoryID() == bcid ? 'active-category-blog' : ''}">${bc.getName()}</a>
                                 </li>
                             </c:forEach>
-                            
+
                         </ul>
                         <ul class="blog-list" id="container-left">
                             <c:choose>

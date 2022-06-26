@@ -19,14 +19,16 @@
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 min-vh-100 bg-dark p-0">
+                <!--Sidebar-->
+                <div class="col-1 col-sm-2 bg-dark p-0 collapse-horizontal overflow-auto vh-100" id="navbarTogglerDemo01">
                     <jsp:include page="sidenav.jsp?page=Manage Access"/>
                 </div>
-                <div class="col p-0">
+
+                <!--Page Content-->
+                <div class="col p-0 vh-100 overflow-auto">
                     <jsp:include page="navbar-header.jsp?page=Manage Access"/>
 
-                    <div class="container min-vh-100">
-                        
+                    <div class="container bg-light">
                         <ul class="nav nav-tabs">
                             <c:forEach items="${roles}" var="r">
                                 <li class="nav-item">
@@ -55,9 +57,9 @@
                                     </c:forEach>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-success mr-3">Udpate</button>
+                                    <button type="submit" class="btn btn-success me-3">Udpate</button>
                                     <div></div>
-                                    <button type="" class="btn btn-danger mr-3">Delete</button>
+                                    <button type="" class="btn btn-danger me-3">Delete</button>
                                 </div>
                             </form>
                         </div>

@@ -19,13 +19,16 @@
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-2 min-vh-100 bg-dark p-0">
+                <!--Sidebar-->
+                <div class="col-1 col-sm-2 bg-dark p-0 collapse-horizontal overflow-auto vh-100" id="navbarTogglerDemo01">
                     <jsp:include page="sidenav.jsp?page=Manage Permission"/>
                 </div>
-                <div class="col-sm-10 p-0">
+
+                <!--Page Content-->
+                <div class="col p-0 vh-100 overflow-auto">
                     <jsp:include page="navbar-header.jsp?page=Manage Permission"/>
 
-                    <div class="container">
+                    <div class="container bg-light">
                         <!-- Modal -->
                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -72,7 +75,6 @@
                                     <th>Request Url</th>
                                     <th>Method</th>
                                     <th></th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,9 +84,9 @@
                                         <td>${p.name}</td>
                                         <td>${p.requestUrl}</td>
                                         <td>${p.method}</td>
-                                        <td><a class="btn btn-link" href="#">Edit</a></td>
                                         <td>
-                                            <button class="btn btn-link" onclick="deletePermissionById(${p.id}, this)">Delete</button>
+                                            <button class="btn btn-link pe-1">Edit</button>/
+                                            <button class="btn btn-link text-danger p-0" onclick="deletePermissionById(${p.id}, this)">Delete</button>
                                         </td>
                                     </tr>
                                 </c:forEach>
