@@ -38,15 +38,15 @@
 
                     <div class="container bg-light">
                         <div class="row">
-                            <div class="col-6 col-md-3 mb-3">
+                            <div class="col-6 col-lg-3 mb-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Accounts</h5>
                                         <div class="row">
-                                            <div class="col-10">
+                                            <div class="col-9">
                                                 <h2 class="mb-0 mr-3 font-weight-bold">+${newAccountInThisMonth} </h2>
                                             </div>
-                                            <div class="col-2 fs-4">
+                                            <div class="col-1 fs-4">
                                                 <i class="fa-solid fa-user"></i>
                                             </div>
                                         </div>
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-6 col-md-3 mb-3">
+                            <div class="col-6 col-lg-3 mb-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Revenue</h5>
@@ -74,7 +74,7 @@
                                                 </span>
                                             </c:if>
                                             <c:if test="${revenueRatio < 0}">
-                                                <span class="font-size-md font-weight-bold ml-3 text-danger ms-2">
+                                                <span class="font-size-md font-weight-bold text-danger ms-2">
                                                     <fmt:formatNumber type="number" maxFractionDigits="2" value="${revenueRatio}" />%
                                                     <i class="fa-solid fa-arrow-trend-down"></i>
                                                 </span>
@@ -87,16 +87,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-6 col-md-3 mb-3">
+                            <div class="col-6 col-lg-3 mb-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Visit Page</h5>
 
                                         <div class="row">
-                                            <div class="col-10">
+                                            <div class="col-9">
                                                 <h2 class="mb-0 font-weight-bold">${numberVisitPageToday}</h2>
                                             </div>
-                                            <div class="col-2 fs-4">
+                                            <div class="col-1 fs-4">
                                                 <i class="fa-solid fa-eye"></i>
                                             </div>
                                         </div>
@@ -107,19 +107,19 @@
                                 </div>
                             </div>
 
-                            <div class="col-6 col-md-3 mb-1 mb-3">
+                            <div class="col-6 col-lg-3 mb-1 mb-3">
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title">Total Earning</h5>
 
                                         <div class="row">
-                                            <div class="col-10">
+                                            <div class="col-9">
                                                 <h2 class="mb-0 mr-3 font-weight-bold">
                                                     <fmt:setLocale value = "en_US"/>
                                                     <fmt:formatNumber value="${totalEarning}" type="currency" />
                                                 </h2>
                                             </div>
-                                            <div class="col-2 fs-4">
+                                            <div class="col-1 fs-4">
                                                 <i class="fa-solid fa-chart-simple"></i>
                                             </div>
                                         </div>
