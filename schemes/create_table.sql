@@ -1,10 +1,11 @@
 CREATE TABLE [Setting] (
-	SettingID INT IDENTITY(1, 1) PRIMARY KEY,
+	SettingID INT IDENTITY(1, 1),
 	[id] int NOT NULL,
 	Name varchar(50),
-	[Order] int IDENTITY(1, 1) PRIMARY KEY,,
+	[Order] int,
 	Status bit,
-	type varchar(200)
+	type varchar(200),
+	CONSTRAINT [PK_Setting] PRIMARY KEY ([SettingID], [Order])
 );
 
 CREATE TABLE [Role] (
@@ -93,22 +94,41 @@ create table BlogCategoryBlog (
 	CONSTRAINT FK_BlogCategoryBlog_BlogCategory_BlogCategoryID FOREIGN KEY (BlogCategoryID) references BlogCategory(BlogCategoryID) ON DELETE CASCADE
 );
 
+CREATE TABLE [dbo].[SubjectMainCategory](
+	[MainCategoryID] [int] IDENTITY(1,1) NOT NULL primary KEY,
+	[Name] [nvarchar](255) NULL
+);
+
 CREATE TABLE [dbo].[SubjectCategory](
 	[CategoryID] [int] IDENTITY(1,1) NOT NULL primary KEY,
-	[Name] [nvarchar](255)
+	[Name] [nvarchar](255),
+	[MainCategoryID] [int],
+	CONSTRAINT [FK_SubjectCategory_SubjectMainCategory] FOREIGN KEY([MainCategoryID]) REFERENCES [SubjectMainCategory] ([MainCategoryID]) ON DELETE SET NULL
 );
 
 create table [Subject] (
 	SubjectID int identity(1, 1) primary KEY,
 	[Name] varchar(200),
 	[CategoryID] [int],
+	[MainCategoryID] [int],
 	[Featured] [bit],
 	[Status] [bit],
 	[Image] [varchar](3000),
 	[Description] [nvarchar](2000),
 	[Order] int,
-	type varchar(200),
-	CONSTRAINT [FK_Subject_SubjectCategory] FOREIGN KEY([CategoryID]) REFERENCES [SubjectCategory] ([CategoryID]) ON DELETE CASCADE
+	[type] [varchar](200) NULL,
+	[OwnerID] [int] NULL,
+	CONSTRAINT [FK_Subject_SubjectCategory] FOREIGN KEY([CategoryID]) REFERENCES [SubjectCategory] ([CategoryID]) ON DELETE CASCADE,
+	CONSTRAINT [FK_Subject_Account] FOREIGN KEY([OwnerID]) REFERENCES [Account] ([AccountID]) ON DELETE SET NULL,
+	CONSTRAINT [FK_Subject_SubjectMainCategory] FOREIGN KEY([MainCategoryID]) REFERENCES [SubjectMainCategory] ([MainCategoryID]) ON DELETE CASCADE
+);
+
+CREATE TABLE [dbo].[SubjectAccount](
+	[AccountID] [int] NOT NULL,
+	[SubjectID] [int] NOT NULL,
+ 	CONSTRAINT [PK_SubjectAccount] PRIMARY KEY ([AccountID], [SubjectID]),
+	CONSTRAINT [FK_SubjectAccount_Account] FOREIGN KEY([AccountID]) REFERENCES [Account] ([AccountID]) ON DELETE CASCADE,
+	CONSTRAINT [FK_SubjectAccount_Subject] FOREIGN KEY([SubjectID]) REFERENCES [Subject] ([SubjectID]) ON DELETE CASCADE
 );
 
 create table Course (
@@ -309,3 +329,14 @@ CREATE TABLE QuizSession (
 
 /* External query */
 ALTER TABLE dbo.QuizLesson ADD QuizTimeInMinute INT DEFAULT(5)
+
+CREATE TABLE [PricePackage](
+	[PriceID] [int] IDENTITY(1,1) NOT NULL primary KEY,
+	[Name] [nvarchar](255) NULL,
+	[AccessDuration] [int] NULL,
+	[Status] [bit] NULL,
+	[ListPrice] [decimal](15, 2) NULL,
+	[SalePrice] [decimal](15, 2) NULL,
+	[SubjectID] [int] NULL,
+	CONSTRAINT [FK_PricePackage_Subject] FOREIGN KEY([SubjectID]) REFERENCES [Subject] ([SubjectID]) ON DELETE CASCADE
+);	
