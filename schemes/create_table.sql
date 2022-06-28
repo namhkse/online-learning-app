@@ -330,7 +330,8 @@ CREATE TABLE QuizSession (
 
 
 /* External query */
-ALTER TABLE dbo.QuizLesson ADD QuizTimeInMinute INT DEFAULT(5)
+ALTER TABLE dbo.QuizLesson ADD QuizTimeInMinute INT DEFAULT(5);
+update QuizLesson set QuizTimeInMinute = 5;
 
 CREATE TABLE [PricePackage](
 	[PriceID] [int] IDENTITY(1,1) NOT NULL primary KEY,
@@ -360,3 +361,8 @@ Create table BlogSubCategoryBlog (
 	BlogID int foreign key references Blog(BlogID) on Delete cascade
 	primary key (BlogID, BlogSubCategoryID)
 )
+
+create table PageViewCounter (
+	[Date] date primary key,
+	AmountAccessPage int 
+);
