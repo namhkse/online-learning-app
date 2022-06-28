@@ -1,3 +1,4 @@
+<link href="../css/base-admin.css" rel="stylesheet" type="text/css"/>
 <nav class="navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">${account.role}</a>

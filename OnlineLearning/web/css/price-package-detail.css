@@ -18,7 +18,22 @@
 .input-box{
     width: 50%;
     margin-bottom: 20px;
-    display: block;
+}
+
+.save {
+    display: flex;
+    width: 95px;
+    height: 35px;
+    margin: 20px auto 15px;
+    font-size: 16px;
+    color: #fff;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #365dcd;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 img{
@@ -46,24 +61,6 @@ img{
     margin-right: 4px;
 }
 
-.action-btn{
-    background: #365dcd;
-    align-items: center;
-    justify-content: space-between;
-    display: flex;
-    width: 84px;
-    height: 35px;
-    margin: 20px auto 15px;
-    font-size: 16px;
-    color: #fff;
-    outline: none;
-    padding: 0 16px 0 16px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-
-}
-
-.action-btn a{
-    color: #fff;
-    text-decoration: none;
+.text-danger{
+    display: none;
 }

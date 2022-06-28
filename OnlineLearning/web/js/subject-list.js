@@ -36,13 +36,20 @@ function checkedCategory(element) {
     let numberSubCategory = listSubCategory.length;
     let count = 1;
     for (var i = 1; i < listSubCategory.length; i++) {
-        if (listSubCategory[i].children[0].checked === true) {
+        if (listSubCategory[i].children[0].checked) {
             count++;
         }
     }
     if (count === numberSubCategory) {
+        category.indeterminate = false;
         category.checked = true;
-    } else {
+    }
+    if (count > 1 && count < numberSubCategory) {
+        category.checked = false;
+        category.indeterminate = true;
+    }
+    if (count == 1) {
+        category.indeterminate = false;
         category.checked = false;
     }
     search();
@@ -61,6 +68,18 @@ function search() {
         categoryID = category.join();
     }
 
+    let mainCategoryElement = document.querySelectorAll('.others');
+    let mainCategory = [];
+    for (var i = 0; i < mainCategoryElement.length; i++) {
+        if (mainCategoryElement[i].children[0].checked === true) {
+            mainCategory.push(mainCategoryElement[i].children[0].value);
+        }
+    }
+    let mainCategoryID = "";
+    if (mainCategory.length != 0) {
+        mainCategoryID = mainCategory.join();
+    }
+
     let statusElement = document.querySelector('.select-tag');
     let status;
     for (var i = 0; i < statusElement.length; i++) {
@@ -76,11 +95,14 @@ function search() {
             cache: false,
             data: {
                 categoryID: categoryID,
+                mainCategoryID: mainCategoryID,
                 status: status
             },
             success: function (result) {
+                $('#table').DataTable().destroy();
                 document.getElementsByTagName('tbody')[0].innerHTML = "";
                 document.getElementsByTagName('tbody')[0].innerHTML += result;
+                $('#table').DataTable();
             }
         });
     });

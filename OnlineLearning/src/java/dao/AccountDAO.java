@@ -223,4 +223,97 @@ public class AccountDAO extends DBContext {
         }
     }
 
+    public ArrayList<Account> getListExpert() {
+        ArrayList<Account> accounts = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM Account WHERE RoleID = 1";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Account account = new Account();
+                Role role = new Role();
+
+                role.setId(rs.getInt("RoleID"));
+                account.setAccountID(rs.getInt("AccountID"));
+                account.setFirstName(rs.getString("FirstName"));
+                account.setLastName(rs.getString("LastName"));
+                account.setEmail(rs.getString("Email"));
+                account.setProfilePictureUrl(rs.getString("ProfilePictureUrl"));
+                account.setRole(role);
+                account.setCreatedTime(rs.getTimestamp("CreatedTime"));
+                account.setModifiedTime(rs.getTimestamp("ModifiedTime"));
+                account.setPhone(rs.getString("Phone"));
+                account.setAddress(rs.getString("Address"));
+                account.setGender(Gender.of(rs.getBoolean("Gender")));
+                account.setBalance(rs.getBigDecimal("Balance"));
+                accounts.add(account);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return accounts;
+    }
+
+    public ArrayList<Account> getListAccountCanAccessSubject(int subjectID) {
+        ArrayList<Account> accounts = new ArrayList<>();
+        try {
+            String sql = "SELECT SubjectAccount.*, FirstName, LastName "
+                    + "FROM SubjectAccount JOIN Account ON SubjectAccount.AccountID = Account.AccountID WHERE SubjectID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, subjectID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Account account = new Account();
+                account.setAccountID(rs.getInt("AccountID"));
+                account.setFirstName(rs.getString("FirstName"));
+                account.setLastName(rs.getString("LastName"));
+                accounts.add(account);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return accounts;
+    }
+
+    public void insertListAccountCanAccessSubject(int subjectID, ArrayList<Integer> accountIDs) {
+        try {
+            String sql = "INSERT INTO [dbo].[SubjectAccount]\n"
+                    + "           ([AccountID]\n"
+                    + "           ,[SubjectID])\n"
+                    + "     VALUES\n";
+            for (int i = 0; i < accountIDs.size(); i++) {
+                if (i == accountIDs.size() - 1) {
+                    sql += "           (?\n"
+                            + "           ,?)";
+                } else {
+                    sql += "           (?\n"
+                            + "           ,?),";
+                }
+            }
+            PreparedStatement stm = connection.prepareStatement(sql);
+            int index = 1;
+            for (int i = 0; i < accountIDs.size(); i++) {
+                Integer get = accountIDs.get(i);
+                stm.setInt(index, get);
+                index++;
+                stm.setInt(index, subjectID);
+                index++;
+            }
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteAllAccountCanAccessSubject(int subjectID) {
+        try {
+            String sql = "DELETE FROM [dbo].[SubjectAccount]\n"
+                    + "      WHERE SubjectID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, subjectID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

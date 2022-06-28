@@ -21,15 +21,6 @@ public class SliderController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         SliderDAO sliderDAO = new SliderDAO();
-        if (request.getParameter("id-delete") != null) {
-            sliderDAO.deleteSlider(Integer.parseInt(request.getParameter("id-delete")));
-        }
-        if (request.getParameter("id-hide") != null) {
-            sliderDAO.setStatusSlider(Integer.parseInt(request.getParameter("id-hide")), false);
-        }
-        if (request.getParameter("id-show") != null) {
-            sliderDAO.setStatusSlider(Integer.parseInt(request.getParameter("id-show")), true);
-        }
         String display = "-1";
         if (request.getParameter("display") != null) {
             display = request.getParameter("display");
@@ -52,6 +43,24 @@ public class SliderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        SliderDAO sliderDAO = new SliderDAO();
+        if (request.getParameter("id-hide") != null) {
+            sliderDAO.setStatusSlider(Integer.parseInt(request.getParameter("id-hide")), false);
+        }
+        if (request.getParameter("id-show") != null) {
+            sliderDAO.setStatusSlider(Integer.parseInt(request.getParameter("id-show")), true);
+        }
+        response.getWriter().flush();
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        SliderDAO sliderDAO = new SliderDAO();
+        if (request.getParameter("id") != null) {
+            sliderDAO.deleteSlider(Integer.parseInt(request.getParameter("id")));
+        }
+        response.getWriter().flush();
     }
 
     @Override

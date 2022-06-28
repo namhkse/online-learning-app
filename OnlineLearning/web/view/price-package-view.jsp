@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
@@ -14,39 +15,35 @@
         <script src="https://kit.fontawesome.com/7b806b5ab9.js" crossorigin="anonymous"></script>
         <!--Jquery-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link href="../css/slide-view.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/price-package-view.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script src="../js/slide-management.js" type="text/javascript"></script>
     </head>
 
     <body>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-2 min-vh-100 bg-dark p-0">
-                    <jsp:include page="sidenav.jsp?page=Manage Slide"/>
+                    <jsp:include page="sidenav.jsp?page=Manage Subject"/>
                 </div>
                 <div class="col-sm-10 p-0">
-                    <jsp:include page="navbar-header.jsp?page=Slide Detail"/>
+                    <jsp:include page="navbar-header.jsp?page=Price Package Detail"/>
 
                     <div class="container">
                         <div class="container-table post">
-                            <a class="back" href="../management/slide-list"><i class="fa-solid fa-angle-left"></i>Back</a>
-                            <div class="form-submit">
-                                <h4 class="title">Title</h4>
-                                <span class="input-box">${slider.title}</span>
-                                <h4 class="title">Sub title</h4>
-                                <span class="input-box">${slider.subTitle}</span>
-                                <h4 class="title">Image</h4>
-                                <div class="upload-img">
-                                    <img src="../img/${slider.imageUrl}">
-                                </div>
-                                <h4 class="title">Description</h4>
-                                <span class="input-box">${slider.description}</span>
-                                <h4 class="title">Backlink</h4>
-                                <span class="input-box">${slider.navigationLink}</span>
-                                <button class="action-btn"><i class="fa-solid fa-pencil"></i><a href="../management/slide-edit?id=${slider.sliderID}">Edit</a></button>
-                            </div>
+                            <a class="back" href="../management/subject-detail?subjectID=${subjectID}"><i class="fa-solid fa-angle-left"></i>Back</a>
+                            <form action="" method="post" class="form-submit">
+                                <h4 class="title">Package</h4>
+                                <span class="input-box">${pricePackage.name}</span>
+                                <h4 class="title">Duration</h4>
+                                <span class="input-box">${pricePackage.accessDuration != -1 ? pricePackage.accessDuration : "Unlimited"}</span>
+                                <h4 class="title">List Price</h4>
+                                <span class="input-box">${pricePackage.listPrice}</span>
+                                <h4 class="title">Sale Price</h4>
+                                <span class="input-box">${pricePackage.salePrice}</span>
+                                <h4 class="title">Status</h4>
+                                <span class="input-box">${pricePackage.status == true ? "Active" : "Deactive"}</span>
+                            </form>
                         </div>
                     </div>
                 </div>
