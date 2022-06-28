@@ -142,6 +142,8 @@ create table Course (
 	ModifiedDate DATE,
 	Price decimal(15, 2) NOT NULL CHECK (Price >= 0),
 	[Status] BIT NOT NULL,
+	VideoIntroduce varchar(500),
+	AboutCourse text,
 	CONSTRAINT FK_Course_Account_AccountID FOREIGN KEY (InstructorID) REFERENCES Account(AccountID) ON DELETE SET NULL
 );
 
@@ -340,3 +342,21 @@ CREATE TABLE [PricePackage](
 	[SubjectID] [int] NULL,
 	CONSTRAINT [FK_PricePackage_Subject] FOREIGN KEY([SubjectID]) REFERENCES [Subject] ([SubjectID]) ON DELETE CASCADE
 );	
+
+Create table Objective (
+	ObjectiveID int primary key identity,
+	ObjectiveName varchar(500),
+	CourseID int foreign key references Course(CourseID) on delete cascade
+)
+
+Create table BlogSubCategory (
+	BlogSubCategoryID int primary key identity(1,1),
+	SubCategoryName varchar(200),
+	BlogCategoryID int foreign key references BlogCategory(BlogCategoryID) on delete cascade
+)
+go
+Create table BlogSubCategoryBlog (
+	BlogSubCategoryID int foreign key references BlogSubCategory(BlogSubCategoryID) on delete cascade,
+	BlogID int foreign key references Blog(BlogID) on Delete cascade
+	primary key (BlogID, BlogSubCategoryID)
+)
