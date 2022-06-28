@@ -69,8 +69,6 @@
 table {
     width: 100%;
     margin-top: 30px;
-    border: 1px solid #000000;
-    border-collapse: collapse;
 }
 
 th i {
@@ -82,8 +80,8 @@ th,
 td {
     text-align: left;
     padding: 12px;
-    border: 1px solid #000;
-    color: #858696;
+    /*border: 1px solid #000;*/
+    color: #000;
 }
 
 th i {
@@ -94,6 +92,12 @@ th i {
 .toggle{
     font-size: 30px;
     text-align: center;
+}
+
+.toggle button{
+    border: 0;
+    color: #0d6efd;
+    background: none;
 }
 
 ul {
@@ -160,23 +164,26 @@ ul {
     color: #fff;
     align-items: center;
     justify-content: space-between;
-
 }
 
-.action-btn.first{
-    width: 72px;
+#action{
+    display: flex;
 }
 
-.action-btn.second{
-    width: 64px;
-}
-
-.action-btn.third{
-    width: 80px;
-    background: #ff3737;
-}
-
-.action-btn a{
-    color: #fff;
+#action a{
     text-decoration: none;
+}
+
+#action a:hover{
+    text-decoration: underline;
+}
+
+#action button{
+    border: 0;
+    padding: 0;
+    background: none;
+}
+
+#action button:hover{
+    text-decoration: underline;
 }

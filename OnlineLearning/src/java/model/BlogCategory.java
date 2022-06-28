@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class BlogCategory {
 
     private int blogCategoryID;
@@ -10,7 +12,16 @@ public class BlogCategory {
     private int order;
     private boolean status;
     private String type;
+    private ArrayList<BlogSubCategory> blogSubCategories;
 
+    public ArrayList<BlogSubCategory> getBlogSubCategories() {
+        return blogSubCategories;
+    }
+
+    public void setBlogSubCategories(ArrayList<BlogSubCategory> blogSubCategories) {
+        this.blogSubCategories = blogSubCategories;
+    }
+      
     public BlogCategory() {
     }
 

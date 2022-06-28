@@ -11,6 +11,7 @@ public class SessionUtil {
         return acc;
     }
     
+    @Deprecated
     public static LocalDateTime getStartQuiz(HttpServletRequest req, String str) {
         return (LocalDateTime) req.getSession().getAttribute(str);
     }

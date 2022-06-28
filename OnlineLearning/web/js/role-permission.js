@@ -32,8 +32,12 @@ $("#updateBtn").click(function () {
         success: function (data, textStatus, jqXHR) {
             customAlert("", "Update permission successfully!.", "green");
         },
-        error: function () {
-            customAlert("Encountered an error!", "Update permission fail.", "red");
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status == 403) {
+                customAlert("Encountered an error!", "You are not allowed execute this action.", "red");
+            } else {
+                customAlert("Encountered an error!", "Update permission fail.", "red");
+            }
         }
     });
 });
@@ -53,8 +57,12 @@ $("#deleteBtn").click(function () {
                         success: function (data, textStatus, jqXHR) {
                             location.reload();
                         },
-                        error: function () {
-                            $.alert('Delete fail!');
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (jqXHR.status == 403) {
+                                customAlert("Encountered an error!", "You are not allowed execute this action.", "red");
+                            } else {
+                                customAlert("Encountered an error!", "Delete role fail.", "red");
+                            }
                         }
                     });
                 }

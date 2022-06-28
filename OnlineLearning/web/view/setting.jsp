@@ -22,6 +22,9 @@
         <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
         <script src="../js/dashboard.js"></script>
         <script src="../js/table.js"></script>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     </head>
 
     <body>
@@ -61,7 +64,9 @@
                                         </form>
                                     </div>
                                 </div>
-                                <table>
+                                
+                                 
+                                <table class="table table-striped mt-5">
                                     <thead>
                                         <tr>
                                             <th>ID<i class="fa-solid fa-sort" onclick="sortTable(0)"></i></th>
@@ -80,12 +85,12 @@
                                                 <td>${setting.name}</td>
                                                 <td>${setting.order}</td>
                                                 <td>${setting.status ? 'Active' : 'Deactive'}</td>
-                                                <td><button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"><a href="setting-detail?SettingID=${setting.settingID}">Edit</a></button>
-                                                    <button type="button" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"><a href="#" onclick="deleteSetting(${setting.settingID},${setting.id}, '${setting.type}')">Delete</a></button></td>
+                                                <td><a class="text-primary" href="setting-detail?SettingID=${setting.settingID}">Edit</a> / <a class="text-danger" href="#" onclick="deleteSetting(${setting.settingID},${setting.id}, '${setting.type}')">Delete</a></td>
                                             </tr>
                                         </c:forEach>    
                                     </tbody>
                                 </table>
+                                
                                 <div class="table-paging">
                                     <ul class="pagging-list">                                
                                         <%@include file="page.jsp"%>

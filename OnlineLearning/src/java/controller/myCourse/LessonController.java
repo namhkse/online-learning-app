@@ -27,7 +27,7 @@ public class LessonController extends HttpServlet {
             throws ServletException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
         if (account == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You need to login first");
+            response.sendRedirect("login");
             return;
         }
         LessonDAO lessonDao = new LessonDAO();
