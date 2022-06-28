@@ -1,10 +1,22 @@
 package model;
 
+import java.util.ArrayList;
+
 public class SubjectCategory {
 
     private int categoryID;
     private String name;
+    
+    private ArrayList<Subject> listSubject;
 
+    public ArrayList<Subject> getListSubject() {
+        return listSubject;
+    }
+
+    public void setListSubject(ArrayList<Subject> listSubject) {
+        this.listSubject = listSubject;
+    }
+    
     public SubjectCategory() {
     }
 

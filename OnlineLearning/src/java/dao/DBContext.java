@@ -11,7 +11,7 @@ protected Connection connection;
         try {
             String user = "sa";
             String pass = "chung3062k1";
-            String url = "jdbc:sqlserver://DENOONED:1433;databaseName=Online_Learning_Ver2";
+            String url = "jdbc:sqlserver://DENOONED:1433;databaseName=hhh";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException | SQLException ex) {

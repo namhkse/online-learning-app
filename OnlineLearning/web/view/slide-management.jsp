@@ -56,16 +56,17 @@
                                         </select>
                                     </form>
                                 </div>
-                                <table>
+                                
+                                        
+                                <table class="table table-striped mt-5">
                                     <thead>
                                         <tr>
-                                            <th>ID<i class="fa-solid fa-sort" onclick="sortTable(0)"></i></th>
+                                            <th class="justify-content-between d-flex">ID<i class="fa-solid fa-sort" onclick="sortTable(0)"></i></th>
                                             <th>Image</th>
-                                            <th class="title-slide">Title<i class="fa-solid fa-sort" onclick="sortTable(2)"></i></th>
+                                            <th class="title-slide justify-content-between d-flex">Title<i class="fa-solid fa-sort" onclick="sortTable(2)"></i></th>
                                             <th>Slider collection<i class="fa-solid fa-sort" onclick="sortTable(3)"></i></th>
                                             <th class="backlink-slide">Backlink</th>
                                             <th>Display</th>
-                                            <th></th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -81,12 +82,13 @@
                                                     <c:if test="${slider.status == true}"><a id="display-toggle" href="../management/slide-list?id-hide=${slider.sliderID}" onclick="return confirm('Are you sure you want to hide this slide?');"><i class="fa-solid fa-toggle-on"></i></a></c:if>
                                                     <c:if test="${slider.status == false}"><a id="display-toggle" href="../management/slide-list?id-show=${slider.sliderID}" onclick="return confirm('Are you sure you want to show this slide?');"><i class="fa-solid fa-toggle-off"></i></a></c:if>
                                                 </td>
-                                                <td><button class="action-btn first"><i class="fa-solid fa-pencil"></i><a href="../management/slide-detail?id=${slider.sliderID}">Edit</a></button></td>
-                                                <td><button class="action-btn second"><i class="fa-solid fa-trash-can"></i><a href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></button></td>
+                                                <td><a class="text-primary" href="../management/slide-detail?id=${slider.sliderID}">Edit</a> / <a class="text-danger" href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></button></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
+                                        
+                                        
                                 <div class="table-paging">
                                     <ul class="pagging-list">                                
                                         <%@include file="page.jsp"%>

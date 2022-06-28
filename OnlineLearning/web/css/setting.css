@@ -1,3 +1,11 @@
+a {
+    text-decoration: none!important;
+}
+
+td > a:hover {
+    text-decoration: underline!important;
+}
+
 #add-blog {
     background-color: #365dcd;
     color: #fff;
@@ -54,7 +62,12 @@
 
 }
 
-table {
+th > i{
+    margin-left: 12px;
+    cursor: poiter;
+}
+
+/*table {
     width: 100%;
     margin-top: 30px;
     border: 1px solid #000000;
@@ -81,7 +94,7 @@ th i {
 
 ul {
     list-style: none;
-}
+}*/
 
 .pagging-list {
     display: flex;
