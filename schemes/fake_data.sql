@@ -6,12 +6,17 @@ INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [
 INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (8, N'Delete Subject Detail', N'http://localhost:8080/OnlineLearning/management/subject-detail', N'DELETE')
 INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (9, N'Dimension Detail', N'http://localhost:8080/OnlineLearning/management/dimension-detail', N'GET')
 INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (12, N'Dimension Detail', N'http://localhost:8080/OnlineLearning/management/dimension-detail', N'POST')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (13, N'View Subject List', N'http://localhost:8080/OnlineLearning/management/subject-list', N'GET')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (14, N'Filter Subject List', N'http://localhost:8080/OnlineLearning/management/subject-list', N'POST')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (15, N'Delete Subject', N'http://localhost:8080/OnlineLearning/management/subject-list', N'DELETE')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (16, N'Edit Price Package', N'http://localhost:8080/OnlineLearning/management/price-package-detail', N'GET')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (17, N'Edit Price Package', N'http://localhost:8080/OnlineLearning/management/price-package-detail', N'POST')
 SET IDENTITY_INSERT [dbo].[PermissionRequest] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Role] ON 
 
 INSERT [dbo].[Role] ([RoleID], [Name], [Order], [Status], [type]) VALUES (1, N'EXPERT', 2, 1, N'USER_ROLE')
-INSERT [dbo].[Role] ([RoleID], [Name], [Order], [Status], [type]) VALUES (2, N'CUSTOMER', 5, 1, N'USER_ROLE')
+INSERT [dbo].[Role] ([RoleID], [Name], [Order], [Status], [type]) VALUES (2, N'CUSTOMERS', 5, 1, N'USER_ROLE')
 INSERT [dbo].[Role] ([RoleID], [Name], [Order], [Status], [type]) VALUES (3, N'SALE', 4, 1, N'USER_ROLE')
 INSERT [dbo].[Role] ([RoleID], [Name], [Order], [Status], [type]) VALUES (4, N'ADMIN', 1, 1, N'USER_ROLE')
 INSERT [dbo].[Role] ([RoleID], [Name], [Order], [Status], [type]) VALUES (5, N'MARKETING', 3, 1, N'USER_ROLE')
@@ -23,6 +28,9 @@ INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1
 INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 8)
 INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 9)
 INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 12)
+INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 13)
+INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 14)
+INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 15)
 GO
 SET IDENTITY_INSERT [dbo].[Account] ON 
 
@@ -34,8 +42,8 @@ INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfileP
 INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (6, N'Nadya', N'Sharpley', N'nsharpley5@seattletimes.com', N'default-account-profile-picture-7.jpg', 2, CAST(394.00 AS Decimal(15, 2)), CAST(N'2018-09-09T23:32:36.000' AS DateTime), CAST(N'2020-03-03T15:31:34.000' AS DateTime), N'2504983052', N'74793 Crowley Circle', 1)
 INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (7, N'Charmane', N'Bracken', N'cbracken6@sina.com.cn', N'default-account-profile-picture-7.jpg', 4, CAST(269.00 AS Decimal(15, 2)), CAST(N'2021-11-11T01:40:27.000' AS DateTime), CAST(N'2021-01-02T23:21:43.000' AS DateTime), N'3924821034', N'68856 Clyde Gallagher Trail', 0)
 INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (8, N'Gennifer', N'Huniwall', N'ghuniwall7@cnbc.com', N'default-account-profile-picture-7.jpg', 5, CAST(73.00 AS Decimal(15, 2)), CAST(N'2021-11-02T06:20:25.000' AS DateTime), CAST(N'2019-01-27T00:51:59.000' AS DateTime), N'5028342556', N'6829 Kensington Avenue', 0)
-INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (9, N'Nettie', N'Jepps', N'njepps8@barnesandnoble.com', N'default-account-profile-picture-7.jpg', 1, CAST(236.00 AS Decimal(15, 2)), CAST(N'2019-01-03T09:51:35.000' AS DateTime), CAST(N'2020-11-20T08:27:53.000' AS DateTime), N'1961244376', N'24232 Graedel Circle', 1)
-INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (10, N'Dore', N'Haymes', N'dhaymes9@multiply.com', N'default-account-profile-picture-7.jpg', 1, CAST(449.00 AS Decimal(15, 2)), CAST(N'2021-05-25T20:48:55.000' AS DateTime), CAST(N'2021-03-06T16:47:17.000' AS DateTime), N'7587185601', N'5952 Melby Parkway', 0)
+INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (9, N'Nettie', N'Jepps', N'giaovien1@gmail.com', N'default-account-profile-picture-7.jpg', 1, CAST(236.00 AS Decimal(15, 2)), CAST(N'2019-01-03T09:51:35.000' AS DateTime), CAST(N'2020-11-20T08:27:53.000' AS DateTime), N'1961244376', N'24232 Graedel Circle', 1)
+INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (10, N'Dore', N'Haymes', N'giaovien2@gmail.com', N'default-account-profile-picture-7.jpg', 1, CAST(449.00 AS Decimal(15, 2)), CAST(N'2021-05-25T20:48:55.000' AS DateTime), CAST(N'2021-03-06T16:47:17.000' AS DateTime), N'7587185601', N'5952 Melby Parkway', 0)
 INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (11, N'Võ', N'Tài', N'tai@gmail.com', N'xiaomi-mi-gaming-laptop-stock-4k-nx-1920x1080.jpg', 2, CAST(75.00 AS Decimal(15, 2)), CAST(N'2010-04-25T00:00:00.000' AS DateTime), CAST(N'2022-06-03T00:42:55.267' AS DateTime), N'1234567890', N'4 Lighthouse Bay Circle', 1)
 INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (12, N'Hà', N'Nam', N'nam@gmail.com', N'default-account-profile-picture-8.jpg', 4, CAST(32.00 AS Decimal(15, 2)), CAST(N'2022-04-10T00:00:00.000' AS DateTime), CAST(N'2022-06-10T20:43:01.937' AS DateTime), N'123123123', N'9 Lighthouse Bay Circle', 1)
 INSERT [dbo].[Account] ([AccountID], [FirstName], [LastName], [Email], [ProfilePictureUrl], [RoleID], [Balance], [CreatedTime], [ModifiedTime], [Phone], [Address], [Gender]) VALUES (13, N'tai', N'123', N'votientai30@gmail.com', N'default-account-profile-picture-7.jpg', 2, CAST(10000.00 AS Decimal(15, 2)), CAST(N'2022-06-01T14:07:15.497' AS DateTime), CAST(N'2022-06-01T14:15:22.763' AS DateTime), N'123', N'', 1)
@@ -252,96 +260,35 @@ INSERT [dbo].[TransactionHistory] ([TransactionHistoryID], [AccountID], [CourseI
 INSERT [dbo].[TransactionHistory] ([TransactionHistoryID], [AccountID], [CourseID], [Amount], [TrasactionTime]) VALUES (4, 11, 7, CAST(87.00 AS Decimal(15, 2)), CAST(N'2021-12-11T12:53:57.320' AS DateTime))
 SET IDENTITY_INSERT [dbo].[TransactionHistory] OFF
 GO
-INSERT [dbo].[CompletedQuestion] ([AccountID], [QuestionID], [SelectedAnswerID], [Status]) VALUES (12, 109, 440, 0)
-INSERT [dbo].[CompletedQuestion] ([AccountID], [QuestionID], [SelectedAnswerID], [Status]) VALUES (12, 109, 441, 1)
-INSERT [dbo].[CompletedQuestion] ([AccountID], [QuestionID], [SelectedAnswerID], [Status]) VALUES (12, 109, 442, 1)
-GO
-INSERT [dbo].[CourseAccount] ([AccountID], [CourseID], [EnrollDate], [Rating]) VALUES (12, 1, CAST(N'2021-12-05' AS Date), 5)
-INSERT [dbo].[CourseAccount] ([AccountID], [CourseID], [EnrollDate], [Rating]) VALUES (12, 2, CAST(N'2021-12-05' AS Date), 5)
-INSERT [dbo].[CourseAccount] ([AccountID], [CourseID], [EnrollDate], [Rating]) VALUES (12, 3, CAST(N'2021-09-01' AS Date), 3)
-GO
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 1, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 2, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 3, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 4, 0, 0, CAST(N'2022-06-17T10:49:07.440' AS DateTime), CAST(N'2022-06-17T10:49:13.177' AS DateTime))
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 5, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 6, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 7, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 9, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 10, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 11, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 13, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 14, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 15, 10, 1, NULL, NULL)
-INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 16, 0, 0, CAST(N'2022-06-16T17:58:50.683' AS DateTime), NULL)
-GO
-SET IDENTITY_INSERT [dbo].[Slider] ON 
 
-INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (1, N'Software Development Lifecycle', N'Sponsored by FPT University', N'This Specialization is designed for people who are new to software engineering. It is also for those who have already developed software, but wish to gain a deeper understanding of the underlying context and theory of software development practices.', N'https://stackoverflow.com/questions/5718191/use-current-date-as-default-value-for-a-column', N'software-product-development-life-cycle_1.png', 1, 1, 1)
-INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (2, N'Web Design for Everybody: Basics of Web Development & Coding', N'Sponsored by FPT University', N'This Specialization covers how to write syntactically correct HTML5 and CSS3, and how to create interactive web experiences with JavaScript. Mastering this range of technologies will allow you to develop high quality web sites that, work seamlessly on mobile, tablet, and large screen browsers accessible.,', N'https://stackoverflow.com/questions/5718191/use-current-date-as-default-value-for-a-column', N'2uYd8j4.jpeg', 1, 1, 1)
-INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (3, N'Requirements Engineering: Secure Software Specifications', N'Sponsored by FPT University', N'This specialization is intended for software engineers, development and product managers, testers, QA analysts, product analysts, tech writers, and security engineers.', N'https://stackoverflow.com/questions/5718191/use-current-date-as-default-value-for-a-column', N'Blog-Know-how-to-secure-web-application-PE-e1531381499384.jpg', 1, 1, 1)
-INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (4, N'Project Management Principles and Practices', N'Sponsored by FPT University', N'This specialization is a precursor to the Applied Project Management Certificate. Project management has been proven to be the most effective method of delivering products within cost, schedule, and resource constraints.', N'https://stackoverflow.com/questions/5718191/use-current-date-as-default-value-for-a-column', N'PM.avif', 1, 1, 1)
-INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (9, N'xcvba', N'xcvb', N'xcvb', N'xcvb', N'xcvb', 1, 0, 2)
-INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (10, N'vbnmaa', N'vbnm', N'vbnm', N'vbnm', N'vbnm', 1, 0, 1)
-INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (14, N'da thay doi da thay doi', N'da thay doi da thay doi', N'da thay doi da thay doi', N'da thay doi da thay doi', N'xiaomi-mi-gaming-laptop-stock-4k-nx-1920x1080.jpg', 1, 1, 2)
-SET IDENTITY_INSERT [dbo].[Slider] OFF
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (1, N'plorum', 6, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (2, N'volcans non', 5, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (3, N'estis quo, Sed', 5, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (4, N'et venit. gravum', 4, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (5, N'cognitio,', 2, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (6, N'fecundio,', 10, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (7, N'e fecit, pars', 8, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (8, N'Quad habitatio', 0, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (9, N'ut egreddior non', 4, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (10, N'vobis quad', 8, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (11, N'esset nomen Et', 6, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (12, N'apparens Longam,', 10, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (13, N'non Multum', 2, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (14, N'novum sed non', 9, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (15, N'non quoque nomen', 5, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (16, N'regit, quartu', 6, 1)
 GO
-SET IDENTITY_INSERT [dbo].[SubjectCategory] ON 
 
-INSERT [dbo].[SubjectCategory] ([CategoryID], [Name]) VALUES (1, N'Business')
-INSERT [dbo].[SubjectCategory] ([CategoryID], [Name]) VALUES (2, N'Science')
-INSERT [dbo].[SubjectCategory] ([CategoryID], [Name]) VALUES (3, N'Technology')
-INSERT [dbo].[SubjectCategory] ([CategoryID], [Name]) VALUES (4, N'Language')
-INSERT [dbo].[SubjectCategory] ([CategoryID], [Name]) VALUES (5, N'Mathematics')
-INSERT [dbo].[SubjectCategory] ([CategoryID], [Name]) VALUES (6, N'Culture')
-SET IDENTITY_INSERT [dbo].[SubjectCategory] OFF
-GO
-SET IDENTITY_INSERT [dbo].[Subject] ON 
-
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (1, N'Biology & Life Sciences', 2, 1, 1, NULL, N'Biology & Life Sciences', 1, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (2, N'Training', 3, 1, 0, NULL, N'Training', 2, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (3, N'Language', 4, 1, 1, NULL, N'Language', 3, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (4, N'Design', 3, 0, 0, NULL, N'Design', 4, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (5, N'Data Analysis & Statistics', 5, 0, 1, NULL, N'Data Analysis & Statistics', 5, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (6, N'Architecture', 3, 0, 1, NULL, N'Architecture', 6, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (7, N'Ethics', 5, 0, 0, NULL, N'Ethics', 7, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (8, N'Art & Culture', 6, 1, 1, NULL, N'Art & Culture', 8, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (9, N'Chemistry', 2, 0, 1, NULL, N'Chemistry', 9, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (10, N'Economics & Finance', 1, 0, 1, NULL, N'Economics & Finance', 10, N'CATEGORY_SUBJECT')
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [Featured], [Status], [Image], [Description], [Order], [type]) VALUES (12, N'dfgh', NULL, NULL, 0, NULL, NULL, 2, N'CATEGORY_SUBJECT')
-SET IDENTITY_INSERT [dbo].[Subject] OFF
-GO
-SET IDENTITY_INSERT [dbo].[DimensionType] ON 
-
-INSERT [dbo].[DimensionType] ([TypeID], [Name]) VALUES (1, N'Domain')
-INSERT [dbo].[DimensionType] ([TypeID], [Name]) VALUES (2, N'Group')
-SET IDENTITY_INSERT [dbo].[DimensionType] OFF
-GO
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (1, N'plorum', 6, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (2, N'volcans non', 5, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (3, N'estis quo, Sed', 5, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (4, N'et venit. gravum', 4, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (5, N'cognitio,', 2, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (6, N'fecundio,', 10, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (7, N'e fecit, pars', 8, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (8, N'Quad habitatio', 0, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (9, N'ut egreddior non', 4, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (10, N'vobis quad', 8, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (11, N'esset nomen Et', 6, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (12, N'apparens Longam,', 10, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (13, N'non Multum', 2, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (14, N'novum sed non', 9, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (15, N'non quoque nomen', 5, 10)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (16, N'regit, quartu', 6, 10)
-GO
 SET IDENTITY_INSERT [dbo].[QuestionLevel] ON 
 
 INSERT [dbo].[QuestionLevel] ([QuestionLevelID], [LevelName], [Order], [Status], [type]) VALUES (1, N'Very Hard', 1, 1, N'LEVEL_QUESTION')
 INSERT [dbo].[QuestionLevel] ([QuestionLevelID], [LevelName], [Order], [Status], [type]) VALUES (2, N'Medium', 2, 1, N'LEVEL_QUESTION')
 INSERT [dbo].[QuestionLevel] ([QuestionLevelID], [LevelName], [Order], [Status], [type]) VALUES (3, N'Hard', 3, 1, N'LEVEL_QUESTION')
 INSERT [dbo].[QuestionLevel] ([QuestionLevelID], [LevelName], [Order], [Status], [type]) VALUES (4, N'Easy', 4, 1, N'LEVEL_QUESTION')
+INSERT [dbo].[QuestionLevel] ([QuestionLevelID], [LevelName], [Order], [Status], [type]) VALUES (6, N'fghj', 4, 1, N'LEVEL_QUESTION')
 SET IDENTITY_INSERT [dbo].[QuestionLevel] OFF
 GO
+
 SET IDENTITY_INSERT [dbo].[Question] ON 
 
 INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (109, N'The collection and summarization of the socioeconomic and physical characteristics of the employees of a particular firm is an example of', NULL, 4, 1, 1, 1)
@@ -354,6 +301,96 @@ INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [Less
 INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (118, N'Find the mean for the binomial distribution which has the stated values of n = 20 and p = 3/5. Round answer to the nearest tenth.', NULL, 4, 4, 10, 1)
 SET IDENTITY_INSERT [dbo].[Question] OFF
 GO
+
+INSERT [dbo].[CompletedQuestion] ([AccountID], [QuestionID], [SelectedAnswerID], [Status]) VALUES (12, 109, 440, 0)
+INSERT [dbo].[CompletedQuestion] ([AccountID], [QuestionID], [SelectedAnswerID], [Status]) VALUES (12, 109, 441, 1)
+GO
+INSERT [dbo].[CourseAccount] ([AccountID], [CourseID], [EnrollDate], [Rating], [Progress]) VALUES (12, 1, CAST(N'2021-12-05' AS Date), 5, 100)
+INSERT [dbo].[CourseAccount] ([AccountID], [CourseID], [EnrollDate], [Rating], [Progress]) VALUES (12, 2, CAST(N'2021-12-05' AS Date), 5, 0)
+INSERT [dbo].[CourseAccount] ([AccountID], [CourseID], [EnrollDate], [Rating], [Progress]) VALUES (12, 3, CAST(N'2021-09-01' AS Date), 3, 0)
+GO
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 1, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 2, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 3, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 4, 0, 0, CAST(N'2022-06-17T14:12:21.607' AS DateTime), CAST(N'2022-06-17T14:12:27.437' AS DateTime))
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 5, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 6, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 7, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 9, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 10, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 11, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 13, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 14, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 15, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 16, 0, 0, CAST(N'2022-06-16T17:58:50.683' AS DateTime), NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 54, 10, 1, NULL, NULL)
+INSERT [dbo].[CompletedLesson] ([AccountID], [LessonID], [Score], [Status], [StartTime], [EndTime]) VALUES (12, 55, 10, 1, NULL, NULL)
+GO
+SET IDENTITY_INSERT [dbo].[SubjectMainCategory] ON 
+
+INSERT [dbo].[SubjectMainCategory] ([MainCategoryID], [Name]) VALUES (1, N'Calculation and analysis')
+INSERT [dbo].[SubjectMainCategory] ([MainCategoryID], [Name]) VALUES (2, N'Research and development')
+INSERT [dbo].[SubjectMainCategory] ([MainCategoryID], [Name]) VALUES (3, N'Cultural and community')
+SET IDENTITY_INSERT [dbo].[SubjectMainCategory] OFF
+GO
+SET IDENTITY_INSERT [dbo].[SubjectCategory] ON 
+
+INSERT [dbo].[SubjectCategory] ([CategoryID], [Name], [MainCategoryID]) VALUES (1, N'Business', 1)
+INSERT [dbo].[SubjectCategory] ([CategoryID], [Name], [MainCategoryID]) VALUES (2, N'Science', 2)
+INSERT [dbo].[SubjectCategory] ([CategoryID], [Name], [MainCategoryID]) VALUES (3, N'Technology', 2)
+INSERT [dbo].[SubjectCategory] ([CategoryID], [Name], [MainCategoryID]) VALUES (4, N'Language', 3)
+INSERT [dbo].[SubjectCategory] ([CategoryID], [Name], [MainCategoryID]) VALUES (5, N'Mathematics', 1)
+INSERT [dbo].[SubjectCategory] ([CategoryID], [Name], [MainCategoryID]) VALUES (6, N'Culture', 3)
+SET IDENTITY_INSERT [dbo].[SubjectCategory] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Subject] ON 
+
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (1, N'Biology & Life Sciences', NULL, 2, 1, 1, N'cell-microbiology_spotlight.jpg', N'Biology & Life Sciences', 1, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (2, N'Training', 3, NULL, 1, 1, N'training-dao-tao-trang-bi-nang-cao-kien-thuc-cho-nhan-vien.jpg', N'Training', 2, N'CATEGORY_SUBJECT', 10)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (3, N'Language', NULL, 3, 1, 1, N'10-language-trends-in-elearning.jpg', N'Language', 3, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (4, N'Design', 3, NULL, 0, 1, N'design.jpg', N'Design', 4, N'CATEGORY_SUBJECT', 10)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (5, N'Data Analysis & Statistics', NULL, 1, 0, 1, N'main-qimg-86093833f5568a3579edf89c97254a68.jpg', N'Data Analysis & Statistics', 5, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (6, N'Architecture', 3, NULL, 0, 1, N'model-architecture.jpg', N'Architecture', 6, N'CATEGORY_SUBJECT', 10)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (7, N'Ethics', 5, NULL, 0, 1, N'Ethics-Blog-760x550-760x550.png', N'Ethics', 7, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (8, N'Art & Culture', 6, NULL, 1, 1, N'Expeditions_Header_Artwork_Card_Size_1.max-1000x1000.jpg', N'Art & Culture', 8, N'CATEGORY_SUBJECT', 10)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (9, N'Chemistry', 2, NULL, 0, 1, N'chemistry_logo.png', N'Chemistry', 9, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (10, N'Economics & Finance', NULL, 1, 0, 1, N'activetrading1-5bfc2b9cc9e77c0026b4fbf9.jpg', N'Economics & Finance ', 10, N'CATEGORY_SUBJECT', 10)
+SET IDENTITY_INSERT [dbo].[Subject] OFF
+GO
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (9, 1)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (9, 3)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (9, 4)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (9, 5)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (9, 7)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (9, 8)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (9, 9)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (10, 1)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (10, 2)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (10, 3)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (10, 4)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (10, 6)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (10, 8)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (10, 9)
+INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (10, 10)
+GO
+SET IDENTITY_INSERT [dbo].[Slider] ON 
+
+INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (1, N'Software Development Lifecycle', N'Sponsored by FPT University', N'This Specialization is designed for people who are new to software engineering. It is also for those who have already developed software, but wish to gain a deeper understanding of the underlying context and theory of software development practices.', N'https://stackoverflow.com/questions/5718191/use-current-date-as-default-value-for-a-column', N'software-product-development-life-cycle_1.png', 1, 1, 1)
+INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (2, N'Web Design for Everybody: Basics of Web Development & Coding', N'Sponsored by FPT University', N'This Specialization covers how to write syntactically correct HTML5 and CSS3, and how to create interactive web experiences with JavaScript. Mastering this range of technologies will allow you to develop high quality web sites that, work seamlessly on mobile, tablet, and large screen browsers accessible.,', N'https://stackoverflow.com/questions/5718191/use-current-date-as-default-value-for-a-column', N'2uYd8j4.jpeg', 1, 1, 1)
+INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (3, N'Requirements Engineering: Secure Software Specifications', N'Sponsored by FPT University', N'This specialization is intended for software engineers, development and product managers, testers, QA analysts, product analysts, tech writers, and security engineers.', N'https://stackoverflow.com/questions/5718191/use-current-date-as-default-value-for-a-column', N'Blog-Know-how-to-secure-web-application-PE-e1531381499384.jpg', 1, 1, 1)
+INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (4, N'Project Management Principles and Practices', N'Sponsored by FPT University', N'This specialization is a precursor to the Applied Project Management Certificate. Project management has been proven to be the most effective method of delivering products within cost, schedule, and resource constraints.', N'https://stackoverflow.com/questions/5718191/use-current-date-as-default-value-for-a-column', N'PM.avif', 1, 1, 1)
+INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (9, N'xcvba', N'xcvb', N'xcvb', N'xcvb', N'cat-1.jpg', 1, 0, 2)
+INSERT [dbo].[Slider] ([SliderID], [Title], [SubTitle], [Description], [NavigationLink], [ImageUrl], [Order], [Status], [SliderCollectionID]) VALUES (14, N'da thay doi da thay doi', N'da thay doi da thay doi', N'da thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doida thay doi da thay doi', N'da thay doi da thay doi', N'xiaomi-mi-gaming-laptop-stock-4k-nx-1920x1080.jpg', 1, 0, 2)
+SET IDENTITY_INSERT [dbo].[Slider] OFF
+GO
+SET IDENTITY_INSERT [dbo].[DimensionType] ON 
+
+INSERT [dbo].[DimensionType] ([TypeID], [Name]) VALUES (1, N'Domain')
+INSERT [dbo].[DimensionType] ([TypeID], [Name]) VALUES (2, N'Group')
+SET IDENTITY_INSERT [dbo].[DimensionType] OFF
+GO
+
+
 SET IDENTITY_INSERT [dbo].[Dimension] ON 
 
 INSERT [dbo].[Dimension] ([DimensionID], [Name], [Description], [TypeID], [SubjectID], [QuestionID], [LessonID]) VALUES (1, N'Business', N'Business', 1, 10, 109, 4)
@@ -381,6 +418,7 @@ INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (5, 4)
 INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (6, 1)
 INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (7, 2)
 GO
+
 INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (1, 1)
 INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (1, 2)
 INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (1, 3)
@@ -391,6 +429,8 @@ INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (2, 7)
 INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (2, 8)
 INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (2, 9)
 GO
+
+
 
 SET IDENTITY_INSERT [dbo].[Answer] ON 
 
@@ -428,16 +468,24 @@ INSERT [dbo].[Answer] ([AnswerID], [AnswerText], [Explain], [Status], [QuestionI
 INSERT [dbo].[Answer] ([AnswerID], [AnswerText], [Explain], [Status], [QuestionID]) VALUES (475, N'd. 11.5', N'The correct answer is: 12.0', 0, 118)
 SET IDENTITY_INSERT [dbo].[Answer] OFF
 GO
+SET IDENTITY_INSERT [dbo].[PricePackage] ON 
+
+INSERT [dbo].[PricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [SubjectID]) VALUES (1, N'Gói truy cập 3 tháng', 3, 1, CAST(3600.00 AS Decimal(15, 2)), CAST(3200.00 AS Decimal(15, 2)), 10)
+INSERT [dbo].[PricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [SubjectID]) VALUES (2, N'Gói truy cập 6 tháng', 6, 0, CAST(5000.00 AS Decimal(15, 2)), CAST(4500.00 AS Decimal(15, 2)), 10)
+INSERT [dbo].[PricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [SubjectID]) VALUES (3, N'Gói truy cập vô thời hạn', NULL, 1, CAST(10000.00 AS Decimal(15, 2)), CAST(9800.00 AS Decimal(15, 2)), 10)
+INSERT [dbo].[PricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [SubjectID]) VALUES (7, N'sdfsdf', 34, 1, CAST(23.00 AS Decimal(15, 2)), CAST(0.00 AS Decimal(15, 2)), 10)
+SET IDENTITY_INSERT [dbo].[PricePackage] OFF
+GO
 SET IDENTITY_INSERT [dbo].[QuizSession] ON 
 
-INSERT [dbo].[QuizSession] ([SessionID], [AccountID], [QuizLessonID], [StartTime], [ExpiredTime]) VALUES (1, 12, 4, CAST(N'2022-06-17T10:49:07.440' AS DateTime), CAST(N'2022-06-17T10:59:07.440' AS DateTime))
+INSERT [dbo].[QuizSession] ([SessionID], [AccountID], [QuizLessonID], [StartTime], [ExpiredTime]) VALUES (1, 12, 4, CAST(N'2022-06-17T14:12:21.607' AS DateTime), CAST(N'2022-06-17T14:13:21.607' AS DateTime))
 INSERT [dbo].[QuizSession] ([SessionID], [AccountID], [QuizLessonID], [StartTime], [ExpiredTime]) VALUES (2, 12, 16, CAST(N'2022-06-16T17:58:50.683' AS DateTime), CAST(N'2022-06-16T18:08:50.683' AS DateTime))
 SET IDENTITY_INSERT [dbo].[QuizSession] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Setting] ON 
 
-INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (1, 1, N'EXPERT', 2, 1, N'USER_ROLE')
-INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (2, 2, N'CUSTOMER', 5, 1, N'USER_ROLE')
+INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (1, 1, N'EXPERT2', 2, 1, N'USER_ROLE')
+INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (2, 2, N'CUSTOMERs', 5, 1, N'USER_ROLE')
 INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (3, 3, N'SALE', 4, 1, N'USER_ROLE')
 INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (4, 4, N'ADMIN', 1, 1, N'USER_ROLE')
 INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (5, 5, N'MARKETING', 3, 1, N'USER_ROLE')
@@ -466,5 +514,6 @@ INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VA
 INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (38, 22, N'MANAGER', 7, 0, N'USER_ROLE')
 INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (40, 5, N'Really Hard', 7, 0, N'LEVEL_QUESTION')
 INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (41, 3, N'Text', 11, 0, N'TYPE_LESSON')
+INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (50, 5, N'fghj', 4, 1, N'LEVEL_QUESTION')
 SET IDENTITY_INSERT [dbo].[Setting] OFF
 GO
