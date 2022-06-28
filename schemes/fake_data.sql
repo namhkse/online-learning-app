@@ -101,7 +101,7 @@ INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate],
 <p>Heard has also filed a counterclaim against her ex-husband, alleging that Depp has created a smear campaign against her.</p>
 
 <p>Should the jury conclude that Heard defamed Depp, she will be ordered to pay him compensation for loss of earnings. He is seeking a sum of $50million (&pound;39.5m).</p>
-', CAST(N'2022-06-03' AS Date), 12, 1, N'1_5924332.jpg', 2503)
+', CAST(N'2022-06-03' AS Date), 12, 1, N'1_5924332.jpg', 2507)
 INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (3, N'S''pore worker wants to quit US$2,480 job because he has nothing to do in the office', N'Don''t overwork yourself, buddy.', N'<p>A worker based in Singapore has raised more than a few eyebrows after posting up his thoughts about his current job and the fact that he&#39;s thinking of quitting it because he has too little to do in the office.</p>
 
 <p>On May 26, 2022, the man named Kenji Ong took to a&nbsp; Singaporean Facebook group &nbsp;to lament his current job, which pays him S$3,400 (US$2,480) monthly.&nbsp; In the post, he said that he wanted to leave his position because he had almost nothing substantial to do on a daily basis.</p>
@@ -119,7 +119,7 @@ INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate],
 <p>He said that all in all, his job was relatively comfortable and fuss-free, although he had for months since returning to the office felt that there was something &quot;missing&quot;, and that he had become tired and lethargic after spending his working days in this way.</p>
 
 <p>&quot;Pretending to be busy while I have have nothing to do is unbearable,&quot; Ong said. &quot;Sometimes I really just want to scream &#39;Aaah! I&#39;m so bored!&#39;.&quot;</p>
-', CAST(N'2022-06-03' AS Date), 12, 1, N'bored-asian_2gbs.jpg', 2668)
+', CAST(N'2022-06-25' AS Date), 12, 0, N'', 2670)
 INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (4, N'Apple''s 24-inch iMac puts the fun back in family computer', N'When Apple introduced its 27-inch iMac last year, I had a strong feeling the company was attempting to bring back the family computer.', N'<p>When Apple introduced its&nbsp; 27-inch iMac last year , I had a strong feeling the company was attempting to bring back the family computer.&nbsp; And this year, it looks like Apple actually delivered.</p>
 
 <p>The new, colorful 24-inch iMac , which starts at US$1,200 and begins shipping May 21, is a clear callback to the old-school, colorful iMac G3 &mdash; Apple&#39;s original family computer that sat in most people&#39;s living rooms throughout the late &#39;90s and early 2000s.&nbsp; It acted as the central hub to the internet for all members of the household, both young and old.</p>
@@ -141,7 +141,7 @@ INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate],
 <p>The discussion moved onto reflecting on the experience of editing a film without the element of hindsight and instead editing global experiences that were happening in a moment that Nse and Mdhamiri were themselves very much a part of, and whether this was a challenge. Nse agreed that it was challenging, as director Kevin Macdonald didn&rsquo;t want the film to be a &lsquo;YouTube thing&rsquo; but rather wanted people to express what was going on in their lives. Nse also touched on the issue around how to portray the Black Lives Matter protests, as a lot of the footage was of people talking about the protests without being &lsquo;intimately connected&rsquo; to it; they entered the theme emotionally through a personal story of someone who was directly affected by the protests.&nbsp;</p>
 
 <p>&nbsp;</p>
-', CAST(N'2022-06-03' AS Date), 12, 1, N'Screenshot 2022-06-03 115348.jpg', 1382)
+', CAST(N'2022-06-03' AS Date), 12, 1, N'Screenshot 2022-06-03 115348.jpg', 1384)
 INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (6, N'Cute computer mouse also has a tiny computer in it', N'Mouse reception.', N'<p>&nbsp;</p>
 
 <p>Yeah, so you might have a fancy keyboard with a screen on it.</p>
@@ -161,22 +161,235 @@ INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate],
 <p>It&#39;s not the only creative use of a Raspberry Pi recently, with a&nbsp; swipe card-powered jukebox &nbsp;and an&nbsp; e-ink media player &nbsp;catching our eye as of late.</p>
 
 <p>&nbsp;</p>
-', CAST(N'2022-06-03' AS Date), 12, 1, N'hero-image.fill.size_1200x1200.v1614271136.png', 880)
-INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (7, N'dfgh', N'uyio', N'<p>yuio</p>
-', CAST(N'2022-06-03' AS Date), 12, 0, N'cat-3.jpg', 8)
+', CAST(N'2022-06-03' AS Date), 12, 1, N'hero-image.fill.size_1200x1200.v1614271136.png', 883)
+INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (8, N'huhu', N'haha', N'<p>dasdasdhaha</p>
+', CAST(N'2022-06-25' AS Date), 12, 0, N'', 0)
+INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (9, N'dasd', N'asd', N'<p>dsad</p>
+', CAST(N'2022-06-22' AS Date), 12, 0, N'', 0)
+INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (10, N'dasd', N'asd', N'<p>dsad</p>
+', CAST(N'2022-06-22' AS Date), 12, 0, N'', 0)
+INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (11, N'update', N'update', N'<p>upupdarw</p>
+
+<p>&nbsp;</p>
+', CAST(N'2022-06-26' AS Date), 12, 0, N'', 1)
+INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (14, N'asdas', N'dasdas', N'<p>dasdasd</p>
+', CAST(N'2022-06-26' AS Date), 12, 0, N'wallpaperflare.com_wallpaper (1).jpg', 0)
+INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (15, N'dasdas', N'dasdasdasd', N'<p>dasdasd</p>
+', CAST(N'2022-06-26' AS Date), 12, 0, N'wallpaperflare.com_wallpaper.jpg', 0)
+INSERT [dbo].[Blog] ([BlogID], [Title], [Description], [Content], [CreatedDate], [AuthorID], [Display], [ThumbnailUrl], [NumberOfView]) VALUES (16, N'new post', N'new post', N'<p>new new new new</p>
+', CAST(N'2022-06-26' AS Date), 12, 0, N'', 0)
 SET IDENTITY_INSERT [dbo].[Blog] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Course] ON 
 
-INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status]) VALUES (1, N'Python for Everybody', N'This Specialization builds on the success of the Python for Everybody course and will introduce fundamental programming concepts including data structures, networked application program interfaces, and databases, using the Python programming language. ', 9, N'https://wallpaperaccess.com/full/796849.jpg', N'https://wallpaperaccess.com/full/796849.jpg', CAST(N'1958-09-24' AS Date), CAST(N'1997-11-14' AS Date), CAST(67.00 AS Decimal(15, 2)), 1)
-INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status]) VALUES (2, N'Deep Learning', N'The Deep Learning Specialization is a foundational program that will help you understand the capabilities, challenges, and consequences of deep learning and prepare you to participate in the development of leading-edge AI technology.', 10, N'https://wallpaperaccess.com/full/1728956.jpg', N'https://wallpaperaccess.com/full/1728956.jpg', CAST(N'1988-02-16' AS Date), CAST(N'1979-11-12' AS Date), CAST(54.00 AS Decimal(15, 2)), 1)
-INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status]) VALUES (3, N'Bachelor of Applied Arts and Sciences', N'The fastest, most affordable way to complete your bachelor’s degree online from a top 9 research school in Texas while leveraging your previous college or military credits.', 9, N'https://wallpaperaccess.com/full/2970443.jpg', N'https://wallpaperaccess.com/full/2970443.jpg', CAST(N'1995-01-05' AS Date), CAST(N'2001-09-14' AS Date), CAST(89.00 AS Decimal(15, 2)), 1)
-INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status]) VALUES (4, N'Donald', N'in quantare', 10, N'img/default-course-tiny-4.jpg', N'img/default-course-thumbnail-6.jpg', CAST(N'1993-04-26' AS Date), CAST(N'1968-07-02' AS Date), CAST(76.00 AS Decimal(15, 2)), 1)
-INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status]) VALUES (5, N'Alana', N'non brevens,', 9, N'img/default-course-tiny-5.jpg', N'img/default-course-thumbnail-9.jpg', CAST(N'2002-03-20' AS Date), CAST(N'1957-09-03' AS Date), CAST(55.00 AS Decimal(15, 2)), 0)
-INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status]) VALUES (6, N'Dianna247', N'Multum fecundio,', 10, N'img/default-course-tiny-5.jpg', N'img/default-course-thumbnail-3.jpg', CAST(N'1954-12-03' AS Date), CAST(N'1997-10-26' AS Date), CAST(90.00 AS Decimal(15, 2)), 0)
-INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status]) VALUES (7, N'Gregory365', N'essit. egreddior', 10, N'img/default-course-tiny-6.jpg', N'img/default-course-thumbnail-0.jpg', CAST(N'2009-05-09' AS Date), CAST(N'1964-02-07' AS Date), CAST(87.00 AS Decimal(15, 2)), 0)
-INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status]) VALUES (8, N'Julia55', N'si bono vobis', 9, N'img/default-course-tiny-0.jpg', N'img/default-course-thumbnail-5.jpg', CAST(N'1954-09-07' AS Date), CAST(N'1989-07-14' AS Date), CAST(66.00 AS Decimal(15, 2)), 1)
-INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status]) VALUES (9, N'Mark7', N'Quad non fecit.', 10, N'img/default-course-tiny-8.jpg', N'img/default-course-thumbnail-0.jpg', CAST(N'1980-06-04' AS Date), CAST(N'2006-01-13' AS Date), CAST(33.00 AS Decimal(15, 2)), 0)
+INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status], [VideoIntroduce], [AboutCourse]) VALUES (1, N'Python for Everybody', N'This Specialization builds on the success of the Python for Everybody course and will introduce fundamental programming concepts including data structures, networked application program interfaces, and databases, using the Python programming language. ', 9, N'https://wallpaperaccess.com/full/796849.jpg', N'https://wallpaperaccess.com/full/796849.jpg', CAST(N'1958-09-24' AS Date), CAST(N'1997-11-14' AS Date), CAST(67.00 AS Decimal(15, 2)), 1, N'https://www.youtube.com/embed/viHILXVY_eU', N'Whether you’ve been tinkering with social media platforms for your
+                business already or are completely new to the field of digital marketing, you’ve come to the right
+                place. This six-course program, developed by digital marketing experts at Aptly together with Meta
+                marketers, includes an industry-relevant curriculum designed to prepare you for an entry-level role in
+                social media marketing.
+                <br>
+                <br>
+                After an introduction to digital marketing and major social media platforms, you’ll learn to establish
+                an online presence, create posts, build a following, and manage your social media accounts. You’ll
+                develop skills in creating and managing advertising campaigns in social media and learn to evaluate the
+                results of your marketing efforts.
+                <br>
+                <br>
+                Upon successful completion of the program, you’ll earn both the Coursera and the Meta Digital Marketing
+                Associate Certification, proving your skills in social media marketing and in the use of Meta Ads
+                Manager.
+                <br>
+                <br>
+                Once you earn your Meta Certification, you’ll get exclusive access to the new Meta Career Programs Job
+                Board—a job search platform that connects Meta Certified professionals with 200+ top employers who have
+                committed to sourcing talent through its certification programs. We’ll provide you with the link once
+                you’ve completed all the courses and passed the exam.')
+INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status], [VideoIntroduce], [AboutCourse]) VALUES (2, N'Deep Learning', N'The Deep Learning Specialization is a foundational program that will help you understand the capabilities, challenges, and consequences of deep learning and prepare you to participate in the development of leading-edge AI technology.', 10, N'https://wallpaperaccess.com/full/1728956.jpg', N'https://wallpaperaccess.com/full/1728956.jpg', CAST(N'1988-02-16' AS Date), CAST(N'1979-11-12' AS Date), CAST(54.00 AS Decimal(15, 2)), 1, N'https://www.youtube.com/embed/viHILXVY_eU', N'Whether you’ve been tinkering with social media platforms for your
+                business already or are completely new to the field of digital marketing, you’ve come to the right
+                place. This six-course program, developed by digital marketing experts at Aptly together with Meta
+                marketers, includes an industry-relevant curriculum designed to prepare you for an entry-level role in
+                social media marketing.
+                <br>
+                <br>
+                After an introduction to digital marketing and major social media platforms, you’ll learn to establish
+                an online presence, create posts, build a following, and manage your social media accounts. You’ll
+                develop skills in creating and managing advertising campaigns in social media and learn to evaluate the
+                results of your marketing efforts.
+                <br>
+                <br>
+                Upon successful completion of the program, you’ll earn both the Coursera and the Meta Digital Marketing
+                Associate Certification, proving your skills in social media marketing and in the use of Meta Ads
+                Manager.
+                <br>
+                <br>
+                Once you earn your Meta Certification, you’ll get exclusive access to the new Meta Career Programs Job
+                Board—a job search platform that connects Meta Certified professionals with 200+ top employers who have
+                committed to sourcing talent through its certification programs. We’ll provide you with the link once
+                you’ve completed all the courses and passed the exam.')
+INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status], [VideoIntroduce], [AboutCourse]) VALUES (3, N'Bachelor of Applied Arts and Sciences', N'The fastest, most affordable way to complete your bachelor’s degree online from a top 9 research school in Texas while leveraging your previous college or military credits.', 9, N'https://wallpaperaccess.com/full/2970443.jpg', N'https://wallpaperaccess.com/full/2970443.jpg', CAST(N'1995-01-05' AS Date), CAST(N'2001-09-14' AS Date), CAST(89.00 AS Decimal(15, 2)), 1, N'https://www.youtube.com/embed/viHILXVY_eU', N'Whether you’ve been tinkering with social media platforms for your
+                business already or are completely new to the field of digital marketing, you’ve come to the right
+                place. This six-course program, developed by digital marketing experts at Aptly together with Meta
+                marketers, includes an industry-relevant curriculum designed to prepare you for an entry-level role in
+                social media marketing.
+                <br>
+                <br>
+                After an introduction to digital marketing and major social media platforms, you’ll learn to establish
+                an online presence, create posts, build a following, and manage your social media accounts. You’ll
+                develop skills in creating and managing advertising campaigns in social media and learn to evaluate the
+                results of your marketing efforts.
+                <br>
+                <br>
+                Upon successful completion of the program, you’ll earn both the Coursera and the Meta Digital Marketing
+                Associate Certification, proving your skills in social media marketing and in the use of Meta Ads
+                Manager.
+                <br>
+                <br>
+                Once you earn your Meta Certification, you’ll get exclusive access to the new Meta Career Programs Job
+                Board—a job search platform that connects Meta Certified professionals with 200+ top employers who have
+                committed to sourcing talent through its certification programs. We’ll provide you with the link once
+                you’ve completed all the courses and passed the exam.')
+INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status], [VideoIntroduce], [AboutCourse]) VALUES (4, N'Javascript for Beginners Learn by Doing Practical Exercises', N'JavaScript for Beginners : Work closely with me doing exercises & learn more. I make Javascript easy for you guaranteed.', 10, N'https://c.wallhere.com/photos/cc/ce/1920x1080_px_JavaScript_minimalism-1473283.jpg!d', N'https://c.wallhere.com/photos/cc/ce/1920x1080_px_JavaScript_minimalism-1473283.jpg!d', CAST(N'1993-04-26' AS Date), CAST(N'1968-07-02' AS Date), CAST(76.00 AS Decimal(15, 2)), 1, N'https://www.youtube.com/embed/viHILXVY_eU', N'Whether you’ve been tinkering with social media platforms for your
+                business already or are completely new to the field of digital marketing, you’ve come to the right
+                place. This six-course program, developed by digital marketing experts at Aptly together with Meta
+                marketers, includes an industry-relevant curriculum designed to prepare you for an entry-level role in
+                social media marketing.
+                <br>
+                <br>
+                After an introduction to digital marketing and major social media platforms, you’ll learn to establish
+                an online presence, create posts, build a following, and manage your social media accounts. You’ll
+                develop skills in creating and managing advertising campaigns in social media and learn to evaluate the
+                results of your marketing efforts.
+                <br>
+                <br>
+                Upon successful completion of the program, you’ll earn both the Coursera and the Meta Digital Marketing
+                Associate Certification, proving your skills in social media marketing and in the use of Meta Ads
+                Manager.
+                <br>
+                <br>
+                Once you earn your Meta Certification, you’ll get exclusive access to the new Meta Career Programs Job
+                Board—a job search platform that connects Meta Certified professionals with 200+ top employers who have
+                committed to sourcing talent through its certification programs. We’ll provide you with the link once
+                you’ve completed all the courses and passed the exam.')
+INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status], [VideoIntroduce], [AboutCourse]) VALUES (5, N'Learn Python: The Complete Python Programming Course
+', N'Learn A-Z everything about Python, from the basics, to advanced topics like Python GUI, Python Data Analysis, and more!
+', 9, N'https://images.hdqwalls.com/wallpapers/python-logo-4k-i6.jpg', N'https://images.hdqwalls.com/wallpapers/python-logo-4k-i6.jpg', CAST(N'2002-03-20' AS Date), CAST(N'1957-09-03' AS Date), CAST(55.00 AS Decimal(15, 2)), 1, N'https://www.youtube.com/embed/viHILXVY_eU', N'Whether you’ve been tinkering with social media platforms for your
+                business already or are completely new to the field of digital marketing, you’ve come to the right
+                place. This six-course program, developed by digital marketing experts at Aptly together with Meta
+                marketers, includes an industry-relevant curriculum designed to prepare you for an entry-level role in
+                social media marketing.
+                <br>
+                <br>
+                After an introduction to digital marketing and major social media platforms, you’ll learn to establish
+                an online presence, create posts, build a following, and manage your social media accounts. You’ll
+                develop skills in creating and managing advertising campaigns in social media and learn to evaluate the
+                results of your marketing efforts.
+                <br>
+                <br>
+                Upon successful completion of the program, you’ll earn both the Coursera and the Meta Digital Marketing
+                Associate Certification, proving your skills in social media marketing and in the use of Meta Ads
+                Manager.
+                <br>
+                <br>
+                Once you earn your Meta Certification, you’ll get exclusive access to the new Meta Career Programs Job
+                Board—a job search platform that connects Meta Certified professionals with 200+ top employers who have
+                committed to sourcing talent through its certification programs. We’ll provide you with the link once
+                you’ve completed all the courses and passed the exam.')
+INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status], [VideoIntroduce], [AboutCourse]) VALUES (6, N'Learning Python for Data Analysis and Visualization
+', N'Learn python and how to use it to analyze,visualize and present data. Includes tons of sample code and hours of video!
+', 10, N'https://wallpapercave.com/wp/wp9904460.png', N'https://wallpapercave.com/wp/wp9904460.png', CAST(N'1954-12-03' AS Date), CAST(N'1997-10-26' AS Date), CAST(90.00 AS Decimal(15, 2)), 1, N'https://www.youtube.com/embed/viHILXVY_eU', N'Whether you’ve been tinkering with social media platforms for your
+                business already or are completely new to the field of digital marketing, you’ve come to the right
+                place. This six-course program, developed by digital marketing experts at Aptly together with Meta
+                marketers, includes an industry-relevant curriculum designed to prepare you for an entry-level role in
+                social media marketing.
+                <br>
+                <br>
+                After an introduction to digital marketing and major social media platforms, you’ll learn to establish
+                an online presence, create posts, build a following, and manage your social media accounts. You’ll
+                develop skills in creating and managing advertising campaigns in social media and learn to evaluate the
+                results of your marketing efforts.
+                <br>
+                <br>
+                Upon successful completion of the program, you’ll earn both the Coursera and the Meta Digital Marketing
+                Associate Certification, proving your skills in social media marketing and in the use of Meta Ads
+                Manager.
+                <br>
+                <br>
+                Once you earn your Meta Certification, you’ll get exclusive access to the new Meta Career Programs Job
+                Board—a job search platform that connects Meta Certified professionals with 200+ top employers who have
+                committed to sourcing talent through its certification programs. We’ll provide you with the link once
+                you’ve completed all the courses and passed the exam.')
+INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status], [VideoIntroduce], [AboutCourse]) VALUES (7, N'Photography for Kids: Project-Based Beginner Photography
+', N'Photography for Kids: Project-Based Beginner Photography
+', 10, N'https://wallpaperaccess.com/full/1209559.jpg', N'https://wallpaperaccess.com/full/1209559.jpg', CAST(N'2009-05-09' AS Date), CAST(N'1964-02-07' AS Date), CAST(0.00 AS Decimal(15, 2)), 1, N'https://www.youtube.com/embed/viHILXVY_eU', N'Whether you’ve been tinkering with social media platforms for your
+                business already or are completely new to the field of digital marketing, you’ve come to the right
+                place. This six-course program, developed by digital marketing experts at Aptly together with Meta
+                marketers, includes an industry-relevant curriculum designed to prepare you for an entry-level role in
+                social media marketing.
+                <br>
+                <br>
+                After an introduction to digital marketing and major social media platforms, you’ll learn to establish
+                an online presence, create posts, build a following, and manage your social media accounts. You’ll
+                develop skills in creating and managing advertising campaigns in social media and learn to evaluate the
+                results of your marketing efforts.
+                <br>
+                <br>
+                Upon successful completion of the program, you’ll earn both the Coursera and the Meta Digital Marketing
+                Associate Certification, proving your skills in social media marketing and in the use of Meta Ads
+                Manager.
+                <br>
+                <br>
+                Once you earn your Meta Certification, you’ll get exclusive access to the new Meta Career Programs Job
+                Board—a job search platform that connects Meta Certified professionals with 200+ top employers who have
+                committed to sourcing talent through its certification programs. We’ll provide you with the link once
+                you’ve completed all the courses and passed the exam.')
+INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status], [VideoIntroduce], [AboutCourse]) VALUES (8, N'Photoshop Master Course: From Beginner to Photoshop Pro
+', N'This Adobe Photoshop Beginner Course will teach a Beginner Photoshop user all essentials of Adobe Photoshop CC
+', 9, N'https://media5.sgp1.digitaloceanspaces.com/wp-content/uploads/2021/10/13115628/Adobe-Photoshop-Wallpapers.jpg', N'https://media5.sgp1.digitaloceanspaces.com/wp-content/uploads/2021/10/13115628/Adobe-Photoshop-Wallpapers.jpg', CAST(N'1954-09-07' AS Date), CAST(N'1989-07-14' AS Date), CAST(0.00 AS Decimal(15, 2)), 1, N'https://www.youtube.com/embed/viHILXVY_eU', N'Whether you’ve been tinkering with social media platforms for your
+                business already or are completely new to the field of digital marketing, you’ve come to the right
+                place. This six-course program, developed by digital marketing experts at Aptly together with Meta
+                marketers, includes an industry-relevant curriculum designed to prepare you for an entry-level role in
+                social media marketing.
+                <br>
+                <br>
+                After an introduction to digital marketing and major social media platforms, you’ll learn to establish
+                an online presence, create posts, build a following, and manage your social media accounts. You’ll
+                develop skills in creating and managing advertising campaigns in social media and learn to evaluate the
+                results of your marketing efforts.
+                <br>
+                <br>
+                Upon successful completion of the program, you’ll earn both the Coursera and the Meta Digital Marketing
+                Associate Certification, proving your skills in social media marketing and in the use of Meta Ads
+                Manager.
+                <br>
+                <br>
+                Once you earn your Meta Certification, you’ll get exclusive access to the new Meta Career Programs Job
+                Board—a job search platform that connects Meta Certified professionals with 200+ top employers who have
+                committed to sourcing talent through its certification programs. We’ll provide you with the link once
+                you’ve completed all the courses and passed the exam.')
+INSERT [dbo].[Course] ([CourseID], [Name], [Description], [InstructorID], [TinyPictureUrl], [ThumbnailUrl], [CreatedDate], [ModifiedDate], [Price], [Status], [VideoIntroduce], [AboutCourse]) VALUES (9, N'Google Ads for Beginners
+', N'Learn how to effectively use Google Ads to reach more customers online and grow your business.
+', 10, N'https://wallpapercave.com/wp/wp10324532.jpg', N'https://wallpapercave.com/wp/wp10324532.jpg', CAST(N'1980-06-04' AS Date), CAST(N'2006-01-13' AS Date), CAST(0.00 AS Decimal(15, 2)), 1, N'https://www.youtube.com/embed/viHILXVY_eU', N'Whether you’ve been tinkering with social media platforms for your
+                business already or are completely new to the field of digital marketing, you’ve come to the right
+                place. This six-course program, developed by digital marketing experts at Aptly together with Meta
+                marketers, includes an industry-relevant curriculum designed to prepare you for an entry-level role in
+                social media marketing.
+                <br>
+                <br>
+                After an introduction to digital marketing and major social media platforms, you’ll learn to establish
+                an online presence, create posts, build a following, and manage your social media accounts. You’ll
+                develop skills in creating and managing advertising campaigns in social media and learn to evaluate the
+                results of your marketing efforts.
+                <br>
+                <br>
+                Upon successful completion of the program, you’ll earn both the Coursera and the Meta Digital Marketing
+                Associate Certification, proving your skills in social media marketing and in the use of Meta Ads
+                Manager.
+                <br>
+                <br>
+                Once you earn your Meta Certification, you’ll get exclusive access to the new Meta Career Programs Job
+                Board—a job search platform that connects Meta Certified professionals with 200+ top employers who have
+                committed to sourcing talent through its certification programs. We’ll provide you with the link once
+                you’ve completed all the courses and passed the exam.')
 SET IDENTITY_INSERT [dbo].[Course] OFF
 GO
 SET IDENTITY_INSERT [dbo].[LessonType] ON 
@@ -345,16 +558,16 @@ SET IDENTITY_INSERT [dbo].[SubjectCategory] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Subject] ON 
 
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (1, N'Biology & Life Sciences', NULL, 2, 1, 1, N'cell-microbiology_spotlight.jpg', N'Biology & Life Sciences', 1, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (1, N'Biology & Life Sciences', 2, 2, 1, 1, N'cell-microbiology_spotlight.jpg', N'Biology & Life Sciences', 1, N'CATEGORY_SUBJECT', 9)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (2, N'Training', 3, NULL, 1, 1, N'training-dao-tao-trang-bi-nang-cao-kien-thuc-cho-nhan-vien.jpg', N'Training', 2, N'CATEGORY_SUBJECT', 10)
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (3, N'Language', NULL, 3, 1, 1, N'10-language-trends-in-elearning.jpg', N'Language', 3, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (3, N'Language', 4, 3, 1, 1, N'10-language-trends-in-elearning.jpg', N'Language', 3, N'CATEGORY_SUBJECT', 9)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (4, N'Design', 3, NULL, 0, 1, N'design.jpg', N'Design', 4, N'CATEGORY_SUBJECT', 10)
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (5, N'Data Analysis & Statistics', NULL, 1, 0, 1, N'main-qimg-86093833f5568a3579edf89c97254a68.jpg', N'Data Analysis & Statistics', 5, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (5, N'Data Analysis & Statistics', 5, 1, 0, 1, N'main-qimg-86093833f5568a3579edf89c97254a68.jpg', N'Data Analysis & Statistics', 5, N'CATEGORY_SUBJECT', 9)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (6, N'Architecture', 3, NULL, 0, 1, N'model-architecture.jpg', N'Architecture', 6, N'CATEGORY_SUBJECT', 10)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (7, N'Ethics', 5, NULL, 0, 1, N'Ethics-Blog-760x550-760x550.png', N'Ethics', 7, N'CATEGORY_SUBJECT', 9)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (8, N'Art & Culture', 6, NULL, 1, 1, N'Expeditions_Header_Artwork_Card_Size_1.max-1000x1000.jpg', N'Art & Culture', 8, N'CATEGORY_SUBJECT', 10)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (9, N'Chemistry', 2, NULL, 0, 1, N'chemistry_logo.png', N'Chemistry', 9, N'CATEGORY_SUBJECT', 9)
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (10, N'Economics & Finance', NULL, 1, 0, 1, N'activetrading1-5bfc2b9cc9e77c0026b4fbf9.jpg', N'Economics & Finance ', 10, N'CATEGORY_SUBJECT', 10)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (10, N'Economics & Finance', 1, 1, 0, 1, N'activetrading1-5bfc2b9cc9e77c0026b4fbf9.jpg', N'Economics & Finance ', 10, N'CATEGORY_SUBJECT', 10)
 SET IDENTITY_INSERT [dbo].[Subject] OFF
 GO
 INSERT [dbo].[SubjectAccount] ([AccountID], [SubjectID]) VALUES (9, 1)
@@ -409,14 +622,61 @@ INSERT [dbo].[BlogCategory] ([BlogCategoryID], [Name], [Description], [IconUrl],
 INSERT [dbo].[BlogCategory] ([BlogCategoryID], [Name], [Description], [IconUrl], [ThumbnailUrl], [Order], [Status], [type]) VALUES (4, N'Arts and Humanities', N'Id et quo quartu', N'https://nationalhumanitiescenter.org/wp-content/uploads/2019/04/nhc-hmaws-laptop-1440x900.jpg', N'https://nationalhumanitiescenter.org/wp-content/uploads/2019/04/nhc-hmaws-laptop-1440x900.jpg', 4, 1, N'CATEGORY_POST')
 INSERT [dbo].[BlogCategory] ([BlogCategoryID], [Name], [Description], [IconUrl], [ThumbnailUrl], [Order], [Status], [type]) VALUES (5, N'Business', N'linguens plorum', N'https://nationalhumanitiescenter.org/wp-content/uploads/2019/04/nhc-hmaws-laptop-1440x900.jpg', N'https://wallpaperaccess.com/full/656670.jpg', 5, 1, N'CATEGORY_POST')
 SET IDENTITY_INSERT [dbo].[BlogCategory] OFF
-GO
+SET IDENTITY_INSERT [dbo].[BlogSubCategory] ON 
+
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (1, N'IT Certifications', 1)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (2, N'Network & Security', 1)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (3, N'Hardware', 1)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (4, N'Operating Systems & Servers', 1)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (5, N'DevOps', 2)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (6, N'Python', 2)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (7, N'Docker', 2)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (8, N'Caculus', 3)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (9, N'Statistic', 3)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (10, N'Linear Algebra', 3)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (11, N'Phographer', 4)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (12, N'Design', 4)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (13, N'Digital Marketing', 5)
+INSERT [dbo].[BlogSubCategory] ([BlogSubCategoryID], [SubCategoryName], [BlogCategoryID]) VALUES (14, N'Social Media Marketing', 5)
+SET IDENTITY_INSERT [dbo].[BlogSubCategory] OFF
+INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (1, 1)
 INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (1, 2)
 INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (2, 4)
 INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (3, 5)
 INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (4, 1)
 INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (5, 4)
 INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (6, 1)
-INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (7, 2)
+INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (8, 3)
+INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (8, 4)
+INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (11, 2)
+INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (14, 1)
+INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (15, 4)
+INSERT [dbo].[BlogCategoryBlog] ([BlogID], [BlogCategoryID]) VALUES (16, 5)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (1, 4)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (1, 6)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (1, 14)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (2, 4)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (2, 6)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (2, 14)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (3, 4)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (5, 1)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (5, 11)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (6, 1)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (6, 11)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (7, 11)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (8, 8)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (9, 8)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (10, 8)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (11, 2)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (11, 5)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (11, 8)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (12, 5)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (12, 8)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (12, 15)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (13, 3)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (13, 16)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (14, 3)
+INSERT [dbo].[BlogSubCategoryBlog] ([BlogSubCategoryID], [BlogID]) VALUES (14, 16)
 GO
 
 INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (1, 1)
@@ -428,8 +688,18 @@ INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (2, 6)
 INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (2, 7)
 INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (2, 8)
 INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (2, 9)
-GO
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (3, 1)
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (3, 2)
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (3, 5)
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (4, 1)
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (4, 2)
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (4, 6)
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (4, 7)
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (5, 7)
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (5, 8)
+INSERT [dbo].[SubjectCourse] ([SubjectID], [CourseID]) VALUES (5, 9)
 
+GO
 
 
 SET IDENTITY_INSERT [dbo].[Answer] ON 
@@ -517,3 +787,89 @@ INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VA
 INSERT [dbo].[Setting] ([SettingID], [id], [Name], [Order], [Status], [type]) VALUES (50, 5, N'fghj', 4, 1, N'LEVEL_QUESTION')
 SET IDENTITY_INSERT [dbo].[Setting] OFF
 GO
+SET IDENTITY_INSERT [dbo].[Objective] ON 
+
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (1, N'Have an intermediate skill level of Python programming.', 1)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (2, N'Use the Jupyter Notebook Environment.
+', 1)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (3, N'Use the numpy library to create and manipulate arrays.
+', 1)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (4, N'Have a portfolio of various data analysis projects.
+', 1)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (5, N'Use the pandas module with Python to create and structure data.
+', 1)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (6, N'Have an intermediate skill level of Python programming.', 2)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (7, N'Have an intermediate skill level of Python programming.', 3)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (8, N'Have an intermediate skill level of Python programming.', 4)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (9, N'Have an intermediate skill level of Python programming.', 5)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (10, N'Have an intermediate skill level of Python programming.', 6)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (11, N'Have an intermediate skill level of Python programming.', 7)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (12, N'Have an intermediate skill level of Python programming.', 8)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (13, N'Have an intermediate skill level of Python programming.', 9)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (14, N'Use the Jupyter Notebook Environment.
+', 2)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (15, N'Use the Jupyter Notebook Environment.
+', 3)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (16, N'Use the Jupyter Notebook Environment.
+', 4)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (17, N'Use the Jupyter Notebook Environment.
+', 5)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (18, N'Use the Jupyter Notebook Environment.
+', 6)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (19, N'Use the Jupyter Notebook Environment.
+', 7)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (20, N'Use the Jupyter Notebook Environment.
+', 8)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (21, N'Use the Jupyter Notebook Environment.
+', 9)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (22, N'Use the numpy library to create and manipulate arrays.
+', 2)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (23, N'Use the numpy library to create and manipulate arrays.
+', 3)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (24, N'Use the numpy library to create and manipulate arrays.
+', 4)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (25, N'Use the numpy library to create and manipulate arrays.
+', 5)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (26, N'Use the numpy library to create and manipulate arrays.
+', 6)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (27, N'Use the numpy library to create and manipulate arrays.
+', 7)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (28, N'Use the numpy library to create and manipulate arrays.
+', 8)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (29, N'Use the numpy library to create and manipulate arrays.
+', 9)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (30, N'Have a portfolio of various data analysis projects.
+', 2)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (31, N'Have a portfolio of various data analysis projects.
+', 3)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (32, N'Have a portfolio of various data analysis projects.
+', 4)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (33, N'Have a portfolio of various data analysis projects.
+', 5)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (34, N'Have a portfolio of various data analysis projects.
+', 6)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (35, N'Have a portfolio of various data analysis projects.
+', 7)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (36, N'Have a portfolio of various data analysis projects.
+', 8)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (37, N'Have a portfolio of various data analysis projects.
+', 9)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (38, N'Use the pandas module with Python to create and structure data.
+', 2)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (39, N'Use the pandas module with Python to create and structure data.
+', 3)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (40, N'Use the pandas module with Python to create and structure data.
+', 4)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (41, N'Use the pandas module with Python to create and structure data.
+', 5)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (42, N'Use the pandas module with Python to create and structure data.
+', 6)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (43, N'Use the pandas module with Python to create and structure data.
+', 7)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (44, N'Use the pandas module with Python to create and structure data.
+', 8)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (45, N'Use the pandas module with Python to create and structure data.
+', 9)
+INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (46, N'Use the pandas module with Python to create and structure data.
+', NULL)
+SET IDENTITY_INSERT [dbo].[Objective] OFF
