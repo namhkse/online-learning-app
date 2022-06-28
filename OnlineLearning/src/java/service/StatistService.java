@@ -1,25 +1,27 @@
 package service;
 
 import com.google.gson.Gson;
-import dao.StatistDAO;
+import dao.StatisticDAO;
+import java.time.LocalDate;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/statist")
+@Path("/statistics")
 public class StatistService {
-    
-    private final StatistDAO statistDAO;
+
+    private final StatisticDAO statistDAO;
     private final Gson gson;
-    
+
     public StatistService() {
-        statistDAO = new StatistDAO();
+        statistDAO = new StatisticDAO();
         gson = new Gson();
     }
-    
+
     @GET
     @Path("/coursesubject")
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,7 +36,7 @@ public class StatistService {
         }
         return resp;
     }
-    
+
     @GET
     @Path("/enrollcourse")
     @Produces(MediaType.APPLICATION_JSON)
@@ -49,22 +51,53 @@ public class StatistService {
         }
         return resp;
     }
-    
+
+    /**
+     * Default get before 7 months
+     *
+     * @return
+     */
     @GET
     @Path("/revenue")
     @Produces(MediaType.APPLICATION_JSON)
     public Response fetchRevenue() {
         Response resp = null;
+        LocalDate today = LocalDate.now();
+        LocalDate before7Months = today.minusMonths(7);
         try {
-            List table = statistDAO.calculateRevenues();
+            List table = statistDAO.calculateRevenues(before7Months.getMonthValue(),
+                    before7Months.getYear(),
+                    today.getMonthValue(),
+                    today.getYear());
             String json = gson.toJson(table, List.class);
             resp = Response.ok(json).build();
         } catch (Exception ex) {
+            ex.printStackTrace();
             return Response.serverError().build();
         }
         return resp;
     }
-    
+
+    @GET
+    @Path("/revenue/{m1}/{y1}/{m2}/{y2}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response fetchRevenue(@PathParam("m1") int m1,
+            @PathParam("y1") int y1,
+            @PathParam("m2") int m2,
+            @PathParam("y2") int y2) {
+        Response resp = null;
+
+        try {
+            List table = statistDAO.calculateRevenues(m1, y1, m2, y2);
+            String json = gson.toJson(table, List.class);
+            resp = Response.ok(json).build();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return Response.serverError().build();
+        }
+        return resp;
+    }
+
     @GET
     @Path("/blogcategorytrend")
     @Produces(MediaType.APPLICATION_JSON)
@@ -72,6 +105,21 @@ public class StatistService {
         Response resp = null;
         try {
             List table = statistDAO.countNumberViewOfAllBlogCategory();
+            String json = gson.toJson(table, List.class);
+            resp = Response.ok(json).build();
+        } catch (Exception ex) {
+            return Response.serverError().build();
+        }
+        return resp;
+    }
+
+    @GET
+    @Path("/amount_account_subject")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response fetchNumberOfAccountInAllSubject() {
+        Response resp = null;
+        try {
+            List table = statistDAO.getAmountEnrollInAllSubject();
             String json = gson.toJson(table, List.class);
             resp = Response.ok(json).build();
         } catch (Exception ex) {

@@ -31,11 +31,12 @@
                 <div class="col-1 col-sm-2 bg-dark p-0 collapse-horizontal overflow-auto vh-100" id="navbarTogglerDemo01">
                     <jsp:include page="sidenav.jsp?page=Dashboard"/>
                 </div>
-                
+
                 <!--Page Content-->
                 <div class="col p-0 vh-100 overflow-auto">
                     <jsp:include page="navbar-header.jsp?page=Dashboard"/>
 
+                    <!--New Account Card-->
                     <div class="container bg-light">
                         <div class="row">
                             <div class="col-6 col-lg-3 mb-3">
@@ -52,11 +53,12 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-white bg-success">
-                                        Last Month: ${newAccountInLastMonth}
+                                        New users in last month: ${newAccountInLastMonth}
                                     </div>
                                 </div>
                             </div>
 
+                            <!--Revenue Card-->
                             <div class="col-6 col-lg-3 mb-3">
                                 <div class="card">
                                     <div class="card-body">
@@ -87,6 +89,7 @@
                                 </div>
                             </div>
 
+                            <!--Amount Visit Page-->
                             <div class="col-6 col-lg-3 mb-3">
                                 <div class="card">
                                     <div class="card-body">
@@ -102,11 +105,12 @@
                                         </div>
                                     </div>
                                     <div class="card-footer text-white bg-primary">
-                                        Lastest
+                                        Number access page today
                                     </div>
                                 </div>
                             </div>
 
+                            <!--Total Revenue Card-->
                             <div class="col-6 col-lg-3 mb-1 mb-3">
                                 <div class="card">
                                     <div class="card-body">
@@ -132,14 +136,24 @@
                         </div>
 
                         <div class="row m-4 mx-0">
-                            <div>
-                                <h5 class="card-title">Revenue Statistics</h5>
-                                <div class="card p-4">
-                                    <canvas id="revenueChart"></canvas>
+                            <!--Revenue Chart-->
+                            <h5 class="card-title">Revenue Statistics</h5>
+                            <div class="col-12 col-sm-6">
+                                <div class="input-group mb-3 input-group-sm">
+                                    <span class="input-group-text">From</span>
+                                    <input id="fromMonth" type="text" class="form-control" placeholder="MM/yyyy">
+
+                                    <span class="input-group-text">To</span>
+                                    <input id="toMonth" type="text" class="form-control" placeholder="MM/yyyy">
                                 </div>
+                            </div>
+                            <!--Revenue Chart-->
+                            <div class="card p-4">
+                                <canvas id="revenueChart"></canvas>
                             </div>
                         </div>
 
+                        <!--Subject And Course Chart-->
                         <div class="row">
                             <div class="col-12 col-md-8">
                                 <canvas id="myChart"></canvas>
@@ -148,17 +162,21 @@
                                 <canvas id="subjectChart"></canvas>
                             </div>
                         </div>
-                                                    
+
                         <div class="row mt-4 border rounded m-0 p-2">
-                            <div class="col-md-4">
-                                <canvas id="blogTrendChart"></canvas>
+                            <div class="col-md-6">
+                                <canvas id="subjectEnrollTrend"></canvas>
                             </div>
 
-                            <div class="col-md-8">
+                            <!--Most Enrolled Courses Table-->
+                            <div class="col-md-5 mt-3">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="card-title">Most Enrolled Courses</div>
-                                        <div class="table-wraper">
+                                        <h4 class="card-title">
+                                            <i class="fa-solid fa-star text-warning"></i>
+                                            Most Enrolled Courses
+                                        </h4>
+                                        <div class="overflow-auto" style="height: 50vh">
                                             <table id="courseEnrollTable" class="table">
                                                 <thead>
                                                 <th>#Top</th>
@@ -166,7 +184,7 @@
                                                 <th>Registration</th>
                                                 </thead>
                                                 <tbody>
-                                                    <!--Data goes here-->
+                                                    <!--Table data goes here-->
                                                 </tbody>
                                             </table>
                                         </div>
@@ -174,10 +192,12 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
+        <!--Chart JS-->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="../js/statistics.js"></script>
     </body>

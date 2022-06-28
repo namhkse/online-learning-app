@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class StatistDAO extends DBContext {
+public class StatisticDAO extends DBContext {
 
-    private static final Logger LOG = Logger.getLogger(StatistDAO.class.getName());
+    private static final Logger LOG = Logger.getLogger(StatisticDAO.class.getName());
 
     private class CourseSubjectArgs {
 
@@ -71,18 +71,21 @@ public class StatistDAO extends DBContext {
         return ls;
     }
 
+    /**
+     * Calculate income up to now.
+     *
+     * @return income up to now
+     */
     public double getAllEarning() {
         String sql = "select sum(Amount) from TransactionHistory";
-        double total = 0;
+        double income = 0;
         try (Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)) {
-            if (rs.next()) {
-                total = rs.getDouble(1);
-            }
+            income = rs.next() ? rs.getDouble(1) : 0;
         } catch (SQLException ex) {
-            LOG.warning(ex.getMessage());
+            ex.printStackTrace();
         }
-        return total;
+        return income;
     }
 
     /**
@@ -90,28 +93,64 @@ public class StatistDAO extends DBContext {
      */
     private class RevenueArgs {
 
-        private final String monthInYear;
-        private final double revenue;
+        private int month;
+        private int year;
+        private double revenue;
 
-        public RevenueArgs(String monthInYear, double revenue) {
-            this.monthInYear = monthInYear;
+        public RevenueArgs(int month, int year, double revenue) {
+            this.month = month;
+            this.year = year;
             this.revenue = revenue;
         }
     }
 
-    public List calculateRevenues() throws SQLException {
+    public List calculateRevenues(int m1, int y1, int m2, int y2) throws SQLException {
         List<RevenueArgs> ls = new ArrayList<>();
         String sql = "select\n"
-                + "	FORMAT(TrasactionTime, 'MM/yyyy') [MonthInYear],\n"
+                + "	MONTH(TrasactionTime) [Month],\n"
+                + "     YEAR(TrasactionTime) [Year],\n"
                 + "	SUM(Amount) [Revenue]\n"
                 + "from TransactionHistory\n"
-                + "group by FORMAT(TrasactionTime, 'MM/yyyy')\n"
-                + "order by MonthInYear";
+                + "where \n"
+                + "	Year(TrasactionTime) between ? and ?\n"
+                + "group by MONTH(TrasactionTime), YEAR(TrasactionTime)\n"
+                + "order by [Month], [Year]\n"
+                + "\n"
+                + "\n"
+                + "select * from TransactionHistory\n"
+                + "";
 
-        try (Statement stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery(sql)) {
+        for (int year = y1; year <= y2; year++) {
+            int start = 1;
+            int end = 12;
+            if (year == y1) {
+                start = m1;
+            }
+            if (year == y2) {
+                end = m2;
+            }
+            for (int m = start; m <= end; m++) {
+                RevenueArgs r = new RevenueArgs(m, year, 0);
+                ls.add(r);
+            }
+        }
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, y1);
+            stmt.setInt(2, y2);
+
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                ls.add(new RevenueArgs(rs.getString("MonthInYear"), rs.getDouble("Revenue")));
+                int m = rs.getInt("Month");
+                int y = rs.getInt("Year");
+                double revenue = rs.getDouble("Revenue");
+
+                for (RevenueArgs r : ls) {
+                    if (r.month == m && r.year == y) {
+                        r.revenue = revenue;
+                        break;
+                    }
+                }
             }
         }
 
@@ -180,6 +219,7 @@ public class StatistDAO extends DBContext {
      * @return
      * @throws SQLException
      */
+    @Deprecated
     public Map<String, Integer> getNumberOfNewAccount(String MM_YYYY) {
         String sql = "select \n"
                 + "	MonthInYear = FORMAT(CreatedTime, 'MM/yyyy') ,\n"
@@ -200,37 +240,57 @@ public class StatistDAO extends DBContext {
                 map.put("NumberNewAccount", 0);
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
+            LOG.warning(ex.getMessage());
         }
 
         return map;
     }
 
+    public int countNewAccount(int month, int year) {
+        String sql = "select count(AccountID) from Account "
+                + "where MONTH(CreatedTime) = ? and YEAR(CreatedTime) = ?";
+        int n = 0;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, month);
+            stmt.setInt(2, year);
+            ResultSet rs = stmt.executeQuery();
+            n = rs.next() ? rs.getInt(1) : 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return n;
+    }
+
+    /**
+     * Returns the number access the web app in a day.
+     *
+     * @param date
+     * @return the number access in the passed date.
+     */
     public int getNumberVisitPage(LocalDate date) {
         int counter = 0;
-        String sql = "select * from ViewPage where date = ?";
+        String sql = "select * from PageViewCounter where date = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setDate(1, java.sql.Date.valueOf(date));
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                counter = rs.getInt(2);
-            }
+            counter = rs.next() ? rs.getInt(2) : 0;
         } catch (Exception ex) {
             LOG.warning(ex.getMessage());
         }
         return counter;
     }
 
-    public void plusNumberVisistPage(LocalDate date, int n) {
-        String sql = "select * from ViewPage where [date] = ?";
+    public void plusNumberVisitPage(LocalDate date, int n) {
+        String sql = "select * from PageViewCounter where [date] = ?";
         try (PreparedStatement stmt
                 = connection.prepareCall(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             stmt.setDate(1, java.sql.Date.valueOf(date));
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                int lastVisitNumber = rs.getInt(2);
-                lastVisitNumber++;
-                rs.updateInt(2, lastVisitNumber);
+                int newNumberVisitPage = rs.getInt(2) + n;
+                rs.updateInt(2, newNumberVisitPage);
                 rs.updateRow();
             } else {
                 rs.moveToInsertRow();
@@ -241,5 +301,66 @@ public class StatistDAO extends DBContext {
         } catch (SQLException ex) {
             LOG.warning(ex.getMessage());
         }
+    }
+
+    class AmountAccountEnrollInSubjectArgs {
+
+        private int subjectId;
+        private String subjectName;
+        private int amountEnrolled;
+        private int totalAccount;
+
+        public AmountAccountEnrollInSubjectArgs(int subjectId, String subjectName, int amountEnrolled, int totalAccount) {
+            this.subjectId = subjectId;
+            this.subjectName = subjectName;
+            this.amountEnrolled = amountEnrolled;
+            this.totalAccount = totalAccount;
+        }
+    }
+
+    public List<AmountAccountEnrollInSubjectArgs> getAmountEnrollInAllSubject() {
+        String sqlCountTotalAccount = "select count(AccountID) from Account";
+        int totalAccount = 0;
+        List<AmountAccountEnrollInSubjectArgs> ls = new ArrayList<>();
+
+        try (Statement stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(sqlCountTotalAccount)) {
+            if (rs.next()) {
+                totalAccount = rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        if (totalAccount == 0) {
+            return ls;
+        }
+
+        String sqlSelectSubject = "select SubjectID, Name from Subject";
+
+        String sqlCountAccountOfSubject = "select "
+                + "	count(t.AccountID) [AmountAccountEnroll]\n"
+                + "from TransactionHistory as t\n"
+                + "	inner join Course as c on t.CourseID = c.CourseID\n"
+                + "	inner join  SubjectCourse as sc on t.CourseID = sc.CourseID\n"
+                + "where SubjectID = ?\n"
+                + "group by sc.SubjectID";
+        try (PreparedStatement countAccountStmt = connection.prepareStatement(sqlCountAccountOfSubject);
+                Statement selectSubjectStmt = connection.createStatement();
+                ResultSet subjectTable = selectSubjectStmt.executeQuery(sqlSelectSubject)) {
+            while (subjectTable.next()) {
+                int subjectId = subjectTable.getInt(1);
+                String subjectName = subjectTable.getString(2);
+
+                countAccountStmt.setInt(1, subjectId);
+                ResultSet rs = countAccountStmt.executeQuery();
+                int amountAccountEnroll = (rs.next()) ? rs.getInt(1) : 0;
+                ls.add(new AmountAccountEnrollInSubjectArgs(subjectId, subjectName, amountAccountEnroll, totalAccount));
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return ls;
     }
 }

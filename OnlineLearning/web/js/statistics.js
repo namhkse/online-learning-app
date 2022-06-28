@@ -1,3 +1,15 @@
+const COLORS = [
+    '#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+    '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+    '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+    '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+    '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+    '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+    '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+    '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+    '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+    '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'
+];
 const ctx = document.getElementById('myChart').getContext('2d');
 const blogTrendChart = new Chart(ctx, {
     type: 'bar',
@@ -20,7 +32,7 @@ const blogTrendChart = new Chart(ctx, {
         plugins: {
             title: {
                 display: true,
-                text: 'Blog Trend Chart',
+                text: 'Blog Category Trend Chart',
                 position: 'bottom',
                 font: {
                     size: 16
@@ -29,6 +41,7 @@ const blogTrendChart = new Chart(ctx, {
         }
     }
 });
+
 
 const subjectCtx = document.getElementById("subjectChart");
 const subjectChart = new Chart(subjectCtx, {
@@ -42,11 +55,7 @@ const subjectChart = new Chart(subjectCtx, {
         datasets: [{
                 label: 'My First Dataset',
                 data: [300, 50, 100],
-                backgroundColor: [
-                    'rgb(255, 99, 132)',
-                    'rgb(54, 162, 235)',
-                    'rgb(255, 205, 86)'
-                ],
+                backgroundColor: COLORS,
                 hoverOffset: 4
             }]
     },
@@ -67,22 +76,14 @@ const subjectChart = new Chart(subjectCtx, {
     }
 });
 
-const blogTrendCtx = document.getElementById("blogTrendChart");
-const blogTrendChart2 = new Chart(blogTrendCtx, {
+const subjectEnrollTrendCtx = document.getElementById("subjectEnrollTrend");
+const subjectEnrollTrend = new Chart(subjectEnrollTrendCtx, {
     type: 'radar',
     data: {
-        labels: [
-            'Eating',
-            'Drinking',
-            'Sleeping',
-            'Designing',
-            'Coding',
-            'Cycling',
-            'Running'
-        ],
+        labels: [],
         datasets: [{
-                label: 'My First Dataset',
-                data: [65, 59, 90, 81, 56, 55, 40],
+                label: 'The probability that a user enrolls in a course on this subject',
+                data: [],
                 fill: true,
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgb(255, 99, 132)',
@@ -90,17 +91,22 @@ const blogTrendChart2 = new Chart(blogTrendCtx, {
                 pointBorderColor: '#fff',
                 pointHoverBackgroundColor: '#fff',
                 pointHoverBorderColor: 'rgb(255, 99, 132)'
-            }, {
-                label: 'My Second Dataset',
-                data: [28, 48, 40, 19, 96, 27, 100],
-                fill: true,
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgb(54, 162, 235)',
-                pointBackgroundColor: 'rgb(54, 162, 235)',
-                pointBorderColor: '#fff',
-                pointHoverBackgroundColor: '#fff',
-                pointHoverBorderColor: 'rgb(54, 162, 235)'
             }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Possibly Interested In A Subject Of An Account',
+                position: 'bottom',
+                font: {
+                    size: 16
+                }
+            }
+        }
     }
 });
 
@@ -111,7 +117,7 @@ const revenueChart = new Chart(revenueCtx, {
         labels: [],
         datasets: [{
                 data: [],
-                label: "",
+                label: "Income",
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -132,11 +138,20 @@ const revenueChart = new Chart(revenueCtx, {
             }]
     },
     options: {
-//        scales: {
-//            y: {
-//                beginAtZero: true
-//            }
-//        }
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function (value, index, values) {
+                        if (parseInt(value) >= 1000) {
+                            return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                            return '$' + value;
+                        }
+                    }
+                }
+            }
+        },
         plugins: {
             legend: {
                 display: false
@@ -146,7 +161,7 @@ const revenueChart = new Chart(revenueCtx, {
 });
 
 function drawCourseSubjectChart() {
-    fetch("http://localhost:8080/OnlineLearning/api/statist/coursesubject")
+    fetch("../api/statistics/coursesubject")
             .then(resp => resp.json())
             .then(data => {
                 let subjects = data.map(e => e.subject)
@@ -160,7 +175,7 @@ function drawCourseSubjectChart() {
 
 function drawCourseEnrollTable() {
     let tableContent = document.getElementById("courseEnrollTable").querySelector("tbody");
-    fetch("../api/statist/enrollcourse")
+    fetch("../api/statistics/enrollcourse")
             .then(resp => resp.json())
             .then(data => {
                 let n = 1;
@@ -183,11 +198,16 @@ function drawCourseEnrollTable() {
             .catch(error => console.log(error))
 }
 
-function drawRevenueChart() {
-    fetch("../api/statist/revenue")
+
+function drawRevenueChart(m1, y1, m2, y2) {
+    let url = (m1 && y1 && m2 && y2)
+            ? `../api/statistics/revenue/${m1}/${y1}/${m2}/${y2}`
+            : "../api/statistics/revenue";
+
+    fetch(url)
             .then(resp => resp.json())
             .then(data => {
-                let monthInYear = data.map(e => e.monthInYear);
+                let monthInYear = data.map(e => e.month + "/" + e.year);
                 let revenues = data.map(e => e.revenue);
                 revenueChart.data.labels = monthInYear;
                 revenueChart.data.datasets[0].data = revenues;
@@ -197,7 +217,7 @@ function drawRevenueChart() {
 }
 
 function drawBlogTrendChart() {
-    fetch("../api/statist/blogcategorytrend")
+    fetch("../api/statistics/blogcategorytrend")
             .then(resp => resp.json())
             .then(data => {
                 let blogCategories = data.map(e => e.blogCategoryName);
@@ -208,6 +228,69 @@ function drawBlogTrendChart() {
             })
             .catch(error => console.log(error));
 }
+
+function drawSubjectEnrollTrend() {
+    fetch("../api/statistics/amount_account_subject")
+            .then(resp => resp.json())
+            .then(data => {
+                let subjectNames = data.map(e => e.subjectName);
+                let amountEnrolled = data.map(e => e.amountEnrolled / e.totalAccount);
+                subjectEnrollTrend.data.labels = subjectNames;
+                subjectEnrollTrend.data.datasets[0].data = amountEnrolled;
+                subjectEnrollTrend.update();
+            })
+            .catch(error => console.log(error));
+}
+
+const fromMonthInput = document.getElementById("fromMonth");
+const toMonthInput = document.getElementById("toMonth");
+
+function searchRevenueEventHandler() {
+    let str1 = fromMonthInput.value;
+    let str2 = toMonthInput.value;
+    const pattern = /^(\d?\d)(\/\d{4})$/;
+
+    const styleInvalidInput = (input, borderStyle) => input.style.borderRight = borderStyle;
+    let invalidBorderStyle = "5px red solid";
+
+    styleInvalidInput(fromMonthInput, "");
+    styleInvalidInput(toMonthInput, "");
+
+
+    if (!pattern.test(str1)) {
+        styleInvalidInput(fromMonthInput, invalidBorderStyle);
+        return;
+    }
+
+    if (!pattern.test(str2)) {
+        styleInvalidInput(toMonthInput, invalidBorderStyle);
+        return;
+    }
+
+    let tokens = str1.split("/");
+    let m1 = parseInt(tokens[0]);
+    let y1 = parseInt(tokens[1]);
+    tokens = str2.split("/");
+    let m2 = parseInt(tokens[0]);
+    let y2 = parseInt(tokens[1]);
+
+    if (m1 > 12) {
+        styleInvalidInput(fromMonthInput, invalidBorderStyle);
+        return;
+    }
+
+    if (m2 > 12) {
+        styleInvalidInput(toMonthInput, invalidBorderStyle);
+        return;
+    }
+
+    drawRevenueChart(m1, y1, m2, y2);
+}
+
+fromMonthInput.addEventListener('change', () => searchRevenueEventHandler());
+toMonthInput.addEventListener('change', () => searchRevenueEventHandler());
+
+drawSubjectEnrollTrend();
 drawBlogTrendChart();
 drawCourseSubjectChart();
 drawCourseEnrollTable();

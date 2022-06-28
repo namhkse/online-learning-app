@@ -47,6 +47,7 @@
         </libraries>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>forEach</word>
+            <word>JQuery</word>
         </spellchecker-wordlist>
     </configuration>
 </project>

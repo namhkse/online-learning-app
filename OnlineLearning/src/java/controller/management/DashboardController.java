@@ -1,10 +1,8 @@
 package controller.management;
 
-import dao.StatistDAO;
+import dao.StatisticDAO;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Map;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,32 +17,32 @@ public class DashboardController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("/view/dashboard.jsp");
-        StatistDAO statistDAO = new StatistDAO();
+        StatisticDAO statistDAO = new StatisticDAO();
         LocalDate today = LocalDate.now();
+        LocalDate todayInLastMonth = today.minusMonths(1);
 
-        int newAccountInThisMonth = statistDAO.getNumberOfNewAccount(
-                today.format(DateTimeFormatter.ofPattern("MM/yyyy"))).get("NumberNewAccount");
-
-        int newAccountInLastMonth = statistDAO.getNumberOfNewAccount(
-                today.minusMonths(1).format(DateTimeFormatter.ofPattern("MM/yyyy"))).get("NumberNewAccount");
-
+        int newAccountInThisMonth = statistDAO.countNewAccount(today.getMonthValue(), today.getYear());
         req.setAttribute("newAccountInThisMonth", newAccountInThisMonth);
+        
+        int newAccountInLastMonth = statistDAO.countNewAccount(todayInLastMonth.getMonthValue(), todayInLastMonth.getYear());
         req.setAttribute("newAccountInLastMonth", newAccountInLastMonth);
 
         int numberVisitPageToday = statistDAO.getNumberVisitPage(today);
         req.setAttribute("numberVisitPageToday", numberVisitPageToday);
 
         double revenueThisYear = statistDAO.calculateRevenueInYear(today.getYear());
-        double revenueLastYear = statistDAO.calculateRevenueInYear(today.getYear() - 1);
-        double totalEarning = statistDAO.getAllEarning();
-
-        req.setAttribute("totalEarning", totalEarning);
-        req.setAttribute("revenueRatio", calRevenueChange(revenueLastYear, revenueThisYear));
         req.setAttribute("revenueThisYear", revenueThisYear);
+        
+        double revenueLastYear = statistDAO.calculateRevenueInYear(today.getYear() - 1);
+        req.setAttribute("revenueRatio", caculateRevenueRatio(revenueLastYear, revenueThisYear));
+        
+        double totalEarning = statistDAO.getAllEarning();
+        req.setAttribute("totalEarning", totalEarning);
+
         dispatcher.forward(req, resp);
     }
 
-    private double calRevenueChange(double lastYear, double thisYear) {
+    private double caculateRevenueRatio(double lastYear, double thisYear) {
         if (lastYear == 0) {
             return 100;
         }
