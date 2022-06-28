@@ -14,6 +14,24 @@ import model.SubjectMainCategory;
 
 public class SubjectDAO extends DBContext {
 
+    public Subject mappingData(ResultSet rs) throws SQLException {
+        SubjectCategory sc = new SubjectCategory();
+        sc.setCategoryID(rs.getInt("CategoryID"));
+
+        Subject subject = new Subject();
+        subject.setSubjectId(rs.getInt("SubjectID"));
+        subject.setName(rs.getString("Name"));
+        subject.setCategoryID(sc);
+        subject.setFeatured(rs.getBoolean("Featured"));
+        subject.setStatus(rs.getBoolean("Status"));
+        subject.setImage(rs.getString("Image"));
+        subject.setDescription(rs.getString("Description"));
+        subject.setOrder(rs.getInt("Order"));
+        subject.setType(rs.getString("type"));
+
+        return subject;
+    }
+
     public ArrayList<Subject> getAllSubjects() {
         ArrayList<Subject> subjects = new ArrayList<>();
         try {
@@ -309,13 +327,7 @@ public class SubjectDAO extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                Subject subject = new Subject();
-                subject.setSubjectId(rs.getInt("SubjectID"));
-                subject.setOrder(rs.getInt("Order"));
-                subject.setStatus(rs.getBoolean("Status"));
-                subject.setName(rs.getString("Name"));
-                subject.setType(rs.getString("type"));
-
+                Subject subject = mappingData(rs);
                 return subject;
             }
         } catch (SQLException ex) {
@@ -363,11 +375,29 @@ public class SubjectDAO extends DBContext {
                 subject.setOrder(rs.getInt("Order"));
                 subject.setType(rs.getString("type"));
                 return subject;
-            }
+                }
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public ArrayList<Subject> getSubjectsByCourseID(int courseID) {
+        ArrayList<Subject> listSubject = new ArrayList<>();
+        try {
+            String sql = "select * from [subject] s join SubjectCourse sc\n"
+                    + "on sc.SubjectID = s.SubjectID where CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Subject subject = mappingData(rs);
+                listSubject.add(subject);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listSubject;
     }
 
     public ArrayList<Subject> getListSubjectCanAccess(int accountID) {

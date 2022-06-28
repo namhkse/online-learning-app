@@ -2,6 +2,7 @@ package model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class Course {
 
@@ -15,7 +16,61 @@ public class Course {
     private Date modifiedDate;
     private BigDecimal price;
     private boolean status;
+    private String videoIntroduce;
+    private ArrayList<String> objectives;
+    private String aboutCourse;
+    private ArrayList<Subject> listSubject;
+    private int star;
+    private int numberPeopleLearning;
+    public String getVideoIntroduce() {
+        return videoIntroduce;
+    }
 
+    public void setVideoIntroduce(String videoIntroduce) {
+        this.videoIntroduce = videoIntroduce;
+    }
+
+    public ArrayList<String> getObjectives() {
+        return objectives;
+    }
+
+    public void setObjectives(ArrayList<String> objectives) {
+        this.objectives = objectives;
+    } 
+
+    public String getAboutCourse() {
+        return aboutCourse;
+    }
+
+    public void setAboutCourse(String aboutCourse) {
+        this.aboutCourse = aboutCourse;
+    }  
+
+    public int getNumberPeopleLearning() {
+        return numberPeopleLearning;
+    }
+
+    public void setNumberPeopleLearning(int numberPeopleLearning) {
+        this.numberPeopleLearning = numberPeopleLearning;
+    }
+    
+    public int getStar() {
+        return star;
+    }
+
+    public void setStar(int star) {
+        this.star = star;
+    } 
+
+    public ArrayList<Subject> getListSubject() {
+        return listSubject;
+    }
+
+    public void setListSubject(ArrayList<Subject> listSubject) {
+        this.listSubject = listSubject;
+    }
+    
+    
     public Course() {
     }
 

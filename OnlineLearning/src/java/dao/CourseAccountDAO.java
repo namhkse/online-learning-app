@@ -391,10 +391,16 @@ public class CourseAccountDAO extends DBContext {
                 + "on ca.AccountID = a.AccountID join Course c\n"
                 + "on c.CourseID = ca.CourseID \n"
                 + "join account ins on ins.AccountID = c.InstructorID\n"
-                + "join SubjectCourse sc on sc.CourseID = c.CourseID\n"
-                + "join [Subject] s on s.SubjectID = sc.SubjectID\n"
-                + "join SubjectCategory sca on sca.CategoryID = s.CategoryID\n"
-                + "where a.AccountID = ? and c.Status = 1 ";
+                + "where a.AccountID = ? and c.Status = 1 \n"
+                + "and c.CourseID in (\n"
+                + "	select c.CourseID from courseaccount ca join account a \n"
+                + "	on ca.AccountID = a.AccountID join Course c\n"
+                + "	on c.CourseID = ca.CourseID \n"
+                + "	join account ins on ins.AccountID = c.InstructorID\n"
+                + "	join SubjectCourse sc on sc.CourseID = c.CourseID\n"
+                + "	join [Subject] s on s.SubjectID = sc.SubjectID\n"
+                + "	join SubjectCategory sca on sca.CategoryID = s.CategoryID\n"
+                + "	where a.AccountID = ? and c.Status = 1 \n";
 
         if (listSearchId.size() == 1) {
             sql += " AND s.SubjectID = ? ";
@@ -409,11 +415,14 @@ public class CourseAccountDAO extends DBContext {
                 }
             }
         }
+        sql += "	group by c.CourseID) ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, accountID);
+            ps.setInt(2, accountID);
+
             for (int i = 0; i < listSearchId.size(); i++) {
-                ps.setInt(i + 2, listSearchId.get(i));
+                ps.setInt(i + 3, listSearchId.get(i));
             }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

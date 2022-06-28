@@ -1,5 +1,6 @@
 package filter;
 
+import dao.AccountDAO;
 import dao.PermissionDAO;
 import java.io.IOException;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ManagementFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
+        HttpServletResponse resp = (HttpServletResponse) response; 
         Account loggedAccount = (Account) req.getSession().getAttribute("account");
 
         if (loggedAccount == null) {
