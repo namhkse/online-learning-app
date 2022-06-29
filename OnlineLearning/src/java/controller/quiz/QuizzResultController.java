@@ -48,8 +48,8 @@ public class QuizzResultController extends HttpServlet {
         int AccountID = acc.getAccountID();
         CompletedLessonDAO completedLessonDAO = new CompletedLessonDAO();
         ArrayList<CompletedQuestion> list = new CompletedQuestionDAO().listAllQuizReview(AccountID, lessonID);
-        ArrayList<Answer> answerList = new AnswerDAO().listAllAnsByQues(lessonID, list.get(0).getQuestionID().getId());
         ArrayList<CompletedQuestion> total = new CompletedQuestionDAO().listSizeQuizReview(AccountID, lessonID);
+        ArrayList<Answer> answerList = new AnswerDAO().listAllAnsByQues(lessonID, list.get(0).getQuestionID().getId());
         resultColor(request, response, total);
         int count = CountTotalQues(lessonID);
         LocalDate datenow = java.time.LocalDate.now();

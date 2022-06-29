@@ -135,6 +135,10 @@ th i {
 .action-btn.first{
     width: 64px;
 }
+
+.action-btn.four{
+    width: 70px;
+}
 .action-btn.second{
     width: 80px;
     background: #ff3737;

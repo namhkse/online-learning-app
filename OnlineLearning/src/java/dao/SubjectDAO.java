@@ -263,4 +263,27 @@ public class SubjectDAO extends DBContext {
         }
         return null;
     }
+    
+    
+    public Subject getSubjectByID(int subID) {
+        try {
+            String sql = "SELECT * FROM Subject WHERE SubjectID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, subID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Subject subject = new Subject();
+                subject.setSubjectId(rs.getInt("SubjectID"));
+                subject.setOrder(rs.getInt("Order"));
+                subject.setStatus(rs.getBoolean("Status"));
+                subject.setName(rs.getString("Name"));
+                subject.setType(rs.getString("type"));
+
+                return subject;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }
