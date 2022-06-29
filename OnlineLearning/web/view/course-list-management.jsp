@@ -34,10 +34,11 @@
                     <jsp:include page="navbar-header.jsp?page=Manage Course"/>
 
                     <div class="container">
+                        <a class="back" href="../management/subject-list"><i class="fa-solid fa-angle-left"></i>Back</a>
                         <div class="container-table">
                             <div class="table-content">
                                 <div class="search">
-                                    <a class="margin-auto-0" id="add-blog" href="slide-edit" ><i class="fa-solid fa-plus"></i> Add Slide</a>
+                                    <a class="margin-auto-0" id="add-blog" href="slide-edit" ><i class="fa-solid fa-plus"></i> Add Course</a>
 
                                     <h4>${subject.getName()}</h4>
 
@@ -63,9 +64,9 @@
                                             <th>Instructor Name</th>
                                             <th>Instructor Email</th>
                                             <th>Status</th>
-                                            <th></th>
-                                            <th></th>
-                                            
+                                            <th>Lesson</th>
+                                            <th>Action</th>
+
                                         </tr>
                                     </thead>
                                     <tbody id="content-course">
@@ -85,15 +86,19 @@
                                                         <td>Unpublished</td>
                                                     </c:otherwise>
                                                 </c:choose>
-                                                <td><a href="lesson-list?Cid=${course.getCourseId()}">Lesson</a></td>
-                                                <td><div class="context"><a href="../management/slide-view?id=${slider.sliderID}"class="text-primary">View</a>/
-                                                <a href="../management/slide-edit?id=${slider.sliderID}"class="text-primary">Edit</a>/
-                                                <a href="" class="text-danger" id="${course.getCourseId()}" >Delete</a></div></td>
+                                                <td><a class="text-primary" href="lesson-list?Cid=${course.getCourseId()}&Sid=${subject.subjectId}">Lessons</a></td>
+                                                <td>
+                                                    <div class="context">
+                                                        <a href="../management/slide-view?id=${slider.sliderID}" class="text-primary">View</a>/
+                                                        <a href="../management/slide-edit?id=${slider.sliderID}" class="text-primary">Edit</a>/
+                                                        <a href="#" class="text-danger" id="${course.getCourseId()}" >Delete</a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                            
+
                             </div>
                         </div>
 

@@ -95,6 +95,7 @@
                                             <th>Name</th>
                                             <th>Category</th>
                                             <th>Number of courses</th>
+                                            <th>Course</th>
                                             <th>Owner</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -111,6 +112,7 @@
                                                 <td>${subject.name}</td>
                                                 <td>${subject.categoryID.name != null ? subject.categoryID.name : subject.mainCategoryID.name}</td>
                                                 <td>${numberCourse[count]}</td>
+                                                <td><a class="text-primary courses" href="../management/course-list?Sid=${subject.subjectId}">Courses</a></td>
                                                 <td>${subject.ownerID.firstName} ${subject.ownerID.lastName}</td>
                                                 <c:choose>
                                                     <c:when test = "${subject.status == true}">

@@ -33,10 +33,11 @@
                     <jsp:include page="navbar-header.jsp?page=Manage Lesson"/>
 
                     <div class="container">
+                        <a class="back" href="../management/course-list?Sid=${subjectID}"><i class="fa-solid fa-angle-left"></i>Back</a>
                         <div class="container-table">
                             <div class="table-content">
                                 <div class="search">
-                                    <a class="margin-auto-0" id="add-lesson" href="lesson-detail?Cid=${Cid}" ><i class="fa-solid fa-plus"></i> Add Slide</a>
+                                    <a class="margin-auto-0" id="add-lesson" href="lesson-detail?Cid=${Cid}" ><i class="fa-solid fa-plus"></i> Add Lesson</a>
 
                                     <form class="search-form"> 
                                         <div class="filter">
@@ -83,8 +84,8 @@
                                             <th>ID</th>
                                             <th>Name</th>
                                             <th>Video</th>
-                                            <th>start day</th>
-                                            <th class="type-lesson">Type lesson</th>
+                                            <th>Start day</th>
+                                            <th class="type-lesson">Type</th>
                                             <th>SubLesson Name</th>
                                             <th>Status</th>
                                             <th></th>

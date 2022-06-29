@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller.management;
 
 import dao.LessonDAO;
@@ -20,22 +15,9 @@ import model.Lesson;
 import model.LessonType;
 import model.SubLesson;
 
-/**
- *
- * @author FPTSHOP
- */
 @WebServlet(name = "LessonListManagemet", urlPatterns = {"/management/lesson-list"})
 public class LessonListManagemet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -60,31 +42,16 @@ public class LessonListManagemet extends HttpServlet {
         request.setAttribute("slList", slList);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         getAllLessonByCourse(request, response);
         getAllLesson(request, response);
+        String subjectID = request.getParameter("Sid");
+        request.setAttribute("subjectID", subjectID);
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -125,10 +92,10 @@ public class LessonListManagemet extends HttpServlet {
                     + "                                                 " + (lesson.isStatus() == true ? "<td>Published</td>" : "<td>Unpublished</td>")
                     + "                                                \n<td>\n"
                     + "                                                       <div class=\"context\">\n"
-                    + "                                                        <a href=\"lesson-detail?Lid="+lesson.getId()+"&type=view\"class=\"text-primary\">View</a>/\n"
-                    + "                                                        <a href=\"lesson-detail?Lid="+lesson.getId()+"\"class=\"text-primary\">Edit</a>/\n" 
-                    + "                                                        <a href=\"\" class=\"text-danger\" id=\""+lesson.getId()+"\" >Delete</a>\n"     
-                    + "                                                        </div>\n"  
+                    + "                                                        <a href=\"lesson-detail?Lid=" + lesson.getId() + "&type=view\"class=\"text-primary\">View</a>/\n"
+                    + "                                                        <a href=\"lesson-detail?Lid=" + lesson.getId() + "\"class=\"text-primary\">Edit</a>/\n"
+                    + "                                                        <a href=\"\" class=\"text-danger\" id=\"" + lesson.getId() + "\" >Delete</a>\n"
+                    + "                                                        </div>\n"
                     + "                                                  </td>\n"
                     + "                                            </tr>");
 
@@ -148,7 +115,7 @@ public class LessonListManagemet extends HttpServlet {
 
         return arr;
     }
-    
+
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -157,18 +124,6 @@ public class LessonListManagemet extends HttpServlet {
         new LessonDAO().deleteLesson(Integer.parseInt(request.getParameter("Lid")));
     }
 
-    
-//    @Override
-//    protected void doSearch(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//        System.out.println("here: "+request.getParameter("search"));
-//    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
