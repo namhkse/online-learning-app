@@ -1,4 +1,4 @@
-package controller;
+package controller.quiz;
 
 import dao.LessonDAO;
 import dao.QuizLessonDAO;
