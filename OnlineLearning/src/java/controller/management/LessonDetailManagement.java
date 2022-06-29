@@ -166,15 +166,20 @@ public class LessonDetailManagement extends HttpServlet {
             if (order != lesson.getOrder()) {
                 new LessonDAO().updateOrder(lesson.getOrder(), order, lesson.getCourseID().getCourseId());
             }
-
+            
             new LessonDAO().updateLesson(lesson, lessonType);
+            
+            lesson = new LessonDAO().getAllLessonByID(Integer.parseInt(request.getParameter("Lid")));
 
+            ArrayList<Lesson> orderList = new LessonDAO().getOrderBySublesson(lesson.getSubLessonID().getSubLessonID());
+            
             mess = "successfully changed the lesson";
 
             request.setAttribute("lesson", lesson);
             request.setAttribute("ltList", ltList);
             request.setAttribute("lsList", lsList);
             request.setAttribute("mess", mess);
+            request.setAttribute("order", orderList);
             request.setAttribute("isNoti", true);
             request.getRequestDispatcher("/view/addedit-lesson-detail.jsp").forward(request, response);
         }
@@ -200,7 +205,6 @@ public class LessonDetailManagement extends HttpServlet {
             lesson.setCourseID(c);
             lesson.setOrder(order);
 
-//            lsList = new SubLessonDAO().getListSubLessonByCourseID(c.getCourseId());
 
             new LessonDAO().updateOrder(0, order, c.getCourseId());
 
