@@ -7,7 +7,7 @@
         int i = 1;
         ArrayList<String> type = (ArrayList<String>) request.getAttribute("type");
     %>
-    <head>
+    <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <title>${lesson.name}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,7 +43,7 @@
                     <div class="review-container-left-right">
                         <div class="text-question">
                             <p>
-                                ${FirstQuiz.getQuestionID().getQuestionText()}
+                                ${FirstQuiz.getQuestionText()}
                             </p>
                         </div>
                         <div class="select-choice">
@@ -51,6 +51,9 @@
                                 <ul>
                                     <c:forEach items="${AnswerQuiz}" var="an">
                                             <li
+                                                <c:if test="${selectAns==null}" >
+                                                    ${an.getStatus()==1?"class='right-choice'":""} 
+                                                </c:if>
                                         <c:forEach items="${selectAns}" var="se">
                                                 ${an.getStatus()==1?"class='right-choice'":""} 
                                                 ${an.getAnswerID()==se.getSelectedAnswerID()&&an.getStatus()==0?"class='wrong-choice'":""}

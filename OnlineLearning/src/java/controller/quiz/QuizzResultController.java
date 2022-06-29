@@ -47,9 +47,9 @@ public class QuizzResultController extends HttpServlet {
         Account acc = (Account) request.getSession().getAttribute("account");
         int AccountID = acc.getAccountID();
         CompletedLessonDAO completedLessonDAO = new CompletedLessonDAO();
-        ArrayList<CompletedQuestion> list = new CompletedQuestionDAO().listAllQuizReview(AccountID, lessonID);
-        ArrayList<Answer> answerList = new AnswerDAO().listAllAnsByQues(lessonID, list.get(0).getQuestionID().getId());
-        ArrayList<CompletedQuestion> total = new CompletedQuestionDAO().listSizeQuizReview(AccountID, lessonID);
+         ArrayList<CompletedQuestion> list = new CompletedQuestionDAO().listAllQuizReview(acc.getId(), lessonID);
+        ArrayList<Question> total = new QuestionDAO().total(lessonID);
+        ArrayList<Answer> answerList = new AnswerDAO().listAllAnsByQues(lessonID, total.get(0).getId());
         resultColor(request, response, total);
         int count = CountTotalQues(lessonID);
         LocalDate datenow = java.time.LocalDate.now();
@@ -69,7 +69,6 @@ public class QuizzResultController extends HttpServlet {
         request.setAttribute("dimensionDetails", dimensionDetails);
         request.setAttribute("lessonID", lessonID);
         request.setAttribute("AnswerQuiz", answerList);
-        request.setAttribute("FirstQuiz", list.get(0));
         request.setAttribute("totoalQuiz", total);
         request.setAttribute("count", count);
         request.setAttribute("datenow", datenow);
@@ -85,54 +84,46 @@ public class QuizzResultController extends HttpServlet {
         return count;
     }
 
-    private void resultColor(HttpServletRequest request, HttpServletResponse response, ArrayList<CompletedQuestion> list) {
+
+    
+    private void resultColor(HttpServletRequest request, HttpServletResponse response, ArrayList<Question> list) {
         int lessonID = Integer.parseInt(request.getParameter("lID"));
         float total = 0;
         float aver = 10 / (float) (list.size());
         float mul = 0;
         int size = 0;
-        int countunanswer = 0;
-        QuizDAO quizDAO = new QuizDAO();
-        QuizLesson quizLesson = quizDAO.getQuizLessonByID(lessonID);
         for (int i = 0; i < list.size(); i++) {
-            ArrayList<Answer> ans = new AnswerDAO().listquestionbyQuestionID(lessonID, list.get(i).getQuestionID().getId());
-            ArrayList<CompletedQuestion> comp = new CompletedQuestionDAO().getSelectedAnswerByQuestion(12, list.get(i).getQuestionID().getId());
-            if (ans.size() > 1) {
-                int count = 0;
-                mul = aver / (float) ans.size();
-                if (comp.size() == ans.size()) {
-                    for (int j = 0; j < ans.size(); j++) {
-                        System.out.println("ans: " + ans.get(j).getAnswerID() + ", comp: " + comp.get(j).getSelectedAnswerID());
-                        if (ans.get(j).getAnswerID() == comp.get(j).getSelectedAnswerID()) {
-                            total += mul;
-                            count++;
+            ArrayList<Answer> ans = new AnswerDAO().listquestionbyQuestionID(lessonID, list.get(i).getId());
+            ArrayList<CompletedQuestion> comp = new CompletedQuestionDAO().getSelectedAnswerByQuestion(12, list.get(i).getId());
+            if (comp.size() != 0 && comp.size() <= ans.size()) {
+                if (ans.size() > 1) {
+                    int count = 0;
+                    mul = aver / (float) ans.size();
+                    if (ans.size() == comp.size()) {
+                        for (int j = 0; j < ans.size(); j++) {
+                            if (ans.get(j).getAnswerID() == comp.get(j).getSelectedAnswerID()) {
+                                total += mul;
+                                count++;
+                            }
                         }
                     }
-                }
-                if (count == ans.size()) {
-                    size++;
-                }
-            } else {
-                if (ans.get(0).getAnswerID() == comp.get(0).getSelectedAnswerID() && comp.get(0).getSelectedAnswerID() != 0) {
-                    total += aver;
-                    size++;
+                    if (count == ans.size()) {
+                        size++;
+                    }
+                } else {
+                    if (ans.get(0).getAnswerID() == comp.get(0).getSelectedAnswerID()) {
+                        total += aver;
+                        size++;
+                    }
                 }
             }
+            
         }
-        System.out.println("total =" + total);
-        total = total * 10;
-        String formattedString = String.format("%.02f", total);
-        Boolean checkPass;
-        if (size >= quizLesson.getPassScore()) {
-            checkPass = true;
-        } else {
-            checkPass = false;
-        }
+        String formattedString = String.format("%.02f", total*10);
         request.setAttribute("total", formattedString);
         request.setAttribute("size", size);
-        request.setAttribute("checkPass", checkPass);
-    }
 
+    }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -149,4 +140,7 @@ public class QuizzResultController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+     
+
 }

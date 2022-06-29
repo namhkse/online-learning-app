@@ -28,7 +28,7 @@ public class ReviewQuizController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         request.getRequestDispatcher("view/review-quiz.jsp").forward(request, response);;
-    }
+    } 
 
     private void getQuestion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int lessonID = Integer.parseInt(request.getParameter("lID"));
@@ -37,17 +37,21 @@ public class ReviewQuizController extends HttpServlet {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You need to login first");
             return;
         }
-        int accountID = account.getAccountID();
+        int accountID = account.getAccountID();  
         ArrayList<CompletedQuestion> list = new CompletedQuestionDAO().listAllQuizReview(accountID, lessonID);
-        ArrayList<Answer> answerList = new AnswerDAO().listAllAnsByQues(lessonID, list.get(0).getQuestionID().getId());
         ArrayList<Question> total = new QuestionDAO().total(lessonID);
+        ArrayList<Answer> answerList = new AnswerDAO().listAllAnsByQues(lessonID, total.get(0).getId());
         resultColor(request, response, total);
 
-        ArrayList<CompletedQuestion> selectedQues = new CompletedQuestionDAO().listSelectedByQuiz(accountID, lessonID, list.get(0).getQuestionID().getId());
+        ArrayList<CompletedQuestion> selectedQues = new CompletedQuestionDAO().listSelectedByQuiz(accountID, lessonID, total.get(0).getId());
 
         Lesson lesson = new LessonDAO().getLessonByID(lessonID);
         request.setAttribute("lesson", lesson);
-        request.setAttribute("selectAns", selectedQues);
+        if(selectedQues.size()!=0){
+            request.setAttribute("selectAns", selectedQues);
+        } else {
+            request.setAttribute("selectAns", null);
+        }
         
         Course course = new CourseDAO().getCourseByLessonID(lessonID);
         request.setAttribute("course", course);
@@ -57,7 +61,7 @@ public class ReviewQuizController extends HttpServlet {
         request.setAttribute("score", scoreOfQuestion(request, response, total.get(0).getId(), lessonID, average));
 
         request.setAttribute("AnswerQuiz", answerList);
-        request.setAttribute("FirstQuiz", list.get(0));
+        request.setAttribute("FirstQuiz", total.get(0));
         request.setAttribute("SecondQuiz", total.get(1));
 
         request.setAttribute("totoalQuiz", total);
