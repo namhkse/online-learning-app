@@ -1,14 +1,24 @@
 package model;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Answer {
 
-    @Expose private int id;
-    @Expose private String text;
-    @Expose private String explain;
-    private     int status;
-    
+    @Expose
+    @SerializedName("id")
+    private int id;
+
+    @Expose
+    @SerializedName("text")
+    private String text;
+
+    @Expose
+    @SerializedName("explain")
+    private String explain;
+
+    private int status;
+
     private Question questionID;
 
     public Answer() {
@@ -27,9 +37,10 @@ public class Answer {
         this.status = Status;
         this.questionID = QuestionID;
     }
-    
+
     /**
      * Use getId()
+     *
      * @return
      * @deprecated
      */
@@ -37,9 +48,10 @@ public class Answer {
     public int getAnswerID() {
         return id;
     }
-    
+
     /**
      * Use setId()
+     *
      * @param AnswerID
      * @deprecated
      */
@@ -47,9 +59,10 @@ public class Answer {
     public void setAnswerID(int AnswerID) {
         this.id = AnswerID;
     }
-    
+
     /**
      * Use getText()
+     *
      * @return
      * @deprecated
      */
@@ -60,7 +73,8 @@ public class Answer {
 
     /**
      * Use setText()
-     * @param AnswerText 
+     *
+     * @param AnswerText
      */
     @Deprecated
     public void setAnswerText(String AnswerText) {

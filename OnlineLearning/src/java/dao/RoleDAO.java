@@ -1,5 +1,6 @@
 package dao;
 
+import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import model.Role;
 
 public class RoleDAO extends DBContext {
 
+    @Deprecated
     private void mapping(Role role, ResultSet rs) throws SQLException {
         role.setId(rs.getInt("RoleID"));
         role.setName(rs.getString("Name"));
@@ -23,7 +25,7 @@ public class RoleDAO extends DBContext {
         }
     }
 
-    public ArrayList<Role> findAll() throws SQLException {
+    public ArrayList<Role> findAll() {
         ArrayList<Role> roles = new ArrayList<>();
         String sql = "select [RoleID], [Name], [Order], Status from Role";
 
@@ -33,6 +35,8 @@ public class RoleDAO extends DBContext {
                 mapping(role, rs);
                 roles.add(role);
             }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
 
         return roles;
@@ -47,6 +51,10 @@ public class RoleDAO extends DBContext {
         return hm;
     }
 
+    /**
+     * @deprecated use findById
+     */
+    @Deprecated
     public Role find(int id) throws SQLException {
         String sql = "select [RoleID], [Name], [Order], Status from Role where [RoleID] = ?";
         Role role = null;
@@ -67,6 +75,26 @@ public class RoleDAO extends DBContext {
         return role;
     }
 
+    public Role findById(int id) {
+        String sql = "select [RoleID], [Name] from Role where [RoleID] = ?";
+        Role role = null;
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                role.setId(rs.getInt("RoleID"));
+                role.setName(rs.getString("Name"));
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return role;
+    }
+
+    @Deprecated
     public Role findByName(String name) {
         String sql = "select [RoleID], [Name] from Role where [Name] = ?";
         Role role = null;
@@ -81,7 +109,28 @@ public class RoleDAO extends DBContext {
         }
         return role;
     }
-    
+
+    public int save(Role r) {
+        String sql = "insert Role values(?, ?, ?, ?);";
+        int id = 0;
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, r.getName().trim().toUpperCase());
+            stmt.setInt(2, r.getOrder());
+            stmt.setBoolean(3, true);
+            stmt.setString(4, r.getType());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            id = rs.next() ? rs.getInt(1) : 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return id;
+    }
+
+    /**
+     * @deprecated use save()
+     */
+    @Deprecated
     public void insertRole(Role s) {
         String sql = "INSERT INTO [Role]\n"
                 + "           ([Name]\n"
@@ -119,9 +168,9 @@ public class RoleDAO extends DBContext {
                 }
             }
         }
-
     }
 
+    @Deprecated
     public void updateRole(Role s) {
         String sql = "UPDATE [Role]\n"
                 + "   SET [Name] = ?\n"
@@ -159,6 +208,23 @@ public class RoleDAO extends DBContext {
 
     }
 
+    public void delete(Role r) {
+        String sql = "DELETE Role WHERE RoleID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, r.getId());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Use delete(
+     *
+     * @param id
+     * @deprecated
+     */
+    @Deprecated
     public void deleteRole(int id) {
         String sql = "DELETE Role"
                 + " WHERE RoleID = ?";
@@ -188,6 +254,7 @@ public class RoleDAO extends DBContext {
 
     }
 
+    @Deprecated
     public Role getRoleLast() {
         try {
             String sql = "SELECT * FROM Role WHERE RoleID = (SELECT MAX(RoleID) FROM Role)";

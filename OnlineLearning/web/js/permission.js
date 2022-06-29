@@ -1,3 +1,15 @@
+function customAlert(title, content, type) {
+    $.alert({
+        title: title,
+        content: content,
+        type: type,
+        typeAnimated: true,
+        buttons: {
+            close: function () {
+            }
+        }
+    });
+}
 
 function deletePermissionById(id, btn) {
     if (confirm("Delete this permission? ")) {

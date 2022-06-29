@@ -93,6 +93,44 @@ public class CourseDAO extends DBContext {
         return null;
     }
 
+public ArrayList<Course> getAllCourseBySubjectID(int subjectID, int status){
+        ArrayList<Course> list = new ArrayList<>();
+        try {
+            String sql = "select c.*,a.FirstName, a.LastName, a.ProfilePictureUrl, a.Email from Course c, SubjectCourse sc, Account a "
+                    + "where c.CourseID = sc.CourseID and a.AccountID = c.InstructorID and sc.SubjectID = ?";
+            if(status != -1 ){
+                sql += " and c.[Status] = ?";
+            }
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, subjectID);
+            if(status != -1 ){
+                stm.setInt(2, status);
+            }
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {                
+                Course c = new Course();
+                
+                c.setCourseId(rs.getInt("CourseID"));
+                c.setName(rs.getString("Name"));
+                c.setPrice(rs.getBigDecimal("Price"));
+                c.setStatus(rs.getBoolean("Status"));
+                
+                Account ac = new Account();
+                ac.setFirstName(rs.getString("FirstName"));
+                ac.setLastName(rs.getString("LastName"));
+                ac.setEmail(rs.getString("Email"));
+                ac.setProfilePictureUrl(rs.getString("ProfilePictureUrl"));
+                
+                c.setInstructorId(ac);
+                
+                list.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public ArrayList<Course> getAllCourse() {
         ArrayList<Course> listCourse = new ArrayList<>();
         try {
@@ -326,12 +364,34 @@ public class CourseDAO extends DBContext {
         return list;
     }
     
-    public static void main(String[] args) {
-        ArrayList<Integer> in = new ArrayList<>();
-        in.add(2);
-        ArrayList<Course> list = new CourseDAO().getListCourseBySubject(in);
-        for (Course course : list) {
-            System.out.println(course.getName());
+    public void deleteCourse(int id) {
+        try {
+            String sql = "DELETE [Course] WHERE [CourseID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+        
+    public int getlCourseIdsublessonID(int subLessonId){
+        Course c = new Course();
+        try {
+            String sql = "  select s.CourseID from SubLesson s where s.SubLessonID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, subLessonId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {        
+                c.setCourseId(rs.getInt("CourseID"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c.getCourseId();
+    }
+    
+    
 }
+
