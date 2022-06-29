@@ -2,7 +2,7 @@
     <div class="navbar-collapse">
 
         <div class="text-center border-bottom pb-3 d-none d-md-block">
-            <img src="img/${account.profilePictureUrl}" height="40" width="40">
+            <img src="../img/${account.profilePictureUrl}" height="40" width="40">
             <a class="navbar-brand d-none d-md-inline px-2" href="#">${account.role}</a>
         </div>
         
