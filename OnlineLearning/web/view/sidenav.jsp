@@ -39,6 +39,12 @@
                     <span class="d-none d-md-inline px-2">Manage Subject</span>
                 </a>
             </li>
+            <li class="nav-item">
+                    <a class="nav-link ${(param["page"] == "Manage Quiz") ? "active" : ""}" href="./quizsetting">
+                        <i class="fa-solid fa-bars-progress"></i>
+                        Manage Quiz
+                    </a>
+                </li>
             <li class="nav-item m-auto m-md-1">
                 <a class="nav-link ${(param["page"] == "Manage Account") ? "active" : ""}" href="./account">
                     <i class="fa-solid fa-user"></i>

@@ -33,11 +33,12 @@ public class QuizSessionDAO extends DBContext {
                         rs.getTimestamp("ExpiredTime").toLocalDateTime()
                 );
             }
+            return session;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
-        return session;
+        return null;
     }
 
     public void insertOrUpdate(Account account, QuizLesson quiz,

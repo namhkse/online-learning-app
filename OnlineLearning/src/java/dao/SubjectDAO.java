@@ -439,5 +439,44 @@ public class SubjectDAO extends DBContext {
         }
         return subjects;
     }
+    public Subject getSubjectNamebyID(int subjectID) {
+        try {
+            String sql = "select Subject.Name as SubjectName\n" +
+                        "from Subject where Subject.SubjectID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, subjectID);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Subject subject = new Subject();
+                subject.setName(rs.getString("SubjectName"));
+                return subject;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
+    public ArrayList<Subject> getAllSubjectName() {
+        ArrayList<Subject> subjects = new ArrayList<>();
+        try {
+            String sql = "select SubjectID, Subject.Name as SubjectName\n" +
+                        "from Subject ";
+
+            PreparedStatement stm = connection.prepareStatement(sql);
+
+            ResultSet rs = stm.executeQuery();
+
+            while (rs.next()) {
+                Subject subject = new Subject();
+                subject.setSubjectId(rs.getInt("SubjectID"));
+                subject.setName(rs.getString("SubjectName"));
+                subjects.add(subject);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QuizDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return subjects;
+    }
 }
