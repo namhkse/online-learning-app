@@ -474,18 +474,7 @@ INSERT [dbo].[TransactionHistory] ([TransactionHistoryID], [AccountID], [CourseI
 SET IDENTITY_INSERT [dbo].[TransactionHistory] OFF
 GO
 
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (1, N'plorum', 6, 1, 1, N'Microsoft Excel files with Pythons', 1, N'Medium', 0, N'Text')
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (2, N'volcans non', 5, 1, 2, N'HTML with Python', 2, N'Medium', NULL, N'Text')
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (3, N'estis quo, Sed', 5, 1, 3, N'Reading and Writing Text Files', 3, N'Medium', NULL, N'Text')
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (4, N'et venit. gravum', 4, 1, 4, N'JSON with Python', 4, N'Medium', 8, N'Text')
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (5, N'cognitio,', 2, 1, 5, N'Merge on Index', 5, N'Medium', NULL, N'Text')
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (6, N'fecundio,', 10, 1, 6, N'Combining DataFrames', 6, N'Easy', NULL, N'Video')
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (7, N'e fecit, pars', 8, 1, 7, N'Duplicates in DataFrames', 7, N'Easy', NULL, N'Video')
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (8, N'Quad habitatio', 0, 1, 8, N'Rename Index', 8, N'Easy', NULL, N'Video')
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (9, N'ut egreddior non', 4, 1, 9, N'GroupBy on DataFrames', 9, N'Easy', NULL, N'Video')
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (10, N'vobis quad', 8, 1, 10, N'GroupBy on Dict and Series', 10, N'Hard', NULL, N'Video')
 
-GO
 
 SET IDENTITY_INSERT [dbo].[QuestionLevel] ON 
 
@@ -497,18 +486,7 @@ INSERT [dbo].[QuestionLevel] ([QuestionLevelID], [LevelName], [Order], [Status],
 SET IDENTITY_INSERT [dbo].[QuestionLevel] OFF
 GO
 
-SET IDENTITY_INSERT [dbo].[Question] ON 
 
-INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (109, N'The collection and summarization of the socioeconomic and physical characteristics of the employees of a particular firm is an example of', NULL, 4, 1, 1, 1)
-INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (110, N'The outcome of an experiment is the number of resulting heads when a nickel and a dime are flipped simultaneously. What is the sample space for this experiment?', NULL, 4, 1, 2, 1)
-INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (111, N'Suppose that on a particular multiple choice question, 96% of the students answered correctly. What is the probability that a randomly selected student answered the question incorrectly?', NULL, 4, 2, 3, 1)
-INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (112, N'If you flip a coin three times, the possible outcomes are HHH HHT HTH HTT THH THT TTH TTT. What is the probability of getting at most one head?', NULL, 4, 2, 4, 1)
-INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (114, N'Assume that P(C) = 0.5 and P(D) = 0.3. If C and D are independent, find P(C and D).', NULL, 4, 1, 6, 1)
-INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (116, N'The probability that an individual is left-handed is 0.15. In a class of 30 students, what is the probability of finding five left-handers?', NULL, 4, 2, 8, 1)
-INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (117, N'TProduct codes of 3, 4 or 5 letters are equally likely. What is the mean of the number of letters in 20 codes?', NULL, 4, 4, 9, 1)
-INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (118, N'Find the mean for the binomial distribution which has the stated values of n = 20 and p = 3/5. Round answer to the nearest tenth.', NULL, 4, 4, 10, 1)
-SET IDENTITY_INSERT [dbo].[Question] OFF
-GO
 
 INSERT [dbo].[CompletedQuestion] ([AccountID], [QuestionID], [SelectedAnswerID], [Status]) VALUES (12, 109, 440, 0)
 INSERT [dbo].[CompletedQuestion] ([AccountID], [QuestionID], [SelectedAnswerID], [Status]) VALUES (12, 109, 441, 1)
@@ -598,6 +576,32 @@ INSERT [dbo].[DimensionType] ([TypeID], [Name]) VALUES (2, N'Group')
 SET IDENTITY_INSERT [dbo].[DimensionType] OFF
 GO
 
+SET IDENTITY_INSERT [dbo].[QuizLesson] ON
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (1, N'plorum', 6, 1, 1, N'Microsoft Excel files with Pythons', 1, N'Medium', 0, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (2, N'volcans non', 5, 1, 2, N'HTML with Python', 2, N'Medium', NULL, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (3, N'estis quo, Sed', 5, 1, 3, N'Reading and Writing Text Files', 3, N'Medium', NULL, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (4, N'et venit. gravum', 4, 1, 4, N'JSON with Python', 4, N'Medium', 8, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (5, N'cognitio,', 2, 1, 5, N'Merge on Index', 5, N'Medium', NULL, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (6, N'fecundio,', 10, 1, 6, N'Combining DataFrames', 6, N'Easy', NULL, N'Video')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (7, N'e fecit, pars', 8, 1, 7, N'Duplicates in DataFrames', 7, N'Easy', NULL, N'Video')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (8, N'Quad habitatio', 0, 1, 8, N'Rename Index', 8, N'Easy', NULL, N'Video')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (9, N'ut egreddior non', 4, 1, 9, N'GroupBy on DataFrames', 9, N'Easy', NULL, N'Video')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (10, N'vobis quad', 8, 1, 10, N'GroupBy on Dict and Series', 10, N'Hard', NULL, N'Video')
+SET IDENTITY_INSERT [dbo].[QuizLesson] OFF
+GO
+
+SET IDENTITY_INSERT [dbo].[Question] ON 
+
+INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (109, N'The collection and summarization of the socioeconomic and physical characteristics of the employees of a particular firm is an example of', NULL, 4, 1, 1, 1)
+INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (110, N'The outcome of an experiment is the number of resulting heads when a nickel and a dime are flipped simultaneously. What is the sample space for this experiment?', NULL, 4, 1, 2, 1)
+INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (111, N'Suppose that on a particular multiple choice question, 96% of the students answered correctly. What is the probability that a randomly selected student answered the question incorrectly?', NULL, 4, 2, 3, 1)
+INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (112, N'If you flip a coin three times, the possible outcomes are HHH HHT HTH HTT THH THT TTH TTT. What is the probability of getting at most one head?', NULL, 4, 2, 4, 1)
+INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (114, N'Assume that P(C) = 0.5 and P(D) = 0.3. If C and D are independent, find P(C and D).', NULL, 4, 1, 6, 1)
+INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (116, N'The probability that an individual is left-handed is 0.15. In a class of 30 students, what is the probability of finding five left-handers?', NULL, 4, 2, 8, 1)
+INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (117, N'TProduct codes of 3, 4 or 5 letters are equally likely. What is the mean of the number of letters in 20 codes?', NULL, 4, 4, 9, 1)
+INSERT [dbo].[Question] ([QuestionID], [QuestionText], [QuestionImageUrl], [LessonID], [QuestionLevelID], [Order], [Status]) VALUES (118, N'Find the mean for the binomial distribution which has the stated values of n = 20 and p = 3/5. Round answer to the nearest tenth.', NULL, 4, 4, 10, 1)
+SET IDENTITY_INSERT [dbo].[Question] OFF
+GO
 
 SET IDENTITY_INSERT [dbo].[Dimension] ON 
 
