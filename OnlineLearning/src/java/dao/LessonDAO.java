@@ -425,6 +425,38 @@ public class LessonDAO extends DBContext {
         return null;
     }
 
+    public int getTotalLessonInCourse(int courseId) {
+        try {
+            String sql = "select Count(*) as num from lesson \n"
+                    + "where LessonTypeID = 1 and CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return Integer.parseInt(rs.getString("num"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    
+    public int getTotalQuizInCourse(int courseId) {
+        try {
+            String sql = "select Count(*) as num from lesson \n"
+                    + "where LessonTypeID = 2 and CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return Integer.parseInt(rs.getString("num"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
     public ArrayList<Lesson> getListLessonByCondition(int cid, ArrayList<Integer> ltid, ArrayList<Integer> lsid, boolean checklt, boolean checkls, int stt) {
         ArrayList<Lesson> list = new ArrayList<>();
         int indexQ = 2;

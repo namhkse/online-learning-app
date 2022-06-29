@@ -45,6 +45,7 @@
                                 <span class="input-box">${slider.description}</span>
                                 <h4 class="title">Backlink</h4>
                                 <span class="input-box">${slider.navigationLink}</span>
+                                <button class="action-btn"><i class="fa-solid fa-pencil"></i><a href="../management/slide-edit?id=${slider.sliderID}">Edit</a></button>
                             </div>
                         </div>
                     </div>

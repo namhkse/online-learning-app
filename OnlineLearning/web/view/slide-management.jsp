@@ -39,7 +39,7 @@
                                     <a class="margin-auto-0" id="add-blog" href="slide-edit" ><i class="fa-solid fa-plus"></i> Add Slide</a>
 
                                     <form action="slide-list" method="GET"> 
-                                        
+
                                         Status: 
                                         <select name="display" class="select-tag" onchange="this.form.submit()">
                                             <option value="-1" >All Status</option>
@@ -56,9 +56,7 @@
                                             <th>Title</th>
                                             <th>Backlink</th>
                                             <th>Display</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="myTable">
@@ -69,17 +67,19 @@
                                                 <td class="title-slide">${slider.title}</td>
                                                 <td class="backlink-slide">${slider.navigationLink}</td>
                                                 <td class="toggle">
-                                                    <c:if test="${slider.status == true}"><a id="display-toggle" href="../management/slide-list?id-hide=${slider.sliderID}" onclick="return confirm('Are you sure you want to hide this slide?');"><i class="fa-solid fa-toggle-on"></i></a></c:if>
-                                                    <c:if test="${slider.status == false}"><a id="display-toggle" href="../management/slide-list?id-show=${slider.sliderID}" onclick="return confirm('Are you sure you want to show this slide?');"><i class="fa-solid fa-toggle-off"></i></a></c:if>
-                                                </td>
-                                                <td><button class="action-btn first"><i class="fa-solid fa-eye"></i><a href="../management/slide-view?id=${slider.sliderID}">View</a></button></td>
-                                                <td><button class="action-btn second"><i class="fa-solid fa-pencil"></i><a href="../management/slide-edit?id=${slider.sliderID}">Edit</a></button></td>
-                                                <td><button class="action-btn third"><i class="fa-solid fa-trash-can"></i><a href="../management/slide-list?id-delete=${slider.sliderID}" onclick="return confirm('Are you sure you want to delete this slide?');">Delete</a></button></td>
+                                                    <c:if test="${slider.status == true}"><button class="display-toggle" onclick="changeStatus(this, ${slider.sliderID})"><i class="fa-solid fa-toggle-on"></i></button></c:if>
+                                                    <c:if test="${slider.status == false}"><button class="display-toggle" onclick="changeStatus(this, ${slider.sliderID})"><i class="fa-solid fa-toggle-off"></i></button></c:if>
+                                                    </td>
+                                                    <td>
+                                                        <div id="action">
+                                                            <a class="text-primary" href="../management/slide-view?id=${slider.sliderID}">View</a>&nbsp;/&nbsp;<button class="text-danger" onclick="deletePricePackage(${slider.sliderID}, this)">Delete</button>
+                                                        </div>
+                                                    </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                
+
                             </div>
                         </div>
 

@@ -7,6 +7,7 @@ public class Subject {
     private int subjectId;
     private String name;
     private SubjectCategory categoryID;
+    private SubjectMainCategory mainCategoryID;
     private boolean featured;
     private boolean status;
     private String image;
@@ -24,19 +25,30 @@ public class Subject {
         this.listCategory = listCategory;
     }
 
+    public SubjectMainCategory getMainCategoryID() {
+        return mainCategoryID;
+    }
+
+    public void setMainCategoryID(SubjectMainCategory mainCategoryID) {
+        this.mainCategoryID = mainCategoryID;
+    }
+
     public Subject() {
     }
 
-    public Subject(int subjectId, String name, SubjectCategory categoryID, boolean featured, boolean status, String image, String description, int order, String type) {
+    public Subject(int subjectId, String name, SubjectCategory categoryID, SubjectMainCategory mainCategoryID, boolean featured, boolean status, String image, String description, int order, String type, Account ownerID, ArrayList<SubjectCategory> listCategory) {
         this.subjectId = subjectId;
         this.name = name;
         this.categoryID = categoryID;
+        this.mainCategoryID = mainCategoryID;
         this.featured = featured;
         this.status = status;
         this.image = image;
         this.description = description;
         this.order = order;
         this.type = type;
+        this.ownerID = ownerID;
+        this.listCategory = listCategory;
     }
 
     public Account getOwnerID() {

@@ -1,5 +1,6 @@
 package dao;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,8 +9,30 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
 import model.Course;
+import model.CourseAccount;
+import model.Subject;
 
 public class CourseDAO extends DBContext {
+
+    public Course mappingData(ResultSet rs) throws SQLException {
+        Account account = new Account();
+        account.setFirstName(rs.getString("FirstName"));
+        account.setLastName(rs.getString("LastName"));
+        account.setProfilePictureUrl(rs.getString("ProfilePictureUrl"));
+
+        Course course = new Course();
+        course.setCourseId(rs.getInt("courseID"));
+        course.setName(rs.getString("Name"));
+        course.setDescription(rs.getString("Description"));
+        course.setInstructorId(account);
+        course.setTinyPictureUrl(rs.getString("TinyPictureUrl"));
+        course.setThumbnailUrl(rs.getString("ThumbnailUrl"));
+        course.setCreatedDate(rs.getDate("CreatedDate"));
+        course.setModifiedDate(rs.getDate("ModifiedDate"));
+        course.setPrice(rs.getBigDecimal("Price"));
+
+        return course;
+    }
 
     public int getNumberAllLessonInCourse(int accountID, int courseID) {
         int numLesson = -1;
@@ -70,7 +93,7 @@ public class CourseDAO extends DBContext {
         return null;
     }
 
-    public ArrayList<Course> getAllCourseBySubjectID(int subjectID, int status){
+public ArrayList<Course> getAllCourseBySubjectID(int subjectID, int status){
         ArrayList<Course> list = new ArrayList<>();
         try {
             String sql = "select c.*,a.FirstName, a.LastName, a.ProfilePictureUrl, a.Email from Course c, SubjectCourse sc, Account a "
@@ -101,6 +124,239 @@ public class CourseDAO extends DBContext {
                 c.setInstructorId(ac);
                 
                 list.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public ArrayList<Course> getAllCourse() {
+        ArrayList<Course> listCourse = new ArrayList<>();
+        try {
+            String sql = "select c.*, a.FirstName, a.LastName, a.ProfilePictureUrl \n"
+                    + "from Course c join account a\n"
+                    + "on a.AccountID = c.InstructorID\n"
+                    + "where [status] = 1";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Course course = mappingData(rs);
+                ArrayList<Subject> listSubject = new SubjectDAO().getSubjectsByCourseID(course.getCourseId());
+                course.setListSubject(listSubject);
+                int star = getStarOfCourse(course.getCourseId());
+                course.setStar(star);
+                int people = getNumberPeopleLearningInCourse(course.getCourseId());
+                course.setNumberPeopleLearning(people);
+                listCourse.add(course);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listCourse;
+    }
+
+    public int getStarOfCourse(int courseId) {
+        try {
+            String sql = "select sum(rating) / count(*) as Star \n"
+                    + "from CourseAccount ca where CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Star");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int getNumberPeopleLearningInCourse(int courseId) {
+        try {
+            String sql = "select count(*) as Number \n"
+                    + "from CourseAccount ca where CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("Number");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public ArrayList<Course> getListCourseBySubject(ArrayList<Integer> listSearchId) {
+        ArrayList<Course> listCourse = new ArrayList<>();
+
+        String sql = "select c.*, a.FirstName, a.LastName, a.ProfilePictureUrl\n"
+                + "from Course c join account a\n"
+                + "on c.InstructorID = a.AccountID\n"
+                + "where c.CourseID in (\n"
+                + "	select c.CourseID from Course c join account a\n"
+                + "	on a.AccountID = c.InstructorID join SubjectCourse sc\n"
+                + "	on sc.CourseID = c.CourseID join [Subject] s\n"
+                + "	on s.SubjectID = sc.SubjectID join SubjectCategory scate\n"
+                + "	on scate.CategoryID = s.CategoryID\n"
+                + "	where c.[Status] = 1 \n";
+
+        if (listSearchId.size() == 1) {
+            sql += " AND s.SubjectID = ? ";
+        } else if (listSearchId.size() >= 2) {
+            for (int i = 0; i < listSearchId.size(); i++) {
+                if (i == 0) {
+                    sql += " AND ( s.SubjectID = ? ";
+                } else if (i == listSearchId.size() - 1) {
+                    sql += " OR s.SubjectID = ? )";
+                } else {
+                    sql += " OR s.SubjectID = ? ";
+                }
+            }
+        }
+        sql += "group by c.courseID)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (int i = 0; i < listSearchId.size(); i++) {
+                ps.setInt(i + 1, listSearchId.get(i));
+            }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = mappingData(rs);
+                ArrayList<Subject> listSubject = new SubjectDAO().getSubjectsByCourseID(course.getCourseId());
+                course.setListSubject(listSubject);
+                int star = getStarOfCourse(course.getCourseId());
+                course.setStar(star);
+                int people = getNumberPeopleLearningInCourse(course.getCourseId());
+                course.setNumberPeopleLearning(people);
+                listCourse.add(course);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listCourse;
+    }
+
+    public ArrayList<Course> getListCourseByText(String txtSearch) {
+        ArrayList<Course> listCourse = new ArrayList<>();
+
+        String sql = "select c.*, a.FirstName, a.LastName, a.ProfilePictureUrl\n"
+                + "from Course c join account a\n"
+                + "on a.AccountID = c.InstructorID\n"
+                + "where [status] = 1 and c.name like ? ";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "%" + txtSearch + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = mappingData(rs);
+                ArrayList<Subject> listSubject = new SubjectDAO().getSubjectsByCourseID(course.getCourseId());
+                course.setListSubject(listSubject);
+                int star = getStarOfCourse(course.getCourseId());
+                course.setStar(star);
+                int people = getNumberPeopleLearningInCourse(course.getCourseId());
+                course.setNumberPeopleLearning(people);
+                listCourse.add(course);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listCourse;
+    }
+
+    public ArrayList<Course> getListCourseByPrice(ArrayList<String> listPrice) {
+        ArrayList<Course> listCourse = new ArrayList<>();
+
+        String sql = "select c.*, a.FirstName, a.LastName, a.ProfilePictureUrl\n"
+                + "from Course c join account a\n"
+                + "on a.AccountID = c.InstructorID\n"
+                + "where [status] = 1 ";
+        if (listPrice.size() != 2) {
+            if (listPrice.get(0).equalsIgnoreCase("Free")) {
+                sql += " AND Price = 0 ";
+            } else {
+                sql += " AND Price > 0 ";
+            }
+        }
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Course course = mappingData(rs);
+                ArrayList<Subject> listSubject = new SubjectDAO().getSubjectsByCourseID(course.getCourseId());
+                course.setListSubject(listSubject);
+                int star = getStarOfCourse(course.getCourseId());
+                course.setStar(star);
+                int people = getNumberPeopleLearningInCourse(course.getCourseId());
+                course.setNumberPeopleLearning(people);
+                listCourse.add(course);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listCourse;
+    }
+
+    public Course getCourseByCourseId(int id) {
+
+        String sql = "select c.*, a.FirstName, a.LastName, a.ProfilePictureUrl\n"
+                + "from Course c join account a\n"
+                + "on a.AccountID = c.InstructorID\n"
+                + "where [status] = 1 and courseID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Course course = mappingData(rs);
+                course.setVideoIntroduce(rs.getString("VideoIntroduce"));
+                ArrayList<String> objectives = getObjectives(course.getCourseId());
+                course.setObjectives(objectives);
+                course.setAboutCourse(rs.getString("AboutCourse"));
+                ArrayList<Subject> listSubject = new SubjectDAO().getSubjectsByCourseID(course.getCourseId());
+                course.setListSubject(listSubject);
+                int star = getStarOfCourse(course.getCourseId());
+                course.setStar(star);
+                int people = getNumberPeopleLearningInCourse(course.getCourseId());
+                course.setNumberPeopleLearning(people);
+                return course;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public boolean isRegister(int accountID, int id) {
+        String sql = "select * from courseaccount\n"
+                + "where accountid = ? and CourseID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, accountID);
+            ps.setInt(2, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public ArrayList<String> getObjectives(int courseId) {
+        ArrayList<String> list = new ArrayList<>();
+        String sql = "select * from Objective\n"
+                + "where CourseID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, courseId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getString("ObjectiveName"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);

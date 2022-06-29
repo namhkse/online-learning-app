@@ -212,6 +212,8 @@
 
 .search-sub-category {
     padding: 0 15px;
+    overflow: hidden;
+    height:0;
 }
 
 .search-sub-category-name {
@@ -381,6 +383,6 @@
 .star:hover,
 .star.selected {
     transition: color 0.8s ease;
-    color: rgb(231, 201, 47);
+    color: rgb(231, 201, 47)!important;
     cursor: pointer;
 }

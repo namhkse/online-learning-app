@@ -25,7 +25,7 @@ public class MyCourseController extends HttpServlet {
             throws ServletException, IOException {
         Account account = (Account) request.getSession().getAttribute("account");
         if (account == null) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You need to login first");
+            response.sendRedirect("login");
             return;
         }
         int accountID = account.getAccountID();
@@ -67,8 +67,6 @@ public class MyCourseController extends HttpServlet {
             }
         }
         request.setAttribute("listCourseAccount", listCourseCurrentInPage);
-
-        request.setAttribute("request", request.getRequestURI() + "?");
 
         request.getRequestDispatcher("view/my-course.jsp").forward(request, response);
     }
@@ -177,7 +175,7 @@ public class MyCourseController extends HttpServlet {
             response.getWriter().write("<div id=\"my-course-list\">");
             response.getWriter().write("<div id=\"no-course\">\n"
                     + "                <h2>There is no course you are looking for</h2>\n"
-                    + "                <a href=\"#\">Join a new course</a>\n"
+                    + "                <a href=\"courses\">Join a new course</a>\n"
                     + "            </div>");
             response.getWriter().write("</div>");
             response.getWriter().write("<input type=\"hidden\" id=\"page-num\" value=\"" + pageNum + "\">");

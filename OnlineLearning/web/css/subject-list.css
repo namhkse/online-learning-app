@@ -69,8 +69,6 @@
 table {
     width: 100%;
     margin-top: 30px;
-    border: 1px solid #000000;
-    border-collapse: collapse;
 }
 
 th i {
@@ -82,8 +80,7 @@ th,
 td {
     text-align: left;
     padding: 12px;
-    border: 1px solid #000;
-    color: #858696;
+    color: #000;
 }
 
 th i {
@@ -160,11 +157,6 @@ ul {
     width: 64px;
 }
 
-.action-btn.third{
-    width: 80px;
-    background: #ff3737;
-}
-
 .action-btn a{
     color: #fff;
     text-decoration: none;
@@ -232,4 +224,30 @@ label{
 
 .category{
     margin-left: 24px;
+}
+
+.others{
+    margin-left: 24px;
+}
+
+#action{
+    display: flex;
+}
+
+#action button{
+    border: 0;
+    padding: 0;
+    background: none;
+}
+
+#action button:hover{
+    text-decoration: underline;
+}
+
+#action a{
+    text-decoration: none;
+}
+
+#action a:hover{
+    text-decoration: underline;
 }

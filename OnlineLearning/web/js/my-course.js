@@ -20,7 +20,7 @@ function searchCategory() {
     li = ul.getElementsByClassName("search-category-item");
 
     for (i = 0; i < li.length; i++) {
-        a = li[i].childNodes[1].childNodes[3];
+        a = li[i].childNodes[1].childNodes[1].chilclearValueSearchNodes[3];
         txtValue = a.textContent || a.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
             li[i].style.display = "";
@@ -85,7 +85,7 @@ function unenrollCourse(element) {
 }
 
 function checkedCategory(element) {
-    var listSubCate = element.parentNode.parentNode.childNodes[3].getElementsByClassName("search-sub-category-name");
+    var listSubCate = element.parentNode.parentNode.parentNode.childNodes[3].getElementsByClassName("search-sub-category-name");
     for (i = 0; i < listSubCate.length; i++) {
         if (element.checked === true)
             listSubCate[i].childNodes[1].checked = true;
@@ -97,18 +97,33 @@ function checkedCategory(element) {
 }
 
 function checkedSubCategory(element) {
-    var category = element.parentNode.parentNode.parentNode.childNodes[1].childNodes[1];
+    var category = element.parentNode.parentNode.parentNode.childNodes[1].childNodes[1].childNodes[1];
     var isChecked = false;
     var subCategories = element.parentNode.parentNode.getElementsByClassName("search-sub-category-name");
+    var count = 0;
     for (var i = 0; i < subCategories.length; i++) {
         if (subCategories[i].childNodes[1].checked === true) {
             isChecked = true;
             category.checked = true;
+            count++;
         }
+    }
+    if(count !== subCategories.length) {
+        category.indeterminate = true;
+    } else {
+        category.indeterminate = false;
     }
     if (isChecked === false) {
         category.checked = false;
+        category.indeterminate = false;
     }
+    searchByValue();
+}
+
+function searchProperty() {
+    var pageNum = document.getElementById("page-num");
+    pageNum.value = 1;
+    
     searchByValue();
 }
 
@@ -119,8 +134,8 @@ function clearValueSearch() {
     holderSearchCate.value = "";
 
     document.getElementById("form-select-category").innerHTML = text;
-    var checkhbox = document.querySelectorAll("input[type='checkbox']");
-    checkhbox.forEach(function (check) {
+    var checkbox = document.querySelectorAll("input[type='checkbox']");
+    checkbox.forEach(function (check) {
         check.checked = false;
     });
 
@@ -166,7 +181,7 @@ function voteStar(element, courseId) {
         if (listStar[i].classList.contains('selected') === false)
             listStar[i].classList.add('selected');
     }
-    
+
     $(function () {
         $.ajax({
             type: "POST",
@@ -176,8 +191,20 @@ function voteStar(element, courseId) {
                 courseId: courseId
             },
             success: function (result) {
-                console.log(ok);
             }
         });
     });
+}
+
+function dropDownSubCate(icon) {
+    
+    if (icon.classList.contains("fa-angle-up")) {
+            icon.classList.toggle("fa-angle-up");
+            icon.classList.toggle("fa-angle-down");
+            icon.parentNode.parentNode.childNodes[3].style.height = "0";
+        } else {
+            icon.classList.toggle("fa-angle-up");
+            icon.classList.toggle("fa-angle-down");
+            icon.parentNode.parentNode.childNodes[3].style.height = 'auto';
+        }
 }
