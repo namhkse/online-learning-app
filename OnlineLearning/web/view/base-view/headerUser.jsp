@@ -10,7 +10,7 @@
             <div class="navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav">
                     <a href="home" class="nav-item nav-link active">Home</a>
-                    <a href="courses.html" class="nav-item nav-link">Courses</a>
+                    <a href="courses" class="nav-item nav-link">Courses</a>
                     <a href="blog" class="nav-item nav-link">Blog</a>
                 </div>
                 <a href="login" class="btn-primary">Join Now <i class="fa-solid fa-arrow-right"></i></a>
@@ -25,8 +25,8 @@
             <div class="navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav">
                     <a href="home" class="nav-item nav-link active">Home</a>
-                    <a href="#" class="nav-item nav-link">Courses</a>
-                    <a href="#" class="nav-item nav-link">My Courses</a>
+                    <a href="courses" class="nav-item nav-link">Courses</a>
+                    <a href="my-course" class="nav-item nav-link">My Courses</a>
                     <a href="blog" class="nav-item nav-link">Blog</a>
                 </div>
                 <div id="top-bar">

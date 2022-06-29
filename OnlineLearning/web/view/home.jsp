@@ -23,7 +23,7 @@
                 <div class="slider-item mySlide_current">
                     <i class="slide-icon-right fas fa-angle-right" onclick="plusSlides(1)"></i>
                     <i class="slide-icon-left fas fa-angle-left" onclick="plusSlides(-1)"></i>
-                    <img src="${slider.imageUrl}" alt="">
+                    <img src="img/${slider.imageUrl}" alt="">
                     <div class="slider-desc-parent">
                         <div class="slider-desc">
                             <h5>${slider.subTitle}</h5>
@@ -66,10 +66,6 @@
                         <div class="item-desc">
                             <i class="fa-solid fa-user-tie"></i>
                             <span>${course.courseId.instructorId.firstName} ${course.courseId.instructorId.lastName}</span>
-                        </div>
-                        <div class="item-desc">
-                            <i class="fa-solid fa-user-graduate"></i>
-                            <span>30 Members</span>
                         </div>
                     </div>
 

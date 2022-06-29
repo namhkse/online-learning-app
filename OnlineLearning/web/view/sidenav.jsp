@@ -1,3 +1,4 @@
+<link href="../css/base-admin.css" rel="stylesheet" type="text/css"/>
 <nav class="navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">${account.role}</a>
@@ -24,15 +25,27 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link ${(param["page"] == "Manage Slide") ? "active" : ""}" href="./slide">
+                    <a class="nav-link ${(param["page"] == "Manage Slide") ? "active" : ""}" href="./slide-list">
                         <i class="fa-solid fa-bars-progress"></i>
                         Manage Slide
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ${(param["page"] == "Manage Subject") ? "active" : ""}" href="./subject-list">
+                        <i class="fa-solid fa-bars-progress"></i>
+                        Manage Subject
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link ${(param["page"] == "Manage Account") ? "active" : ""}" href="./account">
                         <i class="fa-solid fa-user"></i>
                         Manage Account
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ${(param["page"] == "Setting") ? "active" : ""}" href="./setting">
+                        <i class="fa-solid fa-gears"></i>
+                        Setting
                     </a>
                 </li>
                 <li class="nav-item">

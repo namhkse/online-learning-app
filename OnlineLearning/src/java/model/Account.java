@@ -4,16 +4,17 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class Account {
+
     private int accountID;
     private String firstName;
     private String lastName;
     private String email;
     private String profilePictureUrl;
-    private Role role;   
+    private Role role;
     private BigDecimal balance;
     private Timestamp createdTime;
     private Timestamp modifiedTime;
-    private String phone;    
+    private String phone;
     private String address;
     private Gender gender;
     private String password;
@@ -37,6 +38,7 @@ public class Account {
         this.password = password;
     }
 
+    @Deprecated
     public int getAccountID() {
         return accountID;
     }
@@ -139,6 +141,9 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
-    }   
-    
+    }
+
+    public int getId() {
+        return this.accountID;
+    }
 }
