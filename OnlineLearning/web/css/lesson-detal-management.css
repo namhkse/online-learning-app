@@ -19,6 +19,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-bottom: 20px;
 }
 /*#submit-btn{
 font-family: Raleway, sans-serif;
@@ -48,8 +49,13 @@ font-family: Raleway, sans-serif;
     padding: 12px;
     border-color: #007bff;
     margin: auto;
+    
 }
 .bt:hover{
+    color: black;
+}
+
+.btQuiz:hover{
     color: black;
 }
 
@@ -65,4 +71,17 @@ font-family: Raleway, sans-serif;
 #Unpublished {
     width: 15px;
     margin-left: 70px;
+}
+.btQuiz{
+    display: inherit;
+    background-color: #007bff;
+    color: #fff;
+    width: 70px;
+    height: 45px;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    border-color: #007bff;
+    margin-left: 60px;
 }

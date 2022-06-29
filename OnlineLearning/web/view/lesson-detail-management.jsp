@@ -32,68 +32,72 @@
             <div class="col-sm-10 p-0">
                 <jsp:include page="navbar-header.jsp?page=Lesson-detail"/>
                 <a href="lesson-list?Cid=${lesson.getCourseID().getCourseId()}">Back</a>
-                    <div class="contain">
-                        <div class="contain-left">
-                            <div class="content">
-                                <h6>Lesson Name:</h6>
-                                <span>${lesson.getName()}</span>
-                            </div>
-                            <div class="content">
-                                <h6>Create Date:</h6>
-                                <span>${createDate}</span>
-                            </div>
-                            <c:if test="${lesson.getUpdatedTime() != null}">
-                                <div class="content">
-                                    <h6>Update Date:</h6>
-                                    <span>${updateDate}</span>
-                                </div>
-                            </c:if>
-                            <div class="content">
-                                <h6>Start learning time:</h6>
-                                <span>${lesson.getStartLearningTime()}</span>
-                            </div>
-                            <div class="content">
-                                <h6>Status</h6>
-                                <span>
-                                    <input type="radio" id="Published" name="status" ${lesson.isStatus()==true?"checked":""} disabled>
-                                    <label for="male">Published</label>
-                                    <input type="radio" id="Unpublished" ${lesson.isStatus()==false?"checked":""} name="status" disabled>
-                                    <label for="female">Unpublished</label>
-                                </span>
-                            </div>
-                            <div class="content">
-                                <h6>Sublesson:</h6>
-                                <span>
-                                    <c:forEach items="${lsList}" var="lsList">
-                                        ${lesson.getSubLessonID().getSubLessonID()==lsList.getSubLessonID()?lsList.getName():""}
-                                    </c:forEach>
-                                </span>
-                            </div>
-                            <div class="content">
-                                <h6>Order:</h6>
-                                <span>
-                                    <c:forEach items="${order}" var="order">
-                                        ${lesson.getOrder()==order.getOrder()?order.getOrder():""}
-                                    </c:forEach>
-                                </span>
-                            </div>
-                            <div class="content">
-                                <h6>Lesson Type:</h6>
-                                <span>
-                                    <c:forEach items="${ltList}" var="ltList">
-                                        ${lesson.getLessonTypeID().getLessonTypeID()==ltList.getLessonTypeID()?ltList.getName():""}
-                                    </c:forEach>
-                                </span>
-                            </div>
+                <div class="contain">
+                    <div class="contain-left">
+                        <div class="content">
+                            <h6>Lesson Name:</h6>
+                            <span>${lesson.getName()}</span>
                         </div>
-                        <div class="contain-right">
-                            <c:if test="${lesson.getLessonTypeID().getLessonTypeID() == 1}">
-                                <video class="video-lesson" src="../${lesson.getVideoUrl()}" controls></video>
+                        <div class="content">
+                            <h6>Create Date:</h6>
+                            <span>${createDate}</span>
+                        </div>
+                        <c:if test="${lesson.getUpdatedTime() != null}">
+                            <div class="content">
+                                <h6>Update Date:</h6>
+                                <span>${updateDate}</span>
+                            </div>
+                        </c:if>
+                        <div class="content">
+                            <h6>Start learning time:</h6>
+                            <span>${lesson.getStartLearningTime()}</span>
+                        </div>
+                        <div class="content">
+                            <h6>Status</h6>
+                            <span>
+                                <input type="radio" id="Published" name="status" ${lesson.isStatus()==true?"checked":""} disabled>
+                                <label for="male">Published</label>
+                                <input type="radio" id="Unpublished" ${lesson.isStatus()==false?"checked":""} name="status" disabled>
+                                <label for="female">Unpublished</label>
+                            </span>
+                        </div>
+                        <div class="content">
+                            <h6>Topic:</h6>
+                            <span>
+                                <c:forEach items="${lsList}" var="lsList">
+                                    ${lesson.getSubLessonID().getSubLessonID()==lsList.getSubLessonID()?lsList.getName():""}
+                                </c:forEach>
+                            </span>
+                        </div>
+                        <div class="content">
+                            <h6>Order:</h6>
+                            <span>
+                                <c:forEach items="${order}" var="order">
+                                    ${lesson.getOrder()==order.getOrder()?order.getOrder():""}
+                                </c:forEach>
+                            </span>
+                        </div>
+                        <div class="content">
+                            <h6>Lesson Type:</h6>
+                            <span>
+                                <c:forEach items="${ltList}" var="ltList">
+                                    ${lesson.getLessonTypeID().getLessonTypeID()==ltList.getLessonTypeID()?ltList.getName():""}
+                                </c:forEach>
+                            <c:if test="${lesson.getLessonTypeID().getLessonTypeID() == 2}">
+                                <a href="" class="btQuiz">Go to quiz</a>
                             </c:if>
+                            </span>
                         </div>
                     </div>
-                    
-                    <a href="lesson-detail?Lid=${lesson.getId()}" class="bt">Edit</a>
+                    <div class="contain-right">
+                        <c:if test="${lesson.getLessonTypeID().getLessonTypeID() == 1}">
+                            <video class="video-lesson" src="../${lesson.getVideoUrl()}" controls></video>
+                            </c:if>
+
+                    </div>
+                </div>
+
+                <a href="lesson-detail?Lid=${lesson.getId()}" class="bt">Edit</a>
             </div>
     </body>
 </html>

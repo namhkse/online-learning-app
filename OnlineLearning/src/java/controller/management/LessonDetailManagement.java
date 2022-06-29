@@ -129,15 +129,14 @@ public class LessonDetailManagement extends HttpServlet {
         String mess = "";
 
         String lessonName = request.getParameter("lname");
-        LocalDateTime startTime = LocalDateTime.now();
-        if (!request.getParameter("starttime").isEmpty()) {
-            startTime = LocalDateTime.parse(request.getParameter("starttime"));
-        }
+        LocalDateTime startTime = LocalDateTime.parse(request.getParameter("starttime"));
+
         boolean status = true;
         if (request.getParameter("status").equals("0")) {
             status = false;
         }
         int subLesson = Integer.parseInt(request.getParameter("sublesson"));
+        
         String videoUrl = request.getParameter("video");
 
         int order = Integer.parseInt(request.getParameter("order"));

@@ -7,7 +7,7 @@
         int i = 1;
         ArrayList<String> type = (ArrayList<String>) request.getAttribute("type");
     %>
-    <head>
+    <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
         <title>${lesson.name}</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">

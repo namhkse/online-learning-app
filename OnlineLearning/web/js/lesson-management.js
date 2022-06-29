@@ -205,21 +205,6 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function () {
-    $(".text-danger").click(function () {
-        var id = $(this).attr('id');
-        console.log(id);
-        if (confirm("Do you want to delete this course?")) {
-            $.ajax({
-                type: 'delete',
-                url: "../management/lesson-list?Lid=" + id,
-                success: function (data) {
-                    $(this).closest('tr').fadeOut();
-                }
-            });
-        }
-    });
-});
 
 function deleteLesson(lessonid){
     if (confirm("Do you want to delete this course?")) {
