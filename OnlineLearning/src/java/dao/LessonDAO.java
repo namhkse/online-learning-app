@@ -149,7 +149,7 @@ public class LessonDAO extends DBContext {
                     + "join LessonType lt \n"
                     + "on lt.LessonTypeID = l.LessonTypeID\n"
                     + "join Course c on c.CourseID = l.CourseID\n"
-                    + "where c.[Status] = 1 and sl.SubLessonID = ?";
+                    + "where c.[Status] = 1 and sl.SubLessonID = ? order by l.[order] ";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, subLesson);
             ResultSet rs = stm.executeQuery();

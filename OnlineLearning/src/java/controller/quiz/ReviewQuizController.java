@@ -28,7 +28,7 @@ public class ReviewQuizController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         request.getRequestDispatcher("view/review-quiz.jsp").forward(request, response);;
-    }
+    } 
 
     private void getQuestion(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int lessonID = Integer.parseInt(request.getParameter("lID"));

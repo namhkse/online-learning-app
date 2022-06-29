@@ -10,7 +10,7 @@ protected Connection connection;
     {
         try {
             String user = "sa";
-            String pass = "7816";
+            String pass = "hoangdung1110";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=Online_Learning";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);

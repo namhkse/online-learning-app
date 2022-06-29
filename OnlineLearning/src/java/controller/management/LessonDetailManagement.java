@@ -129,15 +129,14 @@ public class LessonDetailManagement extends HttpServlet {
         String mess = "";
 
         String lessonName = request.getParameter("lname");
-        LocalDateTime startTime = LocalDateTime.now();
-        if (!request.getParameter("starttime").isEmpty()) {
-            startTime = LocalDateTime.parse(request.getParameter("starttime"));
-        }
+        LocalDateTime startTime = LocalDateTime.parse(request.getParameter("starttime"));
+
         boolean status = true;
         if (request.getParameter("status").equals("0")) {
             status = false;
         }
         int subLesson = Integer.parseInt(request.getParameter("sublesson"));
+        
         String videoUrl = request.getParameter("video");
 
         int order = Integer.parseInt(request.getParameter("order"));
@@ -167,15 +166,20 @@ public class LessonDetailManagement extends HttpServlet {
             if (order != lesson.getOrder()) {
                 new LessonDAO().updateOrder(lesson.getOrder(), order, lesson.getCourseID().getCourseId());
             }
-
+            
             new LessonDAO().updateLesson(lesson, lessonType);
+            
+            lesson = new LessonDAO().getAllLessonByID(Integer.parseInt(request.getParameter("Lid")));
 
+            ArrayList<Lesson> orderList = new LessonDAO().getOrderBySublesson(lesson.getSubLessonID().getSubLessonID());
+            
             mess = "successfully changed the lesson";
 
             request.setAttribute("lesson", lesson);
             request.setAttribute("ltList", ltList);
             request.setAttribute("lsList", lsList);
             request.setAttribute("mess", mess);
+            request.setAttribute("order", orderList);
             request.setAttribute("isNoti", true);
             request.getRequestDispatcher("/view/addedit-lesson-detail.jsp").forward(request, response);
         }
@@ -201,7 +205,6 @@ public class LessonDetailManagement extends HttpServlet {
             lesson.setCourseID(c);
             lesson.setOrder(order);
 
-//            lsList = new SubLessonDAO().getListSubLessonByCourseID(c.getCourseId());
 
             new LessonDAO().updateOrder(0, order, c.getCourseId());
 

@@ -118,7 +118,7 @@
                                                     <div class="context">
                                                         <a href="lesson-detail?Lid=${lesson.getId()}&type=view" class="text-primary">View</a>/
                                                         <a href="lesson-detail?Lid=${lesson.getId()}" class="text-primary">Edit</a>/
-                                                        <a href="" class="text-danger" onclick="deleteLesson(${lesson.getId()})">Delete</a>
+                                                        <a href="#" class="text-danger" onclick="deleteLesson(${lesson.getId()}, this)">Delete</a>
                                                     </div>
                                                 </td>
                                             </tr>

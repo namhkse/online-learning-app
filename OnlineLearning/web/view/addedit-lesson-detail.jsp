@@ -51,18 +51,18 @@
                             </c:if>
                             <tr>
                                 <td>Lesson name:</td>
-                                <td><input type="text" name="lname" value="${lesson.getName()}"/></td>
+                                <td><input type="text" name="lname" value="${lesson.getName()}" required/></td>
                             </tr>
                             <tr><td colspan="2" id="error-fname"></td></tr>
 
                             <tr>
                                 <td>Start learning time:</td>
-                                <td><input type="datetime-local" name="starttime" value="${lesson.getStartLearningTime()}"/><p>${daywarning}</p></td>
+                                <td><input type="datetime-local" name="starttime" value="${lesson.getStartLearningTime()}" required/><p>${daywarning}</p></td>
                             </tr>
                             <tr><td colspan="2" id="error-lname" ></td></tr>
 
                             <tr>
-                                <td>Status</td>                       
+                                <td>Status:</td>                       
                                 <td>
                                     <input type="radio" id="Published" name="status" ${lesson.isStatus()==true?"checked":""} ${lesson==null?"checked":""} value="1">
                                     <label for="male">Published</label>
@@ -73,9 +73,9 @@
                             <tr><td colspan="2"></td></tr>
 
                             <tr>
-                                <td>Sublesson</td>
+                                <td>Topic:</td>
                                 <td>
-                                    <select name="sublesson" class="sublesson">
+                                    <select name="sublesson" class="sublesson" required>
                                         <c:forEach items="${lsList}" var="lsList">
                                             <option value="${lsList.getSubLessonID()}" ${lesson.getSubLessonID().getSubLessonID()==lsList.getSubLessonID()?"selected":""}>${lsList.getName()}</option>
                                         </c:forEach>
@@ -83,7 +83,7 @@
                                 </td>
                             
                                 <td>
-                                    <select name="order" id="order">
+                                    <select name="order" id="order" required>
                                         <c:forEach items="${order}" var="order">
                                             <option value="${order.getOrder()}" ${lesson.getOrder()==order.getOrder()?"selected":""}>${order.getOrder()}</option>
                                         </c:forEach>
@@ -99,7 +99,7 @@
                             <tr>
                                 <td>Lesson Type</td>
                                 <td>
-                                    <select name="lessontype" class="lesson-type" ${lesson==null?"":"disabled"}>
+                                    <select name="lessontype" class="lesson-type" ${lesson==null?"":"disabled"} required>
                                         <c:forEach items="${ltList}" var="ltList">
                                             <option value="${ltList.getLessonTypeID()}" ${lesson.getLessonTypeID().getLessonTypeID()==ltList.getLessonTypeID()?"selected":""}>${ltList.getName()}</option>
                                         </c:forEach>
@@ -107,10 +107,10 @@
                                     <input name="lessont" value="${lesson.getLessonTypeID().getLessonTypeID()}" type="hidden">
                                 </td>
                                     
-                                <td class="type-contentv ${lesson.getLessonTypeID().getLessonTypeID() == 1 || lesson == null?"lestype":""}"><input type="text" name="video" value="${lesson.getVideoUrl()}" placeholder="Input VideoURL"/></td>
+                                <td class="type-contentv ${lesson.getLessonTypeID().getLessonTypeID() == 1 || lesson == null?"lestype":""}"><input type="text" name="video" value="${lesson.getVideoUrl()}" placeholder="Input VideoURL" required/></td>
                  
                                     
-                                <td class="type-contentq ${lesson.getLessonTypeID().getLessonTypeID() == 2?"lestype":""}"><a href="" class="bt">Go to quiz</a></td>
+                                <td class="type-contentq ${lesson.getLessonTypeID().getLessonTypeID() == 2 && lesson != null?"lestype":""}"><a href="" class="bt">Go to quiz</a></td>
                             </tr>
                             <tr><td colspan="2" ></td></tr>
 

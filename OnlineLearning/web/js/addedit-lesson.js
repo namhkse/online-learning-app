@@ -1,16 +1,15 @@
 $(document).ready(function () {
     $(".lesson-type").on('change', function () {
         var values = $('.lesson-type').val();
-        console.log("values: "+values);
+        let params = (new URL(document.location)).searchParams;
+        let Lid = params.get("Lid");
         if(values == 1){
             $('.type-contentv').attr('class', "type-contentv lestype");
-            console.log("true1");
         } else{
             $('.type-contentv').attr('class', "type-contentv");
         }
-        if(values == 2){
+        if(values == 2 && Lid != null){
             $('.type-contentq').attr('class', "type-contentq lestype");
-            console.log("true2");
         } else{
             $('.type-contentq').attr('class', "type-contentq");
         }
