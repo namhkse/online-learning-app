@@ -199,6 +199,9 @@ public class BlogDAO extends DBContext {
                 blog.setThumbnailUrl(rs.getString("ThumbnailUrl"));
                 blog.setNumberOfView(rs.getInt("NumberOfView"));
 
+                ArrayList<BlogCategory> listCategory = new BlogCategoryDAO().getCategoryByID(bid);
+
+                blog.setBlogCategories(listCategory);
                 return blog;
             }
             return null;
@@ -267,9 +270,11 @@ public class BlogDAO extends DBContext {
     public ArrayList<Blog> getAllBlogs() {
         ArrayList<Blog> blogs = new ArrayList<>();
         try {
-            String sql = "select b.*, bc.* from Blog b join BlogCategoryBlog bcb\n"
+            String sql = "select * from blog where blogid in(\n"
+                    + "select b.BlogID from Blog b join BlogCategoryBlog bcb\n"
                     + "on bcb.BlogID = b.BlogID join BlogCategory bc\n"
-                    + "on bc.BlogCategoryID = bcb.BlogCategoryID";
+                    + "on bc.BlogCategoryID = bcb.BlogCategoryID\n"
+                    + "group by b.blogid)";
 
             PreparedStatement stm = connection.prepareStatement(sql);
 
@@ -686,4 +691,123 @@ public class BlogDAO extends DBContext {
         return dates;
     }
 
+    public ArrayList<Blog> getListBlogByCategory(ArrayList<Integer> listSearchId) {
+        ArrayList<Blog> list = new ArrayList<>();
+
+        String sql = "Select * from blog where BlogID\n"
+                + "in (\n"
+                + "	select b.BlogID from Blog b join BlogCategoryBlog bcb\n"
+                + "	on b.BlogID = bcb.BlogID join BlogCategory bc\n"
+                + "	on bcb.BlogCategoryID = bc.BlogCategoryID\n"
+                + "	join BlogSubCategory bsc\n"
+                + "	on bsc.BlogCategoryID = bc.BlogCategoryID\n";
+
+        for (int i = 0; i < listSearchId.size(); i++) {
+            if (i == 0) {
+                sql += " Where bsc.BlogSubCategoryID = ? ";
+            } else {
+                sql += " or bsc.BlogSubCategoryID = ? ";
+            }
+        }
+        sql += "	group by b.BlogID \n"
+                + ")";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            for (int i = 0; i < listSearchId.size(); i++) {
+                ps.setInt(i + 1, listSearchId.get(i));
+            }
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Blog blog = mappingData(rs);
+                ArrayList<BlogCategory> cate = new BlogCategoryDAO().getCategoryByID(blog.getBlogID());
+                blog.setBlogCategories(cate);
+                list.add(blog);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public ArrayList<Blog> getListBlogByStatus(boolean isDisplay) {
+        ArrayList<Blog> list = new ArrayList<>();
+        String sql;
+        if (isDisplay == true) {
+            sql = "Select * from Blog where display = 1";
+        } else {
+            sql = "Select * from Blog where display = 0";
+        }
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Blog blog = mappingData(rs);
+                ArrayList<BlogCategory> cate = new BlogCategoryDAO().getCategoryByID(blog.getBlogID());
+                blog.setBlogCategories(cate);
+                list.add(blog);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public ArrayList<Blog> getListBlogByDate(Date date) {
+        ArrayList<Blog> list = new ArrayList<>();
+        String sql = "Select * from blog where createdDate = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setDate(1, date);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Blog blog = mappingData(rs);
+                ArrayList<BlogCategory> cate = new BlogCategoryDAO().getCategoryByID(blog.getBlogID());
+                blog.setBlogCategories(cate);
+                list.add(blog);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public Blog mappingData(ResultSet rs) throws SQLException {
+        Account account = new Account();
+        account.setAccountID(rs.getInt("AuthorID"));
+
+        Blog blog = new Blog();
+        blog.setBlogID(rs.getInt("BlogID"));
+        blog.setTitle(rs.getString("Title"));
+        blog.setDescription(rs.getString("Description"));
+        blog.setContent(rs.getString("Content"));
+        blog.setCreatedDate(rs.getDate("CreatedDate"));
+        blog.setAuthorID(account);
+        blog.setDisplay(rs.getBoolean("Display"));
+        blog.setThumbnailUrl(rs.getString("ThumbnailUrl"));
+        blog.setNumberOfView(rs.getInt("NumberOfView"));
+
+        return blog;
+    }
+
+    public ArrayList<Blog> getListBlogByTxt(String txtSearch) {
+        ArrayList<Blog> list = new ArrayList<>();
+        String sql = "Select * from blog where title like ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, "%"+ txtSearch +"%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Blog blog = mappingData(rs);
+                ArrayList<BlogCategory> cate = new BlogCategoryDAO().getCategoryByID(blog.getBlogID());
+                blog.setBlogCategories(cate);
+                list.add(blog);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 }
