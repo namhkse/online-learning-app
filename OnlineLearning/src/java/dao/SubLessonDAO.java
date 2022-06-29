@@ -35,4 +35,29 @@ public class SubLessonDAO extends DBContext{
         }
         return list;
     }
+    
+    public ArrayList<SubLesson> getListSubLesson() {
+        ArrayList<SubLesson> list = new ArrayList<>();
+        try {
+            String sql = "select * from sublesson";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {   
+                
+                SubLesson sub = new SubLesson();
+                sub.setSubLessonID(rs.getInt("SubLessonID"));
+                sub.setName(rs.getString("Name"));
+                
+                ArrayList<Lesson> listLesson = 
+                        new LessonDAO().getListLessonBySubLessonID(rs.getInt("SubLessonID"));
+                
+                sub.setListLesson(listLesson);
+                list.add(sub);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SubLessonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 }
