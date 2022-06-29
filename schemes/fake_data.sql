@@ -474,22 +474,17 @@ INSERT [dbo].[TransactionHistory] ([TransactionHistoryID], [AccountID], [CourseI
 SET IDENTITY_INSERT [dbo].[TransactionHistory] OFF
 GO
 
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (1, N'plorum', 6, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (2, N'volcans non', 5, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (3, N'estis quo, Sed', 5, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (4, N'et venit. gravum', 4, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (5, N'cognitio,', 2, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (6, N'fecundio,', 10, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (7, N'e fecit, pars', 8, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (8, N'Quad habitatio', 0, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (9, N'ut egreddior non', 4, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (10, N'vobis quad', 8, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (11, N'esset nomen Et', 6, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (12, N'apparens Longam,', 10, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (13, N'non Multum', 2, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (14, N'novum sed non', 9, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (15, N'non quoque nomen', 5, 1)
-INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute]) VALUES (16, N'regit, quartu', 6, 1)
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (1, N'plorum', 6, 1, 1, N'Microsoft Excel files with Pythons', 1, N'Medium', 0, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (2, N'volcans non', 5, 1, 2, N'HTML with Python', 2, N'Medium', NULL, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (3, N'estis quo, Sed', 5, 1, 3, N'Reading and Writing Text Files', 3, N'Medium', NULL, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (4, N'et venit. gravum', 4, 1, 4, N'JSON with Python', 4, N'Medium', 8, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (5, N'cognitio,', 2, 1, 5, N'Merge on Index', 5, N'Medium', NULL, N'Text')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (6, N'fecundio,', 10, 1, 6, N'Combining DataFrames', 6, N'Easy', NULL, N'Video')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (7, N'e fecit, pars', 8, 1, 7, N'Duplicates in DataFrames', 7, N'Easy', NULL, N'Video')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (8, N'Quad habitatio', 0, 1, 8, N'Rename Index', 8, N'Easy', NULL, N'Video')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (9, N'ut egreddior non', 4, 1, 9, N'GroupBy on DataFrames', 9, N'Easy', NULL, N'Video')
+INSERT [dbo].[QuizLesson] ([LessonID], [Note], [PassScore], [QuizTimeInMinute], [QuizID], [Name], [SubjectID], [Level], [TotalQuestion], [Type]) VALUES (10, N'vobis quad', 8, 1, 10, N'GroupBy on Dict and Series', 10, N'Hard', NULL, N'Video')
+
 GO
 
 SET IDENTITY_INSERT [dbo].[QuestionLevel] ON 

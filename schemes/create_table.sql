@@ -221,6 +221,13 @@ CREATE TABLE QuizLesson (
 	LessonID INT PRIMARY KEY,
 	Note TEXT,
 	PassScore TINYINT NOT NULL,
+	[QuizTimeInMinute] [int] NULL,
+	[QuizID] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [varchar](50) NULL,
+	[SubjectID] [int] NULL,
+	[Level] [varchar](50) NULL,
+	[TotalQuestion] [int] NULL,
+	[Type] [varchar](50) NULL,
 	CONSTRAINT FK_QuizLesson_Lesson_LessonID FOREIGN KEY (LessonID) REFERENCES Lesson(LessonID) ON DELETE CASCADE
 );
 
