@@ -221,7 +221,7 @@ CREATE TABLE QuizLesson (
 	LessonID INT PRIMARY KEY,
 	Note TEXT,
 	PassScore TINYINT NOT NULL,
-	[QuizTimeInMinute] [int] NULL,
+	[QuizTimeInMinute] INT DEFAULT(5),
 	[QuizID] [int] IDENTITY(1,1) NOT NULL,
 	[Name] [varchar](50) NULL,
 	[SubjectID] [int] NULL,
@@ -337,7 +337,6 @@ CREATE TABLE QuizSession (
 
 
 /* External query */
-ALTER TABLE dbo.QuizLesson ADD QuizTimeInMinute INT DEFAULT(5);
 update QuizLesson set QuizTimeInMinute = 5;
 
 CREATE TABLE [PricePackage](
