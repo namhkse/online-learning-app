@@ -1,17 +1,19 @@
 package controller.management;
 
-import dao.PricePackageDAO;
+import dao.DimensionDAO;
+import dao.DimensionTypeDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.PricePackage;
+import model.Dimension;
 
-@WebServlet(name = "PricePackageViewController", urlPatterns = {"/management/price-package-view"})
-public class PricePackageViewController extends HttpServlet {
+@WebServlet(name = "DimensionViewController", urlPatterns = {"/management/dimension-view"})
+public class DimensionViewController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -19,19 +21,20 @@ public class PricePackageViewController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
 
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
-        PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        int priceID = Integer.parseInt(request.getParameter("priceID"));
-        PricePackage pricePackage = pricePackageDAO.getPricePackageByID(priceID);
+        String subjectID = request.getParameter("subjectID");
+        int dimensionID = Integer.parseInt(request.getParameter("dimensionID"));
+        DimensionDAO dimensionDAO = new DimensionDAO();
+        Dimension dimension = dimensionDAO.getDimensionByID(dimensionID);
 
-        request.setAttribute("pricePackage", pricePackage);
+        request.setAttribute("dimension", dimension);
         request.setAttribute("subjectID", subjectID);
-        request.getRequestDispatcher("/view/price-package-view.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/dimension-view.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
     }
 
     @Override

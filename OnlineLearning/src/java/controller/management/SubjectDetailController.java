@@ -93,8 +93,7 @@ public class SubjectDetailController extends HttpServlet {
             String action = request.getParameter("action");
 
             if (action.equalsIgnoreCase("ADD")) {
-//                addSubject(request, response);
-
+                addSubject(request, response);
             } else if (action.equalsIgnoreCase("EDIT")) {
                 editSubject(request, response);
             }
@@ -102,6 +101,67 @@ public class SubjectDetailController extends HttpServlet {
     }
 
     private void editSubject(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+        String name = request.getParameter("name");
+        int mainCategoryID = -1;
+        int categoryID = -1;
+        if (request.getParameter("mainCategoryID") != null) {
+            mainCategoryID = Integer.parseInt(request.getParameter("mainCategoryID"));
+        } else {
+            categoryID = Integer.parseInt(request.getParameter("categoryID"));
+        }
+        String[] expertCanAccess = null;
+        if (request.getParameterValues("expertCanAccess") != null) {
+            expertCanAccess = request.getParameterValues("expertCanAccess");
+        }
+        ArrayList<Integer> expertIDCanAccess = new ArrayList<>();
+        for (int i = 0; i < expertCanAccess.length; i++) {
+            String expertCanAcces = expertCanAccess[i];
+            expertIDCanAccess.add(Integer.parseInt(expertCanAcces));
+        }
+        boolean featured = false;
+        if (request.getParameter("featured") != null) {
+            featured = Boolean.parseBoolean(request.getParameter("featured"));
+        }
+        boolean status = false;
+        if (request.getParameter("status") != null) {
+            status = Boolean.parseBoolean(request.getParameter("status"));
+        }
+        String description = request.getParameter("description");
+
+        Subject subject = new Subject();
+        subject.setName(name);
+        if (mainCategoryID == -1) {
+            SubjectCategory category = new SubjectCategory();
+            category.setCategoryID(categoryID);
+            subject.setCategoryID(category);
+        } else {
+            SubjectMainCategory mainCategory = new SubjectMainCategory();
+            mainCategory.setMainCategoryID(mainCategoryID);
+            subject.setMainCategoryID(mainCategory);
+        }
+        subject.setFeatured(featured);
+        subject.setStatus(status);
+        String img = null;
+        if (uploadFile(request).equals("")) {
+            img = new SubjectDAO().getSubjectByID(subjectID).getImage();
+        } else {
+            img = uploadFile(request);
+        }
+        subject.setImage(img);
+        subject.setDescription(description);
+        subject.setSubjectId(subjectID);
+
+        SubjectDAO subjectDAO = new SubjectDAO();
+        subjectDAO.updateSubject(subject);
+        AccountDAO accountDAO = new AccountDAO();
+        accountDAO.deleteAllAccountCanAccessSubject(subjectID);
+        accountDAO.insertListAccountCanAccessSubject(subjectID, expertIDCanAccess);
+
+        response.sendRedirect("subject-list");
+    }
+    
+    private void addSubject(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int subjectID = Integer.parseInt(request.getParameter("subjectID"));
         String name = request.getParameter("name");
         int mainCategoryID = -1;
