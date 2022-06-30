@@ -162,28 +162,8 @@
                                     <c:forEach items="${subLesson.listLesson}" var="lesson">
                                         <div>
                                             <li class="lesson-body-lesson-item
-                                                <c:if test="${lessonCurrent.lessonID == lesson.lessonID}"> lesson-current </c:if>
-
-                                                <c:set var="isAllow" value="${false}" />
-                                                <c:choose>
-                                                    <c:when test="${lessonLearning == null}">
-                                                        <c:set var="isAllow" value="${true}" />
-                                                    </c:when>
-                                                    <c:when test="${lesson.lessonID == lessonFirst.lessonID && lesson.startLearningTime.compareTo(timeCurrent) < 0}">
-                                                        <c:set var="isAllow" value="${true}" />
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <c:forEach items="${listCompleted}" var="lessonComp">
-                                                            <c:if test="${lessonComp.lessonID.lessonID == lesson.lessonID 
-                                                                          || lesson.lessonTypeID.lessonTypeID == 2
-                                                                          || lesson.lessonID == lessonLearning.lessonID                 
-                                                                  }">
-                                                                <c:set var="isAllow" value="${true}" />
-                                                            </c:if>
-                                                        </c:forEach>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <c:if test="${!isAllow || lesson.startLearningTime.compareTo(timeCurrent) > 0 && lesson.lessonTypeID.lessonTypeID == 1}">not-allow</c:if>
+                                                <c:if test="${lessonCurrent.lessonID == lesson.lessonID}"> lesson-current </c:if>                                       
+                                                <c:if test="${lesson.startLearningTime.compareTo(timeCurrent) > 0}">not-allow</c:if>
                                                     ">
                                                     <a class="info-lesson" id="lessonID-${lesson.lessonID}" href=
                                                    <c:choose>
@@ -211,7 +191,7 @@
                                                             </c:when>
                                                         </c:choose>
                                                     </c:forEach>
-                                                    <c:if test="${!isAllow || (lesson.startLearningTime.compareTo(timeCurrent) > 0 && lesson.lessonTypeID.lessonTypeID == 1)}">
+                                                    <c:if test="${lesson.startLearningTime.compareTo(timeCurrent) > 0}">
                                                         <i class="fa-solid fa-lock lesson-lock"></i>
                                                     </c:if>
                                         </div>

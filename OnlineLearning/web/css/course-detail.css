@@ -30,7 +30,6 @@
     height: fit-content;
     padding: 8px 15px;
     border-radius: 9px;
-    margin: auto 0;
 }
 
 .course-detail-description {
@@ -106,7 +105,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 30px 100px;
-    
+
 }
 
 .course-detail-body-left {
@@ -242,4 +241,118 @@
 
 .display-inline-block {
     display: inline-block;
+}
+
+.cd-content-bottom {
+    padding: 30px 100px
+}
+
+.list-topic {
+    border-left: 1px solid #d1d7dc;
+    border-right: 1px solid #d1d7dc;
+    border-bottom: 1px solid #d1d7dc;
+}
+
+.w-70 {
+    width: 70%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.topic {
+    padding: 10px 30px;
+    background-color: #dfdfdf;
+}
+
+.topic>i {
+    margin: auto 0;
+}
+
+.list-group-item>a {
+    color: #212526;
+}
+.list-group-item>a>i {
+    margin-right: 20px;
+}
+.list-group-item>a:hover {
+    text-decoration: underline;
+}
+.list-group-item>span>i {
+    margin-right: 20px;
+}
+.list-group-flush {
+    height: auto;
+    overflow: hidden;
+    padding: 10px 30px;
+}
+
+.list-feature-course {
+    width: 80%;
+    float: right;
+}
+
+.feature-course-item {
+    margin-bottom: 30px;
+}
+
+.feature-course-item img {
+    width: 100%;
+}
+
+.feature-course-title {
+    padding: 5px 10px;
+    font-size: 16px;
+}
+
+.list-group-item {
+    padding: 8px 0;
+}
+
+.feature-star {
+    font-size: 13px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.price-holder {
+
+}
+
+.feature-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding-left: 10px;
+}
+
+.color1c1d1f {
+    color: #1c1d1f;
+}
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+.table thead th {
+    text-align: left;;
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0,0,0,.05);
+}
+
+.table td, .table th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
 }

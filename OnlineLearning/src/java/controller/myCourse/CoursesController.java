@@ -5,6 +5,7 @@ import dao.CourseDAO;
 import dao.SubjectCategoryDAO;
 import dao.SubjectDAO;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Account;
 import model.Course;
 import model.CourseAccount;
+import model.CoursePricePackage;
 import model.Subject;
 import model.SubjectCategory;
 
@@ -40,6 +42,9 @@ public class CoursesController extends HttpServlet {
 
         ArrayList<Subject> listSubject = new SubjectDAO().getAllSubjects();
         request.setAttribute("listSubject", listSubject);
+
+        ArrayList<Course> listTopFeatureCourse = new CourseDAO().getAllTopFeatureCourse();
+        request.setAttribute("listTopFeatureCourse", listTopFeatureCourse);
 
         ArrayList<Course> listCourse = new CourseDAO().getAllCourse();
 
@@ -147,7 +152,7 @@ public class CoursesController extends HttpServlet {
             Collections.sort(listCourseTempII, new Comparator<Course>() {
                 @Override
                 public int compare(Course t, Course t1) {
-                    return t.getCreatedDate().after(t1.getCreatedDate()) ? 1 : -1;
+                    return t.getCreatedDate().before(t1.getCreatedDate()) ? 1 : -1;
                 }
             });
         }
@@ -194,16 +199,46 @@ public class CoursesController extends HttpServlet {
         } else {
             response.getWriter().write("<div id=\"c-course-list\">");
             for (Course course : listCourseCurrentInPage) {
-                response.getWriter().write("<a href=\"course-detail?id=" + course.getCourseId() + "\">\n"
-                        + "                            <div class=\"c-course-item\">\n"
+                response.getWriter().write("<div class=\"c-course-item\">\n");
+                if (!course.getListPrice().isEmpty()) {
+                    response.getWriter().write("                                <div class=\"price-container\">\n"
+                            + "                                    <table class=\"table table-striped\">\n"
+                            + "                                        <thead>\n"
+                            + "                                            <tr>\n"
+                            + "                                                <th scope=\"col\">Access Package</th>\n"
+                            + "                                                <th scope=\"col\">Price</th>\n"
+                            + "                                                <th scope=\"col\">Sale price</th>\n"
+                            + "                                            </tr>\n"
+                            + "                                        </thead>\n"
+                            + "                                        <tbody>\n");
+                    for (CoursePricePackage coursePrice : course.getListPrice()) {
+                        response.getWriter().write("                                                <tr>\n"
+                                + "                                                    <td>" + coursePrice.getName() + "</td>\n"
+                                + "                                                    <td style=\"text-decoration: line-through\">$ " + coursePrice.getListPrice() + "</td>\n"
+                                + "                                                    <td>$ " + coursePrice.getSalePrice() + "</td>\n"
+                                + "                                                </tr>\n"
+                                + "                                            </c:forEach>                                      \n");
+                    }
+
+                    response.getWriter().write("                                        </tbody>\n"
+                            + "                                    </table>\n"
+                            + "                                </div>\n");
+                }
+                response.getWriter().write("<a style=\"width:27%; margin: auto 0\" href=\"course-detail?id=" + course.getCourseId() + "\"");
+                if (!course.getListPrice().isEmpty()) {
+                    response.getWriter().write("onmouseover=\"displayPrice(this)\" onmouseout=\"hiddenPrice(this)\"");
+                }
+                response.getWriter().write(">\n"
                         + "                                <div class=\"c-course-item-img\">\n"
                         + "                                    <img src='" + course.getTinyPictureUrl() + "' alt=\"\">\n"
-                        + "                                </div>\n"
+                        + "                                </div></a>\n"
                         + "                                <div class=\"c-course-item-intro justify-between\">\n"
                         + "                                    <div class=\"c-course-item-intro-text\">\n"
+                        + "<a href=\"course-detail?id=" + course.getCourseId() + "\">\n"
                         + "                                        <h5 class=\"c-course-item-title\">" + course.getName() + "</h5>\n"
                         + "                                        <p class=\"c-course-item-desc\">" + course.getDescription() + "</p>\n"
-                        + "                                        <ul class=\"ratings\">\n");
+                        + "                                        <ul class=\"ratings\">\n"
+                );
                 for (int i = 0; i < 5; i++) {
                     if (i < course.getStar()) {
                         response.getWriter().write("<i class=\"c-star fa-solid fa-star selected\"></i>\n");
@@ -223,8 +258,8 @@ public class CoursesController extends HttpServlet {
                         response.getWriter().write(", " + course.getListSubject().get(i).getName());
                     }
                 }
-
-                response.getWriter().write("</p></div>\n");
+                response.getWriter().write("</p></a>");
+                response.getWriter().write("");
                 boolean isRegister = false;
                 for (CourseAccount courseAcc : listCourseAccount) {
                     if (courseAcc.getCourseId().getCourseId() == course.getCourseId()) {
@@ -233,13 +268,22 @@ public class CoursesController extends HttpServlet {
                     }
                 }
                 if (isRegister == true) {
+                    response.getWriter().write("<a href=\"#\" class=\"btn-for-course\">Continue</a></div>");
+                } else {
+                    response.getWriter().write("<a href=\"#\" class=\"btn-for-course\">Register</a></div>");
+                }
+
+                if (isRegister == true) {
                     response.getWriter().write("<div class=\"c-course-item-intro-registered\">\n"
                             + "                                            <h5>Registered</h5>\n"
                             + "                                        </div>");
                 } else {
-                    response.getWriter().write("<div class=\"c-course-item-intro-price\">\n"
-                            + "                                            <h5>$ " + course.getPrice() + "</h5>\n"
-                            + "                                        </div>");
+                    BigDecimal num = BigDecimal.valueOf(0);
+                    if (course.getPrice().compareTo(num) <= 0) {
+                        response.getWriter().write("<div class=\"c-course-item-intro-price\">\n"
+                                + "                                           <span class=\"tag-free\">Free</span>\n"
+                                + "                                        </div>");
+                    }
                 }
                 response.getWriter().write("</div></div></a>");
             }

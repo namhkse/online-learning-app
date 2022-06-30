@@ -22,6 +22,15 @@ public class Course {
     private ArrayList<Subject> listSubject;
     private int star;
     private int numberPeopleLearning;
+    private ArrayList<CoursePricePackage> listPrice;
+
+    public ArrayList<CoursePricePackage> getListPrice() {
+        return listPrice;
+    }
+
+    public void setListPrice(ArrayList<CoursePricePackage> listPrice) {
+        this.listPrice = listPrice;
+    }
     public String getVideoIntroduce() {
         return videoIntroduce;
     }
