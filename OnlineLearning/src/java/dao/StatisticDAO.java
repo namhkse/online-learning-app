@@ -116,11 +116,7 @@ public class StatisticDAO extends DBContext {
                 + "where \n"
                 + "	Year(TrasactionTime) between ? and ?\n"
                 + "group by MONTH(TrasactionTime), YEAR(TrasactionTime)\n"
-                + "order by [Month], [Year]\n"
-                + "\n"
-                + "\n"
-                + "select * from TransactionHistory\n"
-                + "";
+                + "order by [Year], [Month]";
         
         for (int year = y1; year <= y2; year++) {
             int start = 1;
@@ -467,14 +463,14 @@ public class StatisticDAO extends DBContext {
     public List<SubjectRevenueArgs> getRevenueOfAllSubject(LocalDate from, LocalDate to) {
         String sql = "SELECT SUM(Amount)\n"
                 + "FROM TransactionHistory\n"
-                + "WHERE CourseID in (SELECT sc.CourseID\n"
+                + "WHERE (CourseID in (SELECT sc.CourseID\n"
                 + "FROM SubjectCourse sc INNER JOIN Course c ON sc.CourseID = c.CourseID\n"
-                + "where sc.SubjectID = ?)\n";
+                + "where sc.SubjectID = ?))\n";
         
         boolean isFilter = (from != null) && (to != null);
         
         if (isFilter) {
-            sql = sql + "and CONVERT(DATE, TrasactionTime) >= ? and CONVERT(DATE, TrasactionTime) <= ?";
+            sql = sql + "and CONVERT(DATE, TrasactionTime) between ? and ?";
         }
         
         List<SubjectRevenueArgs> ls = new ArrayList<>();
