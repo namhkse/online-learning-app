@@ -111,22 +111,16 @@ public class SubjectDetailController extends HttpServlet {
             categoryID = Integer.parseInt(request.getParameter("categoryID"));
         }
         String[] expertCanAccess = null;
+        ArrayList<Integer> expertIDCanAccess = new ArrayList<>();
         if (request.getParameterValues("expertCanAccess") != null) {
             expertCanAccess = request.getParameterValues("expertCanAccess");
+            for (int i = 0; i < expertCanAccess.length; i++) {
+                String expertCanAcces = expertCanAccess[i];
+                expertIDCanAccess.add(Integer.parseInt(expertCanAcces));
+            }
         }
-        ArrayList<Integer> expertIDCanAccess = new ArrayList<>();
-        for (int i = 0; i < expertCanAccess.length; i++) {
-            String expertCanAcces = expertCanAccess[i];
-            expertIDCanAccess.add(Integer.parseInt(expertCanAcces));
-        }
-        boolean featured = false;
-        if (request.getParameter("featured") != null) {
-            featured = Boolean.parseBoolean(request.getParameter("featured"));
-        }
-        boolean status = false;
-        if (request.getParameter("status") != null) {
-            status = Boolean.parseBoolean(request.getParameter("status"));
-        }
+        boolean featured = Boolean.parseBoolean(request.getParameter("featured"));
+        boolean status = Boolean.parseBoolean(request.getParameter("status"));
         String description = request.getParameter("description");
 
         Subject subject = new Subject();
@@ -155,12 +149,14 @@ public class SubjectDetailController extends HttpServlet {
         SubjectDAO subjectDAO = new SubjectDAO();
         subjectDAO.updateSubject(subject);
         AccountDAO accountDAO = new AccountDAO();
-        accountDAO.deleteAllAccountCanAccessSubject(subjectID);
-        accountDAO.insertListAccountCanAccessSubject(subjectID, expertIDCanAccess);
+        if (expertCanAccess != null) {
+            accountDAO.deleteAllAccountCanAccessSubject(subjectID);
+            accountDAO.insertListAccountCanAccessSubject(subjectID, expertIDCanAccess);
+        }
 
         response.sendRedirect("subject-list");
     }
-    
+
     private void addSubject(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int subjectID = Integer.parseInt(request.getParameter("subjectID"));
         String name = request.getParameter("name");

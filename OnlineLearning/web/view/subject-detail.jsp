@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
@@ -167,9 +168,11 @@
 
                             <!-- price package -->
                             <div id="Price" class="tabcontent">
-                                <div class="add-search">
-                                    <a class="margin-auto-0 add-dimension" href="../management/price-package-detail?subjectID=${subjectID}" ><i class="fa-solid fa-plus"></i> Add Price Package</a>
-                                </div>
+                                <c:if test="${sessionScope.account.role.id==4}">
+                                    <div class="add-search">
+                                        <a class="margin-auto-0 add-dimension" href="../management/price-package-detail?subjectID=${subjectID}" ><i class="fa-solid fa-plus"></i> Add Price Package</a>
+                                    </div>
+                                </c:if>
                                 <table class="table table-striped" id="table2">
                                     <thead>
                                         <tr>
