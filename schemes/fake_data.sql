@@ -872,3 +872,25 @@ INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (45
 INSERT [dbo].[Objective] ([ObjectiveID], [ObjectiveName], [CourseID]) VALUES (46, N'Use the pandas module with Python to create and structure data.
 ', NULL)
 SET IDENTITY_INSERT [dbo].[Objective] OFF
+
+SET IDENTITY_INSERT [dbo].[CoursePricePackage] ON 
+
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (1, N'Access 3 months', 3, 1, CAST(60.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 1)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (2, N'Access 6 months', 6, 1, CAST(90.00 AS Decimal(15, 2)), CAST(80.00 AS Decimal(15, 2)), 1)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (3, N'Access unlimited', NULL, 1, CAST(150.00 AS Decimal(15, 2)), CAST(130.00 AS Decimal(15, 2)), 1)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (4, N'Access 3 months', 3, 1, CAST(80.00 AS Decimal(15, 2)), CAST(60.00 AS Decimal(15, 2)), 2)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (5, N'Access 6 months', 6, 1, CAST(120.00 AS Decimal(15, 2)), CAST(100.00 AS Decimal(15, 2)), 2)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (6, N'Access unlimited', NULL, 1, CAST(200.00 AS Decimal(15, 2)), CAST(150.00 AS Decimal(15, 2)), 2)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (7, N'Access 3 months', 3, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 3)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (8, N'Access 6 months', 6, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 3)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (9, N'Access unlimited', NULL, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 3)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (10, N'Access 3 months', 3, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 4)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (11, N'Access 6 months', 6, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 4)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (12, N'Access unlimited', NULL, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 4)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (13, N'Access 3 months', 3, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 5)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (14, N'Access 6 months', 6, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 5)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (15, N'Access unlimited', NULL, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 5)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (16, N'Access 3 months', 3, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 6)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (17, N'Access 6 months', 6, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 6)
+INSERT [dbo].[CoursePricePackage] ([PriceID], [Name], [AccessDuration], [Status], [ListPrice], [SalePrice], [CourseID]) VALUES (18, N'Access unlimited', NULL, 1, CAST(100.00 AS Decimal(15, 2)), CAST(50.00 AS Decimal(15, 2)), 6)
+SET IDENTITY_INSERT [dbo].[CoursePricePackage] OFF
