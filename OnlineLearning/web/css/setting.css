@@ -59,75 +59,11 @@ td > a:hover {
     outline: none;
     font-size: 15px;
     color: #858796;
-
 }
 
 th > i{
     margin-left: 12px;
     cursor: poiter;
-}
-
-/*table {
-    width: 100%;
-    margin-top: 30px;
-    border: 1px solid #000000;
-    border-collapse: collapse;
-}
-
-th i {
-    float: right;
-    font-size: 22px;
-}
-
-th,
-td {
-    text-align: left;
-    padding: 12px;
-    border: 1px solid #000;
-    color: #858696;
-}
-
-th i {
-    text-align: right;
-    color: #858696;
-}
-
-ul {
-    list-style: none;
-}*/
-
-.pagging-list {
-    display: flex;
-    margin-top: 30px;
-}
-
-.pagging-list li {
-    padding: 8px 12px;
-    border: 1px solid #dddfeb;
-    background-color: #fff;
-}
-
-.pagging-list li a {
-    text-decoration: none;
-    color: #858796;
-}
-
-.pagging-active {
-    background-color: #4e73df !important;
-}
-
-.pagging-active a {
-    color: #fff !important;
-}
-
-.previous {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-
-.next {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
 }
 
 .img-thumbnail-blog {
@@ -194,8 +130,6 @@ ul {
 table {
     width: 100%;
     margin-top: 30px;
-    border: 1px solid #000000;
-    border-collapse: collapse;
 }
 
 th i {
@@ -207,13 +141,12 @@ th,
 td {
     text-align: left;
     padding: 12px;
-    border: 1px solid #000;
-    color: #858696;
+    color: #000;
 }
 
 th i {
     text-align: right;
-    color: #858696;
+    color: #000;
 }
 
 ul {
@@ -225,36 +158,11 @@ ul {
     margin-top: 30px;
 }
 
-.pagging-list li {
-    padding: 8px 12px;
-    border: 1px solid #dddfeb;
-    background-color: #fff;
-}
-
-.pagging-list li a {
-    text-decoration: none;
-    color: #858796;
-}
-
-.pagging-active {
-    background-color: #4e73df !important;
-}
-
-.pagging-active a {
-    color: #fff !important;
-}
-
-.previous {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-
-.next {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-}
-
 .img-thumbnail-blog {
     text-align: center;
     width: 78px;
+}
+
+.form-search{
+    margin-bottom: 24px;
 }
