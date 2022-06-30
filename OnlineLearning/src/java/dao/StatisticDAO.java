@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -303,7 +304,73 @@ public class StatisticDAO extends DBContext {
         }
     }
 
-    class AmountAccountEnrollInSubjectArgs {
+    /**
+     * Only for json serializable
+     */
+    public class RegistrationAmountArgs {
+
+        private LocalDate date;
+        private int amount;
+
+        public RegistrationAmountArgs(LocalDate date, int amount) {
+            this.date = date;
+            this.amount = amount;
+        }
+
+        public LocalDate getDate() {
+            return date;
+        }
+
+        public void setDate(LocalDate date) {
+            this.date = date;
+        }
+
+        public int getAmount() {
+            return amount;
+        }
+
+        public void setAmount(int amount) {
+            this.amount = amount;
+        }
+
+    }
+
+    public List<RegistrationAmountArgs> countRegistration(LocalDate from, LocalDate to) {
+        List<RegistrationAmountArgs> ls = new ArrayList<>();
+
+        long dateDiff = ChronoUnit.DAYS.between(from, to) + 1;
+
+        for (int i = 0; i < dateDiff; i++) {
+            ls.add(new RegistrationAmountArgs(from.plusDays(i), 0));
+        }
+
+        String sql = "select CONVERT(Date,TrasactionTime ) [date], count(TransactionHistoryID) [amount] \n"
+                + "from TransactionHistory\n"
+                + "group by CONVERT(Date, TrasactionTime) \n"
+                + "having CONVERT(Date, TrasactionTime) between ? and ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDate(1, java.sql.Date.valueOf(from));
+            stmt.setDate(2, java.sql.Date.valueOf(to));
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                LocalDate date = rs.getDate(1).toLocalDate();
+                for (RegistrationAmountArgs r : ls) {
+                    if (r.getDate().equals(date)) {
+                        r.setAmount(rs.getInt(2));
+                        break;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return ls;
+    }
+
+    public class AmountAccountEnrollInSubjectArgs {
 
         private int subjectId;
         private String subjectName;

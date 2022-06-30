@@ -10,8 +10,8 @@ const COLORS = [
     '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
     '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'
 ];
-const ctx = document.getElementById('myChart').getContext('2d');
-const blogTrendChart = new Chart(ctx, {
+const blogTrendCtx = document.getElementById('myChart').getContext('2d');
+const blogTrendChart = new Chart(blogTrendCtx, {
     type: 'bar',
     data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -42,6 +42,37 @@ const blogTrendChart = new Chart(ctx, {
     }
 });
 
+const registrationCtx = document.getElementById('registrationChart').getContext('2d');
+const registrationChart = new Chart(registrationCtx, {
+    type: 'line',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+                label: '# of Registration',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: '#6f42c1',
+                borderColor: '#6610f2',
+                borderWidth: 1
+            }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Registration Chart',
+                position: 'bottom',
+                font: {
+                    size: 16
+                }
+            }
+        }
+    }
+});
 
 const subjectCtx = document.getElementById("subjectChart");
 const subjectChart = new Chart(subjectCtx, {
@@ -242,6 +273,19 @@ function drawSubjectEnrollTrend() {
             .catch(error => console.log(error));
 }
 
+function drawRegistrationChart(from, to) {
+    fetch(`../api/statistics/registration/${from}/${to}`)
+            .then(resp => resp.json())
+            .then(data => {
+                let dates = data.map(e => `${e.date.year}-${e.date.month}-${e.date.day}`);
+                let amounts = data.map(e => e.amount);
+                registrationChart.data.labels = dates;
+                registrationChart.data.datasets[0].data = amounts;
+                registrationChart.update();
+            })
+            .catch(error => console.log(error));
+}
+
 const fromMonthInput = document.getElementById("fromMonth");
 const toMonthInput = document.getElementById("toMonth");
 
@@ -287,8 +331,34 @@ function searchRevenueEventHandler() {
     drawRevenueChart(m1, y1, m2, y2);
 }
 
+
+
+function formatToISO_LOCAL_DATE(date) {
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
+}
+
+$("#fromDateRegistration").change(function () {
+    drawRegistrationChart($("#fromDateRegistration").val(), $("#toDateRegistration").val());
+});
+
+$("#toDateRegistration").change(function () {
+    drawRegistrationChart($("#fromDateRegistration").val(), $("#toDateRegistration").val());
+});
+
 fromMonthInput.addEventListener('change', () => searchRevenueEventHandler());
 toMonthInput.addEventListener('change', () => searchRevenueEventHandler());
+
+let today = new Date();
+let previous7Day = new Date(today);
+previous7Day.setDate(today.getDate() - 7);
+
+$("#fromDateRegistration").val(formatToISO_LOCAL_DATE(previous7Day));
+$("#toDateRegistration").val(formatToISO_LOCAL_DATE(today));
+
+drawRegistrationChart(formatToISO_LOCAL_DATE(previous7Day), formatToISO_LOCAL_DATE(today));
 
 drawSubjectEnrollTrend();
 drawBlogTrendChart();

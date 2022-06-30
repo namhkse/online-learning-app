@@ -73,3 +73,30 @@ $("#deleteBtn").click(function () {
         }
     });
 });
+
+$("#btnCreateRole").click(function () {
+    let roleName = $("#inputRoleName").val();
+
+    let role = {
+        name: roleName
+    };
+
+    $.ajax({
+        url: './rolepermission',
+        type: 'POST',
+        data: JSON.stringify(role),
+        contentType: 'application/json',
+        success: function (data, textStatus, jqXHR) {
+            console.log(data);
+            location.href = "./rolepermission?roleId=" + data.id;
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status === 403) {
+                $("#createNewRoleModal").modal('hide')
+                customAlert("", "You don't have Create New Role Permission.", "red");
+            } else {
+                customAlert("Encountered an error!", "Create new role fail.", "red");
+            }
+        }
+    });
+});

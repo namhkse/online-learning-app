@@ -1,12 +1,14 @@
 package controller.management;
 
-import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import dao.PermissionDAO;
 import dao.RoleDAO;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,15 +46,11 @@ public class RolePermissionController extends HttpServlet {
         req.getRequestDispatcher("../view/role-permission.jsp").forward(req, resp);
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String roleName = req.getParameter("inputRoleName");
-        int roleId = new RoleDAO().save(new Role(0, roleName));
-        resp.sendRedirect("./rolepermission?roleId=" + roleId);
-    }
-
     /**
-     * Json format { "roleId: 1, "permissionIds": [1, 2, 3 , 4, 5] }
+     * Create a new Role.
+     * <p>
+     * Json format:<code>{ id: 0, name: "admin" }</code>
+     * </p>
      *
      * @param req
      * @param resp
@@ -60,21 +58,46 @@ public class RolePermissionController extends HttpServlet {
      * @throws IOException
      */
     @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Gson gson = new Gson();
+        try (Reader reader = new InputStreamReader(req.getInputStream())) {
+            JsonReader jsonReader = new JsonReader(reader);
+            Role role = gson.fromJson(jsonReader, Role.class);
+            int roleId = new RoleDAO().save(role);
+            role.setId(roleId);
+            PrintWriter out = resp.getWriter();
+            resp.setContentType("application/json");
+            out.write(gson.toJson(role));
+            resp.setStatus(201);
+        }
+    }
+
+    /**
+     * Update a role's permissions.
+     * <p>
+     * Json format:
+     * <code>{ "roleId: 1, "permissionIds": [1, 2, 3 , 4, 5] }</code>
+     * </p>
+     *
+     * @param req
+     * @param resp
+     * @throws javax.servlet.ServletException
+     * @throws java.io.IOException
+     */
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JsonReader reader = new JsonReader(new InputStreamReader(req.getInputStream(), "UTF-8"));
-        try {
+        try (JsonReader reader = new JsonReader(new InputStreamReader(req.getInputStream(), "UTF-8"))) {
             List<Integer> permissionIds = null;
             int roleId = 0;
 
             reader.beginObject();
-
             while (reader.hasNext()) {
                 String name = reader.nextName();
+
                 if (name.equals("roleId")) {
                     roleId = reader.nextInt();
                 } else if (name.equals("permissionIds") && reader.peek() != JsonToken.NULL) {
-                    permissionIds = readIntegerArray(reader);
-
+                    permissionIds = parseJsonIntegerArray(reader);
                 }
             }
             reader.endObject();
@@ -86,13 +109,18 @@ public class RolePermissionController extends HttpServlet {
                     permissionDAO.assignPermissionToRole(permissionId, roleId);
                 }
             }
-
-        } finally {
-            reader.close();
         }
     }
 
-    public List<Integer> readIntegerArray(JsonReader reader) throws IOException {
+    /**
+     * Parse json integer array. Example a json array [1, 2, 3, 4, 5] will be
+     * pasre <code>List<Integer></code>
+     *
+     * @param reader point start of int array
+     * @return list integer from json int array
+     * @throws IOException if parse error
+     */
+    private List<Integer> parseJsonIntegerArray(JsonReader reader) throws IOException {
         List<Integer> ints = new ArrayList<>();
         reader.beginArray();
         while (reader.hasNext()) {
@@ -102,6 +130,17 @@ public class RolePermissionController extends HttpServlet {
         return ints;
     }
 
+    /**
+     * Delete a role by role is passed in query string.
+     * <p>
+     * Request: DELETE /management/rolepermission?roleId=id
+     * </p>
+     *
+     * @param req
+     * @param resp
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int roleId = RequestParamUtil.parseInt(req, "roleId");
@@ -114,5 +153,4 @@ public class RolePermissionController extends HttpServlet {
             ex.printStackTrace();
         }
     }
-
 }

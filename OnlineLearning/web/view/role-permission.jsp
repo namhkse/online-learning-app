@@ -37,20 +37,18 @@
                                 <h5 class="modal-title" id="exampleModalLabel">Create Role</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form method="POST" action="./rolepermission">
-                                <div class="modal-body">
-                                    <div class="mb-3 row">
-                                        <label for="inputRoleName" class="col-3 col-form-label">Role Name</label>
-                                        <div class="col">
-                                            <input type="text" class="form-control" id="inputRoleName" name="inputRoleName">
-                                        </div>
+                            <div class="modal-body">
+                                <div class="mb-3 row">
+                                    <label for="inputRoleName" class="col-3 col-form-label">Role Name</label>
+                                    <div class="col">
+                                        <input type="text" class="form-control" id="inputRoleName" name="inputRoleName">
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary">Create</button>
-                                </div>
-                            </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                                <button id="btnCreateRole" type="button" class="btn btn-primary">Create</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -77,7 +75,7 @@
                         </ul>
 
                         <div>
-                            
+
                             <input type="text" value="${selectedRole.id}" name="roleId" hidden>
                             <div class="form-row mt-4">
                                 <c:forEach items="${permissions}" var="p">

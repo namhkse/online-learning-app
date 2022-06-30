@@ -64,32 +64,11 @@ public class ManagementFilter implements Filter {
             if (isAllowed) {
                 chain.doFilter(request, response);
             } else {
-                resp.setStatus(403);
+                resp.sendError(403);
             }
         }
 
     }
-//        chain.doFilter(request, response);
-
-    /*
-        if (loggedAccount == null) {
-            resp.sendError(401);
-        } else {
-            Role role = loggedAccount.getRole();
-
-            List<Permission> permissions = new PermissionDAO().findPermissionOfRole(role.getId());
-            
-            boolean isAllow = permissions.stream()
-                    .filter(p -> req.getMethod().equals(p.getMethod())
-                    && req.getRequestURL().toString().equals(p.getRequestUrl()))
-                    .findFirst().isPresent();
-            
-            if (role.getName().equals("ADMIN") || isAllow) {
-                chain.doFilter(request, response);
-            } else {
-                resp.sendError(403);
-            }
-        }*/
 
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);

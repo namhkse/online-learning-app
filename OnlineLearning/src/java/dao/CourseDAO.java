@@ -325,13 +325,4 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-    
-    public static void main(String[] args) {
-        ArrayList<Integer> in = new ArrayList<>();
-        in.add(2);
-        ArrayList<Course> list = new CourseDAO().getListCourseBySubject(in);
-        for (Course course : list) {
-            System.out.println(course.getName());
-        }
-    }
 }
