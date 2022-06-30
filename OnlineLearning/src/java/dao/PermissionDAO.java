@@ -122,8 +122,8 @@ public class PermissionDAO extends DBContext {
             stmt.setString(2, permission.getMethod());
             stmt.setString(3, permission.getRequestUrl());
             ResultSet rs = stmt.executeQuery();
-
-            return rs.first();
+            if(rs.next()) return true;
+            
         } catch (Exception ex) {
             ex.printStackTrace();
         }
