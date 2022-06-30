@@ -154,6 +154,22 @@
                             </div>
                         </div>
 
+                        <!--Revenue Base On Subject Chart-->
+                        <div class="p-4 row">
+                            <div class=" col-md-5">
+                                <div class="input-group mb-3 input-group-sm">
+                                    <span class="input-group-text">From</span>
+                                    <input type="date" id="fromDateRevenueSubject" min="2000-01-01" class="form-control">
+                                    <span class="input-group-text">To</span>
+                                    <input type="date" id="toDateRevenueSubject" min="2000-01-01" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <canvas id="subjectRevenueChart"></canvas>
+                            </div>
+                        </div>
+
                         <!--Registration Chart-->
                         <div class="p-4 row">
                             <div class=" col-md-5">

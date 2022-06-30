@@ -130,13 +130,13 @@ public class StatistService {
         }
         return resp;
     }
-    
+
     @GET
     @Path("/test")
     public Response test() {
         return Response.ok().build();
     }
-    
+
     @GET
     @Path("/registration/{from}/{to}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -153,5 +153,30 @@ public class StatistService {
 
         List ls = statistDAO.countRegistration(from, to);
         return Response.ok(gson.toJson(ls)).build();
+    }
+
+    @GET
+    @Path("/revenue/subject")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRevenueOfAllSubject() {
+        return Response.ok(gson.toJson(statistDAO.getRevenueOfAllSubject(null, null))).build();
+    }
+
+    @GET
+    @Path("/revenue/subject/{from}/{to}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRevenueOfAllSubject(@PathParam("from") String f, @PathParam("to") String t) {
+        DateTimeFormatter dft = DateTimeFormatter.ofPattern("yyyy-M-d");
+        LocalDate from = null;
+        LocalDate to = null;
+        try {
+            from = LocalDate.parse(f, dft);
+            to = LocalDate.parse(t, dft);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        return Response.ok(gson.toJson(statistDAO.getRevenueOfAllSubject(from, to))).build();
     }
 }
