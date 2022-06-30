@@ -52,7 +52,8 @@ const registrationChart = new Chart(registrationCtx, {
                 data: [12, 19, 3, 5, 2, 3],
                 backgroundColor: '#6f42c1',
                 borderColor: '#6610f2',
-                borderWidth: 1
+                borderWidth: 1,
+                tension: 0.1
             }]
     },
     options: {
@@ -166,6 +167,7 @@ const revenueChart = new Chart(revenueCtx, {
                     'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 3
+
             }]
     },
     options: {

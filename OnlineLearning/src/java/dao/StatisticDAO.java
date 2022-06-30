@@ -58,7 +58,7 @@ public class StatisticDAO extends DBContext {
     public List<CourseEnrollArgs> countNumberEnrollInAllCourse() throws SQLException {
         List<CourseEnrollArgs> ls = new ArrayList<>();
         String sql = "select c.CourseID, c.Name [CourseName], count(*) [NumberOfEnroll]\n"
-                + "from Course c left join CourseAccount ac\n"
+                + "from Course c left join TransactionHistory ac \n"
                 + "	on c.CourseID = ac.CourseID\n"
                 + "group by c.CourseID, c.Name\n"
                 + "order by NumberOfEnroll desc";
@@ -405,13 +405,11 @@ public class StatisticDAO extends DBContext {
 
         String sqlSelectSubject = "select SubjectID, Name from Subject";
 
-        String sqlCountAccountOfSubject = "select "
-                + "	count(t.AccountID) [AmountAccountEnroll]\n"
-                + "from TransactionHistory as t\n"
-                + "	inner join Course as c on t.CourseID = c.CourseID\n"
-                + "	inner join  SubjectCourse as sc on t.CourseID = sc.CourseID\n"
-                + "where SubjectID = ?\n"
-                + "group by sc.SubjectID";
+        String sqlCountAccountOfSubject = "SELECT COUNT(DISTINCT(AccountID)) from TransactionHistory\n"
+                + "where CourseID IN (SELECT sc.CourseID\n"
+                + "FROM SubjectCourse sc INNER JOIN Course c ON sc.CourseID = c.CourseID\n"
+                + "where sc.SubjectID = ?)";
+        
         try (PreparedStatement countAccountStmt = connection.prepareStatement(sqlCountAccountOfSubject);
                 Statement selectSubjectStmt = connection.createStatement();
                 ResultSet subjectTable = selectSubjectStmt.executeQuery(sqlSelectSubject)) {
