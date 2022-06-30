@@ -101,7 +101,7 @@
                                                         <td></td>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <td><video  style="width: 200px;height: 120px;" src="../${lesson.getVideoUrl()}" controls></video></td>
+                                                        <td><video  style="width: 200px;height: 120px;" src="${lesson.getVideoUrl()}" controls></video></td>
                                                             </c:otherwise>
                                                         </c:choose>
                                                 <td>${lesson.getStartLearningTime()}</td>

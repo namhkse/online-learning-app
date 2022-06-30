@@ -85,20 +85,7 @@
             <div id="container">
                 <div class="blog-container">
                     <div class="blog-container-left">
-<<<<<<< HEAD
-                        <ul class="blog-container-right-toppic-list">
-                            <li class="blog-container-right-toppic-item">
-                                <a href="blog" class="${bcid == null ? 'active-category-blog' : ''}">All Category</a>
-                            </li>
-                            <c:forEach items="${bcList}" var="bc">
-                                <li class="blog-container-right-toppic-item">
-                                    <a href="blog?bcid=${bc.getBlogCategoryID()}" class="${bc.getBlogCategoryID() == bcid ? 'active-category-blog' : ''}">${bc.getName()}</a>
-                                </li>
-                            </c:forEach>
-
-                        </ul>
-=======
->>>>>>> origin/TaiVT
+                        
                         <ul class="blog-list" id="container-left">
                             <c:choose>
                                 <c:when test="${blogList == null}">
