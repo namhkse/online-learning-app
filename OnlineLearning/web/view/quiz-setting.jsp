@@ -18,8 +18,8 @@
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="../js/setting.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />
-        <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+        <!--<link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.7/dist/flowbite.min.css" />-->
+        <!--<script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>-->
         <script src="../js/dashboard.js"></script>
         <script src="../js/table.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
@@ -40,8 +40,8 @@
                         <div class="container-table">
                             <div class="table-content">
                                 <div class="search">
-                                    
-                                    <form action="quizsetting" method="GET"> 
+
+                                    <form class="form-search" action="quizsetting" method="GET"> 
                                         <a  style="background-color: #365dcd;
                                             color: #fff;
                                             text-decoration: none;
@@ -60,41 +60,48 @@
                                             </c:forEach>
                                         </select>
 
-                                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Filter</button>
+                                        <button
+                                            style="background-color: #365dcd;
+                                            text-decoration: none;
+                                            padding: 12px 8px;
+                                            margin-right: 8px;
+                                            border-radius: 10px;
+                                            border: 0;"
+                                            type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Filter</button>
                                     </form>  
-                                    
                                 </div>
-                                <table id="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>NAME</th>
-                                            <th>SUBJECT</th>
-                                            <th>LEVEL</th>
-                                            <th>TOTAL QUESTION</th>
-                                            <th>DURATION</th>
-                                            <th>PASS RATE</th>
-                                            <th>TYPE</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="myTable">
-                                        <c:forEach items="${listQuizLesson}" var="quiz">
+                                <div class="align-content-center">
+                                    <table id="table" class="table table-striped text-center" border="0">
+                                        <thead>
                                             <tr>
-                                                <td>${quiz.quizID}</td>
-                                                <td>${quiz.name}</td>
-                                                <td>${quiz.subjectName}</td>
-                                                <td>${quiz.level}</td>
-                                                <td>${quiz.totalQues}</td>
-                                                <td>${quiz.examTimeInMinute} minutes</td>
-                                                <td>${quiz.passScore} mark</td>
-                                                <td>${quiz.type}</td>
-                                                <td><a  href="quizsettingdetail?id=${quiz.quizID}"<button type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">View Detail</button></a></td>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Subject</th>
+                                                <th>Level</th>
+                                                <th>Total question</th>
+                                                <th>Duration</th>
+                                                <th>Pass rate</th>
+                                                <th>Type</th>
+                                                <th>Action</th>
                                             </tr>
-                                        </c:forEach>    
-                                    </tbody>
-                                </table>
-                                
+                                        </thead>
+                                        <tbody id="myTable">
+                                            <c:forEach items="${listQuizLesson}" var="quiz">
+                                                <tr>
+                                                    <td>${quiz.quizID}</td>
+                                                    <td>${quiz.name}</td>
+                                                    <td>${quiz.subjectName}</td>
+                                                    <td>${quiz.level}</td>
+                                                    <td>${quiz.totalQues}</td>
+                                                    <td>${quiz.examTimeInMinute} minutes</td>
+                                                    <td>${quiz.passScore} mark</td>
+                                                    <td>${quiz.type}</td>
+                                                    <td><a class="text-primary" href="quizsettingdetail?id=${quiz.quizID}">View Detail</a></td>
+                                                </tr>
+                                            </c:forEach>    
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,8 +110,8 @@
 
             <!-- Bootstrap JavaScript -->    
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+                    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
     </body>
 
 </html>
