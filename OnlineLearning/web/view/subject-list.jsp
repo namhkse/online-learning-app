@@ -43,7 +43,7 @@
                         <div class="container-table">
                             <div class="table-content">
                                 <div class="search">
-                                    <a class="margin-auto-0" id="add-blog" href="slide-edit" ><i class="fa-solid fa-plus"></i> Add Subject</a>
+                                    <a class="margin-auto-0" id="add-blog" href="subject-add" ><i class="fa-solid fa-plus"></i> Add Subject</a>
 
                                     <form class="search-form"> 
                                         <div class="filter-status">

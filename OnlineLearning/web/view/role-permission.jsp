@@ -91,7 +91,7 @@
                                 </c:forEach>
                             </div>
                             <div class="d-flex justify-content-end">
-                                <button id="updateBtn" type="button" class="btn btn-success me-3" value="${selectedRole.id}">Udpate</button>
+                                <button id="updateBtn" type="button" class="btn btn-success me-3" value="${selectedRole.id}">Update</button>
 
                                 <button id="deleteBtn" data-role-name="${selectedRole.name}" value="${selectedRole.id}" 
                                         type="button" class="btn btn-danger me-3">Delete</button>

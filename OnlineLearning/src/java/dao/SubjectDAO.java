@@ -246,37 +246,86 @@ public class SubjectDAO extends DBContext {
             String sql = "INSERT INTO [dbo].[Subject]\n"
                     + "           ([Name]\n"
                     + "           ,[CategoryID]\n"
+                    + "           ,[MainCategoryID]\n"
                     + "           ,[Featured]\n"
                     + "           ,[Status]\n"
                     + "           ,[Image]\n"
                     + "           ,[Description]\n"
-                    + "           ,[Order]\n"
                     + "           ,[type]\n"
                     + "           ,[OwnerID])\n"
                     + "     VALUES\n"
-                    + "           (<Name, varchar(200),>\n"
-                    + "           ,<CategoryID, int,>\n"
-                    + "           ,<Featured, bit,>\n"
-                    + "           ,<Status, bit,>\n"
-                    + "           ,<Image, varchar(3000),>\n"
-                    + "           ,<Description, nvarchar(2000),>\n"
-                    + "           ,<Order, int,>\n"
-                    + "           ,<type, varchar(200),>\n"
-                    + "           ,<OwnerID, int,>)";
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, s.getName());
-            stm.setInt(2, s.getCategoryID().getCategoryID());
-            stm.setBoolean(3, s.isFeatured());
-            stm.setBoolean(4, s.isStatus());
-            stm.setString(5, s.getImage());
-            stm.setString(6, s.getDescription());
-            stm.setInt(7, s.getOrder());
-            stm.setString(8, s.getType());
+            if (s.getCategoryID() != null) {
+                stm.setInt(2, s.getCategoryID().getCategoryID());
+                stm.setNull(3, Types.INTEGER);
+            } else {
+                stm.setNull(2, Types.INTEGER);
+                stm.setInt(3, s.getMainCategoryID().getMainCategoryID());
+            }
+            stm.setBoolean(4, s.isFeatured());
+            stm.setBoolean(5, s.isStatus());
+            stm.setString(6, s.getImage());
+            stm.setString(7, s.getDescription());
+            stm.setString(8, "CATEGORY_SUBJECT");
             stm.setInt(9, s.getOwnerID().getId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public Subject getNewSubject() {
+        try {
+            String sql = "SELECT TOP(1) Subject.*, Account.FirstName, Account.LastName, SubjectCategory.Name CategoryName, SubjectMainCategory.Name MainCategoryName\n"
+                    + "FROM [Subject] JOIN Account ON Subject.OwnerID = Account.AccountID\n"
+                    + "LEFT JOIN SubjectCategory ON Subject.CategoryID = SubjectCategory.CategoryID\n"
+                    + "LEFT JOIN SubjectMainCategory ON Subject.MainCategoryID = SubjectMainCategory.MainCategoryID ORDER BY [Subject].SubjectID DESC";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                Subject subject = new Subject();
+                subject.setSubjectId(rs.getInt("SubjectID"));
+                subject.setName(rs.getString("Name"));
+                
+                SubjectCategory category = new SubjectCategory();
+                category.setCategoryID(rs.getInt("CategoryID"));
+                category.setName(rs.getString("CategoryName"));
+                
+                SubjectMainCategory mainCategory = new SubjectMainCategory();
+                mainCategory.setMainCategoryID(rs.getInt("MainCategoryID"));
+                mainCategory.setName(rs.getString("MainCategoryName"));
+                
+                subject.setMainCategoryID(mainCategory);
+                subject.setCategoryID(category);
+                subject.setFeatured(rs.getBoolean("Featured"));
+                subject.setStatus(rs.getBoolean("Status"));
+                subject.setImage(rs.getString("Image"));
+                subject.setDescription(rs.getString("Description"));
+                
+                Account account = new Account();
+                account.setAccountID(rs.getInt("OwnerID"));
+                account.setFirstName(rs.getString("FirstName"));
+                account.setLastName(rs.getString("LastName"));
+                subject.setOwnerID(account);
+                
+                subject.setOrder(rs.getInt("Order"));
+                subject.setType(rs.getString("type"));
+                return subject;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public void updateSubject(Subject subject) {
@@ -375,7 +424,7 @@ public class SubjectDAO extends DBContext {
                 subject.setOrder(rs.getInt("Order"));
                 subject.setType(rs.getString("type"));
                 return subject;
-                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -439,10 +488,11 @@ public class SubjectDAO extends DBContext {
         }
         return subjects;
     }
+
     public Subject getSubjectNamebyID(int subjectID) {
         try {
-            String sql = "select Subject.Name as SubjectName\n" +
-                        "from Subject where Subject.SubjectID = ?";
+            String sql = "select Subject.Name as SubjectName\n"
+                    + "from Subject where Subject.SubjectID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, subjectID);
             ResultSet rs = stm.executeQuery();
@@ -460,8 +510,8 @@ public class SubjectDAO extends DBContext {
     public ArrayList<Subject> getAllSubjectName() {
         ArrayList<Subject> subjects = new ArrayList<>();
         try {
-            String sql = "select SubjectID, Subject.Name as SubjectName\n" +
-                        "from Subject ";
+            String sql = "select SubjectID, Subject.Name as SubjectName\n"
+                    + "from Subject ";
 
             PreparedStatement stm = connection.prepareStatement(sql);
 
