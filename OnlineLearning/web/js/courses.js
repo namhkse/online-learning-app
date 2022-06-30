@@ -25,10 +25,10 @@ function checkedCategory(element) {
             listSubCate[i].childNodes[1].checked = false;
         }
     }
-    
+
     var pageNum = document.getElementById("page-num");
     pageNum.value = 1;
-    
+
     searchByValue();
 }
 
@@ -45,7 +45,7 @@ function checkedSubCategory(element) {
             count++;
         }
     }
-    if(count !== subCategories.length) {
+    if (count !== subCategories.length) {
         category.indeterminate = true;
     } else {
         category.indeterminate = false;
@@ -64,14 +64,14 @@ function checkedSubCategory(element) {
 function searchByPrice() {
     var pageNum = document.getElementById("page-num");
     pageNum.value = 1;
-    
+
     searchByValue();
 }
 
 function sortedCourse() {
     var pageNum = document.getElementById("page-num");
     pageNum.value = 1;
-    
+
     searchByValue();
 }
 
@@ -93,10 +93,10 @@ function clearSearch() {
 
     var status = document.getElementById("all-course");
     status.selected = true;
-    
+
     var pageNum = document.getElementById("page-num");
     pageNum.value = 1;
-    
+
     searchByValue();
 }
 
@@ -137,16 +137,16 @@ filterButton.onclick = function () {
 };
 
 function dropDownSubCate(icon) {
-    
+
     if (icon.classList.contains("fa-angle-up")) {
-            icon.classList.toggle("fa-angle-up");
-            icon.classList.toggle("fa-angle-down");
-            icon.parentNode.parentNode.childNodes[3].style.height = "0";
-        } else {
-            icon.classList.toggle("fa-angle-up");
-            icon.classList.toggle("fa-angle-down");
-            icon.parentNode.parentNode.childNodes[3].style.height = 'auto';
-        }
+        icon.classList.toggle("fa-angle-up");
+        icon.classList.toggle("fa-angle-down");
+        icon.parentNode.parentNode.childNodes[3].style.height = "0";
+    } else {
+        icon.classList.toggle("fa-angle-up");
+        icon.classList.toggle("fa-angle-down");
+        icon.parentNode.parentNode.childNodes[3].style.height = 'auto';
+    }
 }
 
 function searchByValue() {
@@ -158,16 +158,14 @@ function searchByValue() {
         }
     });
     var subjectData = arraySubjectId.join();
-    
     var categoryDatas = document.querySelectorAll(".search-category-name input");
     var arrayCategoryId = [];
-    subjectDatas.forEach(function (data) {
+    categoryDatas.forEach(function (data) {
         if (data.checked === true) {
             arrayCategoryId.push(data.value);
         }
     });
     var categoryData = arrayCategoryId.join();
-
     var priceDatas = document.querySelectorAll(".c-course-filter-item input");
     var arrayPrice = [];
     priceDatas.forEach(function (data) {
@@ -192,7 +190,7 @@ function searchByValue() {
             },
             success: function (result) {
                 document.getElementById("c-course-container-left").innerHTML = "";
-
+                
                 document.getElementById("c-course-container-left").innerHTML = result;
             }
         });
@@ -207,4 +205,13 @@ function pagination(page) {
     var pageNum = document.getElementById("page-num");
     pageNum.value = page;
     searchByValue();
+}
+
+function displayPrice(element) {
+    var priceHolder = element.parentNode.childNodes[1];
+    priceHolder.style.visibility = 'visible';
+}
+function hiddenPrice(element) {
+    var priceHolder = element.parentNode.childNodes[1];
+    priceHolder.style.visibility = 'hidden';
 }

@@ -8,6 +8,8 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Course;
+import model.CoursePricePackage;
 import model.PricePackage;
 import model.Subject;
 
@@ -155,4 +157,37 @@ public class PricePackageDAO extends DBContext {
             Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public ArrayList<CoursePricePackage> getListPricePackageOfCourse(int courseId) {
+        ArrayList<CoursePricePackage> listPriceOfCourse = new ArrayList<>();
+        try {
+            String sql = "select * from coursepricepackage where courseid = ?";
+            PreparedStatement stm = connection.prepareCall(sql);
+            stm.setInt(1, courseId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                CoursePricePackage coursePricePackage = new CoursePricePackage();
+                coursePricePackage.setPriceId(rs.getInt("PriceID"));
+                coursePricePackage.setName(rs.getString("Name"));
+                if (rs.getObject("AccessDuration") != null) {
+                    coursePricePackage.setAccessDuration(rs.getInt("AccessDuration"));
+                } else {
+                    coursePricePackage.setAccessDuration(-1);
+                }
+                coursePricePackage.setStatus(rs.getBoolean("Status"));
+                coursePricePackage.setListPrice(rs.getBigDecimal("ListPrice"));
+                coursePricePackage.setSalePrice(rs.getBigDecimal("SalePrice"));
+                Course course = new Course();
+                course.setCourseId(rs.getInt("CourseID"));
+                coursePricePackage.setCourseId(course);
+                
+                listPriceOfCourse.add(coursePricePackage);
+            }
+            return listPriceOfCourse;
+        } catch (SQLException ex) {
+            Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
 }

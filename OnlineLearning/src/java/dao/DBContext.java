@@ -5,9 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBContext {
-protected Connection connection;
-    public DBContext()
-    {
+
+    protected Connection connection;
+
+    public DBContext() {
         try {
             String user = "sa";
             String pass = "7816";

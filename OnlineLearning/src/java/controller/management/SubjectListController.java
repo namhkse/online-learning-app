@@ -87,6 +87,7 @@ public class SubjectListController extends HttpServlet {
             }
             response.getWriter().write("</td>\n"
                     + "                                                <td>" + numberCourse.get(i) + "</td>\n"
+                    + "                                                <td><a class=\"text-primary courses\" href=\"../management/course-list?Sid=" + get.getSubjectId() + "\">Courses</a></td>\n"
                     + "                                                <td>" + get.getOwnerID().getFirstName() + " " + get.getOwnerID().getLastName() + "</td>");
             if (get.isStatus() == true) {
                 response.getWriter().write("<td>Published</td>");

@@ -275,9 +275,26 @@ public class AccountDAO extends DBContext {
         return accounts;
     }
 
-    public void insertListAccountCanAccessSubject(int subjectID, ArrayList<Integer> accountIDs) {
+    public void insertAccountCanAccessSubject(int subjectID, int accountID) {
         try {
             String sql = "INSERT INTO [dbo].[SubjectAccount]\n"
+                    + "           ([AccountID]\n"
+                    + "           ,[SubjectID])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, accountID);
+            stm.setInt(2, subjectID);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void insertListAccountCanAccessSubject(int subjectID, ArrayList<Integer> accountIDs) {
+        try {
+            String sql = "INSERT INTO [SubjectAccount]\n"
                     + "           ([AccountID]\n"
                     + "           ,[SubjectID])\n"
                     + "     VALUES\n";
@@ -307,7 +324,7 @@ public class AccountDAO extends DBContext {
 
     public void deleteAllAccountCanAccessSubject(int subjectID) {
         try {
-            String sql = "DELETE FROM [dbo].[SubjectAccount]\n"
+            String sql = "DELETE FROM [SubjectAccount]\n"
                     + "      WHERE SubjectID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, subjectID);

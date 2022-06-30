@@ -1,3 +1,4 @@
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -10,7 +11,7 @@
         <script src="https://code.jquery.com/jquery-1.10.0.min.js" 
                 integrity="sha256-2+LznWeWgL7AJ1ciaIG5rFP7GKemzzl+K75tRyTByOE=" crossorigin="anonymous">
         </script> 
-        
+
         <title>Courses</title>
     </head>
     <body>
@@ -48,13 +49,38 @@
             <div id="c-course-container-left">
                 <div id="c-course-list">
                     <c:forEach items="${listCourse}" var="course">
-                        <a href="course-detail?id=${course.courseId}">
-                            <div class="c-course-item">
+
+                        <div class="c-course-item">
+                            <c:if test="${course.listPrice.size() != 0}">
+                                <div class="price-container">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Access Package</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Sale price</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${course.listPrice}" var="price">
+                                                <tr>
+                                                    <td>${price.name}</td>
+                                                    <td style="text-decoration: line-through">${price.listPrice}</td>
+                                                    <td>${price.salePrice}</td>
+                                                </tr>
+                                            </c:forEach>                                      
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </c:if>
+                            <a style="width:27%; margin: auto 0" href="course-detail?id=${course.courseId}" <c:if test="${course.listPrice.size() != 0}">onmouseover="displayPrice(this)" onmouseout="hiddenPrice(this)"</c:if>>
                                 <div class="c-course-item-img">
                                     <img src="${course.tinyPictureUrl}" alt="">
                                 </div>
-                                <div class="c-course-item-intro justify-between">
-                                    <div class="c-course-item-intro-text">
+                            </a>
+                            <div class="c-course-item-intro justify-between">
+                                <div class="c-course-item-intro-text">
+                                    <a href="course-detail?id=${course.courseId}">
                                         <h5 class="c-course-item-title">${course.name}</h5>
                                         <p class="c-course-item-desc">${course.description}</p>
                                         <ul class="ratings">
@@ -76,28 +102,37 @@
                                                 </c:choose>
                                             </c:forEach>
                                         </p>
-                                    </div>
+                                    </a>
                                     <c:set var="isRegister" value="false"/>
                                     <c:forEach items="${listCourseAccount}" var="courseAccount">
                                         <c:if test="${course.courseId == courseAccount.courseId.courseId}">
                                             <c:set var="isRegister" value="true"/>
                                         </c:if>
                                     </c:forEach>
-
                                     <c:if test="${isRegister == true}">
-                                        <div class="c-course-item-intro-registered">
-                                            <h5>Registered</h5>
-                                        </div>
+                                        <a href="#" class="btn-for-course">Continue</a>
                                     </c:if>
                                     <c:if test="${isRegister == false}">
-                                        <div class="c-course-item-intro-price">
-                                            <h5>$ ${course.price}</h5>
-                                        </div>
+                                        <a href="#" class="btn-for-course">Register</a>
                                     </c:if>
-
                                 </div>
+
+
+                                <c:if test="${isRegister == true}">
+                                    <div class="c-course-item-intro-registered">
+                                        <h5>Registered</h5>
+                                    </div>
+                                </c:if>
+                                <c:if test="${isRegister == false}">
+                                    <div class="c-course-item-intro-price">
+                                        <c:if test="${course.price <= 0}">
+                                            <span class="tag-free">Free</span>
+                                        </c:if>
+                                    </div>
+                                </c:if>
+
                             </div>
-                        </a>
+                        </div>
                     </c:forEach>
                 </div>
                 <div id="pagination-page">
@@ -175,6 +210,32 @@
                                 </c:forEach>
                             </div>
                         </form>
+                    </div>
+                </div>
+                <div class="featured-course">
+                    <h4 class="feature-course-title">Most feature course</h4>
+                    <div class="list-feature-course">
+                        <c:forEach items="${listTopFeatureCourse}" var="course">
+                            <a href="#" class="color1c1d1f">
+                                <div class="feature-course-item">
+                                    <img src="${course.thumbnailUrl}" alt="">
+                                    <div>
+                                        <h4 class="feature-course-title">${course.name}</h4>
+                                        <ul class="feature-star">
+                                            <li>
+                                                <c:forEach begin="1" end="${course.star}">
+                                                    <i class="fa-solid fa-star selected"></i>
+                                                </c:forEach>
+                                                <c:forEach begin="${course.star + 1}" end="5">
+                                                    <i class="fa-solid fa-star"></i>
+                                                </c:forEach>
+                                            </li>
+                                        </ul>
+                                        <span class="feature-desc">${course.description}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </c:forEach>
                     </div>
                 </div>
             </div>

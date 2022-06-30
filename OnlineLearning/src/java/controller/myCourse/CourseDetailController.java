@@ -2,8 +2,10 @@ package controller.myCourse;
 
 import dao.CourseDAO;
 import dao.LessonDAO;
-import dao.QuizDAO;
+import dao.PricePackageDAO;
+import dao.SubLessonDAO;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Account;
 import model.Course;
+import model.CoursePricePackage;
+import model.SubLesson;
 
 @WebServlet(name = "CourseDetailController", urlPatterns = {"/course-detail"})
 public class CourseDetailController extends HttpServlet {
@@ -37,6 +41,15 @@ public class CourseDetailController extends HttpServlet {
             
             int numberQuiz = new LessonDAO().getTotalQuizInCourse(courseId);
             request.setAttribute("numberQuiz", numberQuiz);
+            
+            ArrayList<SubLesson> listSubLesson = new SubLessonDAO().getListSubLessonByCourseID(courseId);
+            request.setAttribute("listSubLesson", listSubLesson);
+            
+            ArrayList<Course> listTopFeatureCourse = new CourseDAO().getTopFeatureCourse(courseId);
+            request.setAttribute("listTopFeatureCourse", listTopFeatureCourse);
+            
+            ArrayList<CoursePricePackage> listPrice = new PricePackageDAO().getListPricePackageOfCourse(courseId);
+            request.setAttribute("listPrice", listPrice);
             
             request.getRequestDispatcher("view/course-detail.jsp").forward(request, response);
         } catch (NumberFormatException e) {

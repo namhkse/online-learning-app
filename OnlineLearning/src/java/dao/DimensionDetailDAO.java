@@ -13,23 +13,23 @@ public class DimensionDetailDAO extends DBContext {
     public ArrayList<DimensionDetail> getDimensionDetail(int lessonID) {
         ArrayList<DimensionDetail> dimensionDetails = new ArrayList<>();
         try {
-            String sql = "with t1 as (\n"
-                    + " select count(Answer.AnswerID) as 'NumberCorrect', Dimension.Name as DimensionName, Dimension.DimensionID as DimensionID, DimensionType.TypeID as TypeID\n"
-                    + " from Answer join Question on Answer.QuestionID = Question.QuestionID\n"
-                    + " join Dimension on Question.QuestionID = Dimension.QuestionID\n"
-                    + "join DimensionType on Dimension.TypeID = DimensionType.TypeID\n"
-                    + "where Answer.Status = 1 and Question.LessonID = ? \n"
-                    + "group by Dimension.Name, Dimension.DimensionID, DimensionType.TypeID\n"
-                    + "),t2 as(\n"
-                    + "select count(Answer.AnswerID) as 'Number', Dimension.Name as DimensionName2 , Dimension.DimensionID as DimensionID2, DimensionType.TypeID as TypeID2\n"
-                    + "from Answer join Question on Answer.QuestionID = Question.QuestionID\n"
-                    + "join Dimension on Question.QuestionID = Dimension.QuestionID\n"
-                    + "join DimensionType on Dimension.TypeID = DimensionType.TypeID\n"
-                    + "where Question.LessonID = ?\n"
-                    + "group by Dimension.Name, Dimension.DimensionID,DimensionType.TypeID\n"
-                    + ")\n"
-                    + "select * from t1\n"
-                    + "inner join t2 on t1.DimensionID = t2.DimensionID2\n"
+            String sql = "with t1 as (\n" +
+"                     select count(CompletedQuestion.SelectedAnswerID) as 'NumberCorrect', Dimension.Name as DimensionName, Dimension.DimensionID as DimensionID, DimensionType.TypeID as TypeID\n" +
+"                     from CompletedQuestion join Question on CompletedQuestion.QuestionID = Question.QuestionID\n" +
+"                     join Dimension on Question.QuestionID = Dimension.QuestionID\n" +
+"                    join DimensionType on Dimension.TypeID = DimensionType.TypeID\n" +
+"                    where CompletedQuestion.Status = 1 and Question.LessonID = ?\n" +
+"                    group by Dimension.Name, Dimension.DimensionID, DimensionType.TypeID\n" +
+"                    ),t2 as(\n" +
+"                    select count(CompletedQuestion.SelectedAnswerID) as 'Number', Dimension.Name as DimensionName2 , Dimension.DimensionID as DimensionID2, DimensionType.TypeID as TypeID2\n" +
+"                    from CompletedQuestion join Question on CompletedQuestion.QuestionID = Question.QuestionID\n" +
+"                    join Dimension on Question.QuestionID = Dimension.QuestionID\n" +
+"                    join DimensionType on Dimension.TypeID = DimensionType.TypeID\n" +
+"                    where Question.LessonID =?\n" +
+"                    group by Dimension.Name, Dimension.DimensionID,DimensionType.TypeID\n" +
+"                    )\n" +
+"                    select * from t1\n" +
+"                    inner join t2 on t1.DimensionID = t2.DimensionID2"
                     + "";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, lessonID);

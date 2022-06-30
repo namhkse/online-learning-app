@@ -251,3 +251,11 @@ label{
 #action a:hover{
     text-decoration: underline;
 }
+
+.courses{
+    text-decoration: none;
+}
+
+.courses:hover{
+    text-decoration: underline;
+}

@@ -1,15 +1,16 @@
 package dao;
 
-import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Account;
 import model.Course;
-import model.CourseAccount;
+import model.CoursePricePackage;
 import model.Subject;
 
 public class CourseDAO extends DBContext {
@@ -93,6 +94,44 @@ public class CourseDAO extends DBContext {
         return null;
     }
 
+    public ArrayList<Course> getAllCourseBySubjectID(int subjectID, int status) {
+        ArrayList<Course> list = new ArrayList<>();
+        try {
+            String sql = "select c.*,a.FirstName, a.LastName, a.ProfilePictureUrl, a.Email from Course c, SubjectCourse sc, Account a "
+                    + "where c.CourseID = sc.CourseID and a.AccountID = c.InstructorID and sc.SubjectID = ?";
+            if (status != -1) {
+                sql += " and c.[Status] = ?";
+            }
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, subjectID);
+            if (status != -1) {
+                stm.setInt(2, status);
+            }
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Course c = new Course();
+
+                c.setCourseId(rs.getInt("CourseID"));
+                c.setName(rs.getString("Name"));
+                c.setPrice(rs.getBigDecimal("Price"));
+                c.setStatus(rs.getBoolean("Status"));
+
+                Account ac = new Account();
+                ac.setFirstName(rs.getString("FirstName"));
+                ac.setLastName(rs.getString("LastName"));
+                ac.setEmail(rs.getString("Email"));
+                ac.setProfilePictureUrl(rs.getString("ProfilePictureUrl"));
+
+                c.setInstructorId(ac);
+
+                list.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public ArrayList<Course> getAllCourse() {
         ArrayList<Course> listCourse = new ArrayList<>();
         try {
@@ -110,6 +149,8 @@ public class CourseDAO extends DBContext {
                 course.setStar(star);
                 int people = getNumberPeopleLearningInCourse(course.getCourseId());
                 course.setNumberPeopleLearning(people);
+                ArrayList<CoursePricePackage> listPrice = new PricePackageDAO().getListPricePackageOfCourse(course.getCourseId());
+                course.setListPrice(listPrice);
                 listCourse.add(course);
             }
         } catch (SQLException ex) {
@@ -192,6 +233,8 @@ public class CourseDAO extends DBContext {
                 course.setStar(star);
                 int people = getNumberPeopleLearningInCourse(course.getCourseId());
                 course.setNumberPeopleLearning(people);
+                ArrayList<CoursePricePackage> listPrice = new PricePackageDAO().getListPricePackageOfCourse(course.getCourseId());
+                course.setListPrice(listPrice);
                 listCourse.add(course);
             }
         } catch (SQLException ex) {
@@ -220,6 +263,8 @@ public class CourseDAO extends DBContext {
                 course.setStar(star);
                 int people = getNumberPeopleLearningInCourse(course.getCourseId());
                 course.setNumberPeopleLearning(people);
+                ArrayList<CoursePricePackage> listPrice = new PricePackageDAO().getListPricePackageOfCourse(course.getCourseId());
+                course.setListPrice(listPrice);
                 listCourse.add(course);
             }
         } catch (SQLException ex) {
@@ -254,6 +299,8 @@ public class CourseDAO extends DBContext {
                 course.setStar(star);
                 int people = getNumberPeopleLearningInCourse(course.getCourseId());
                 course.setNumberPeopleLearning(people);
+                ArrayList<CoursePricePackage> listPricePackage = new PricePackageDAO().getListPricePackageOfCourse(course.getCourseId());
+                course.setListPrice(listPricePackage);
                 listCourse.add(course);
             }
         } catch (SQLException ex) {
@@ -308,7 +355,7 @@ public class CourseDAO extends DBContext {
         }
         return false;
     }
-    
+
     public ArrayList<String> getObjectives(int courseId) {
         ArrayList<String> list = new ArrayList<>();
         String sql = "select * from Objective\n"
@@ -324,5 +371,122 @@ public class CourseDAO extends DBContext {
             Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public void deleteCourse(int id) {
+        try {
+            String sql = "DELETE [Course] WHERE [CourseID] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(SubjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public int getlCourseIdsublessonID(int subLessonId) {
+        Course c = new Course();
+        try {
+            String sql = "  select s.CourseID from SubLesson s where s.SubLessonID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, subLessonId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                c.setCourseId(rs.getInt("CourseID"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return c.getCourseId();
+    }
+
+    public ArrayList<Course> getTopFeatureCourse(int courseId) {
+        ArrayList<Course> listCourse = new ArrayList<>();
+        try {
+            String sql = "select c.*, a.FirstName, a.LastName, a.ProfilePictureUrl from course c join account a  on\n"
+                    + "c.instructorid = a.accountid\n"
+                    + "where courseid != ? and courseid in (\n"
+                    + "select distinct c.courseid from Course c join account a\n"
+                    + "on a.AccountID = c.InstructorID\n"
+                    + "join subjectcourse sc\n"
+                    + "on sc.courseid = c.courseid\n"
+                    + "where [status] = 1 and sc.subjectid in (\n"
+                    + "	select subjectid from course c join subjectcourse sc\n"
+                    + "	on c.courseid = sc.courseid\n"
+                    + "	where c.courseid = ?\n"
+                    + "))";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseId);
+            stm.setInt(2, courseId);
+
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Course course = mappingData(rs);
+                ArrayList<Subject> listSubject = new SubjectDAO().getSubjectsByCourseID(course.getCourseId());
+                course.setListSubject(listSubject);
+                int star = getStarOfCourse(course.getCourseId());
+                course.setStar(star);
+                int people = getNumberPeopleLearningInCourse(course.getCourseId());
+                course.setNumberPeopleLearning(people);
+                listCourse.add(course);
+            }
+
+            Collections.sort(listCourse, new Comparator<Course>() {
+                @Override
+                public int compare(Course t, Course t1) {
+                    if (t.getNumberPeopleLearning() < t1.getNumberPeopleLearning()) {
+                        return 1;
+                    } else if (t.getNumberPeopleLearning() == t1.getNumberPeopleLearning()) {
+                        if (t.getStar() < t1.getStar()) {
+                            return 1;
+                        }
+                    } else {
+                        return 0;
+                    }
+                    return -1;
+                }
+
+            });
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int count = 0;
+        ArrayList<Course> listCourseFeature = new ArrayList<>();
+        for (Course course : listCourse) {
+            if (count < 3) {
+                listCourseFeature.add(course);
+                count++;
+            }
+        }
+        return listCourseFeature;
+    }
+
+    public ArrayList<Course> getAllTopFeatureCourse() {
+        ArrayList<Course> listCourse = getAllCourse();
+        Collections.sort(listCourse, new Comparator<Course>() {
+            @Override
+            public int compare(Course t, Course t1) {
+                if (t.getNumberPeopleLearning() < t1.getNumberPeopleLearning()) {
+                    return 1;
+                } else if (t.getNumberPeopleLearning() == t1.getNumberPeopleLearning()) {
+                    if (t.getStar() < t1.getStar()) {
+                        return 1;
+                    }
+                } else {
+                    return 0;
+                }
+                return -1;
+            }
+
+        });
+        int count = 0;
+        ArrayList<Course> listCourseFeature = new ArrayList<>();
+        for (Course course : listCourse) {
+            if (count < 3) {
+                listCourseFeature.add(course);
+                count++;
+            }
+        }
+        return listCourseFeature;
     }
 }

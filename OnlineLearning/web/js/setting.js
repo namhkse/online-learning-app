@@ -6,3 +6,20 @@ function deleteSetting(sid, id, type)
         window.location.href = "setting-delete?sid=" + sid + "&id=" + id + "&type=" + type;
     }
 }
+
+function checkExist(alert,id){
+    if(alert !== ""){
+        document.getElementById('infor').style.display = 'block';
+    }else{
+        window.location.href = "quizedit?quizID=" + id;
+    }
+}
+
+function deleteQuiz(id)
+{
+        window.location.href = "quizdelete?quizid=" + id;
+}
+
+$(document).ready( function () {
+    $('#table').DataTable();
+} );

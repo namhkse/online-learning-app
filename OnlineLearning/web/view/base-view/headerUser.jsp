@@ -1,3 +1,4 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- Navbar Start -->
@@ -55,6 +56,12 @@
                                     <i class="fa-solid fa-list-check"></i>
                                     Activity Log
                                 </a>
+                                <c:if test="${sessionScope.account.role.id!=2 && sessionScope.account.role.id!=null}">
+                                    <a class="dropdown-item" href="management/dashboard">
+                                        <i class="fa-solid fa-bars-progress"></i>
+                                        Management
+                                    </a>
+                                </c:if>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="logout">
                                     <i class="fa-solid fa-right-from-bracket"></i>

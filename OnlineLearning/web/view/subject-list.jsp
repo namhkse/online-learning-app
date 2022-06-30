@@ -43,7 +43,7 @@
                         <div class="container-table">
                             <div class="table-content">
                                 <div class="search">
-                                    <a class="margin-auto-0" id="add-blog" href="slide-edit" ><i class="fa-solid fa-plus"></i> Add Subject</a>
+                                    <a class="margin-auto-0" id="add-blog" href="subject-add" ><i class="fa-solid fa-plus"></i> Add Subject</a>
 
                                     <form class="search-form"> 
                                         <div class="filter-status">
@@ -95,6 +95,7 @@
                                             <th>Name</th>
                                             <th>Category</th>
                                             <th>Number of courses</th>
+                                            <th>Course</th>
                                             <th>Owner</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -111,6 +112,7 @@
                                                 <td>${subject.name}</td>
                                                 <td>${subject.categoryID.name != null ? subject.categoryID.name : subject.mainCategoryID.name}</td>
                                                 <td>${numberCourse[count]}</td>
+                                                <td><a class="text-primary courses" href="../management/course-list?Sid=${subject.subjectId}">Courses</a></td>
                                                 <td>${subject.ownerID.firstName} ${subject.ownerID.lastName}</td>
                                                 <c:choose>
                                                     <c:when test = "${subject.status == true}">

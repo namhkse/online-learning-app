@@ -45,36 +45,28 @@ public class SubjectDetailController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
 
         AccountDAO accountDAO = new AccountDAO();
-        String action = "";
-        if (request.getParameter("subjectID") == null) {
-            action = "ADD";
-        } else {
-            int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
 
-            PricePackageDAO pricePackageDAO = new PricePackageDAO();
-            ArrayList<PricePackage> pricePackages = pricePackageDAO.getAllPricePackages(subjectID);
-            DimensionDAO dimensionDAO = new DimensionDAO();
-            ArrayList<Dimension> dimensions = dimensionDAO.getDimensionsBySubjectID(subjectID);
+        PricePackageDAO pricePackageDAO = new PricePackageDAO();
+        ArrayList<PricePackage> pricePackages = pricePackageDAO.getAllPricePackages(subjectID);
+        DimensionDAO dimensionDAO = new DimensionDAO();
+        ArrayList<Dimension> dimensions = dimensionDAO.getDimensionsBySubjectID(subjectID);
 
-            SubjectDAO subjectDAO = new SubjectDAO();
-            Subject subject = subjectDAO.getSubjectByID(subjectID);
-            ArrayList<Account> accounts = accountDAO.getListAccountCanAccessSubject(subjectID);
+        SubjectDAO subjectDAO = new SubjectDAO();
+        Subject subject = subjectDAO.getSubjectByID(subjectID);
+        ArrayList<Account> accounts = accountDAO.getListAccountCanAccessSubject(subjectID);
 
-            action = "EDIT";
-
-            request.setAttribute("subject", subject);
-            request.setAttribute("accounts", accounts);
-            request.setAttribute("dimensions", dimensions);
-            request.setAttribute("pricePackages", pricePackages);
-            request.setAttribute("subjectID", subjectID);
-        }
+        request.setAttribute("subject", subject);
+        request.setAttribute("accounts", accounts);
+        request.setAttribute("dimensions", dimensions);
+        request.setAttribute("pricePackages", pricePackages);
+        request.setAttribute("subjectID", subjectID);
         SubjectCategoryDAO subjectCategoryDAO = new SubjectCategoryDAO();
         SubjectMainCategoryDAO subjectMainCategoryDAO = new SubjectMainCategoryDAO();
         ArrayList<SubjectCategory> subjectCategories = subjectCategoryDAO.getAllSubjectCategory();
         ArrayList<SubjectMainCategory> subjectMainCategories = subjectMainCategoryDAO.getAllSubjectMainCategories();
         ArrayList<Account> experts = accountDAO.getListExpert();
 
-        request.setAttribute("action", action);
         request.setAttribute("experts", experts);
         request.setAttribute("subjectCategories", subjectCategories);
         request.setAttribute("subjectMainCategories", subjectMainCategories);
@@ -89,15 +81,7 @@ public class SubjectDetailController extends HttpServlet {
         } else {
             response.setContentType("text/html;charset=UTF-8");
             request.setCharacterEncoding("utf-8");
-
-            String action = request.getParameter("action");
-
-            if (action.equalsIgnoreCase("ADD")) {
-//                addSubject(request, response);
-
-            } else if (action.equalsIgnoreCase("EDIT")) {
-                editSubject(request, response);
-            }
+            editSubject(request, response);
         }
     }
 
@@ -112,22 +96,16 @@ public class SubjectDetailController extends HttpServlet {
             categoryID = Integer.parseInt(request.getParameter("categoryID"));
         }
         String[] expertCanAccess = null;
+        ArrayList<Integer> expertIDCanAccess = new ArrayList<>();
         if (request.getParameterValues("expertCanAccess") != null) {
             expertCanAccess = request.getParameterValues("expertCanAccess");
+            for (int i = 0; i < expertCanAccess.length; i++) {
+                String expertCanAcces = expertCanAccess[i];
+                expertIDCanAccess.add(Integer.parseInt(expertCanAcces));
+            }
         }
-        ArrayList<Integer> expertIDCanAccess = new ArrayList<>();
-        for (int i = 0; i < expertCanAccess.length; i++) {
-            String expertCanAcces = expertCanAccess[i];
-            expertIDCanAccess.add(Integer.parseInt(expertCanAcces));
-        }
-        boolean featured = false;
-        if (request.getParameter("featured") != null) {
-            featured = Boolean.parseBoolean(request.getParameter("featured"));
-        }
-        boolean status = false;
-        if (request.getParameter("status") != null) {
-            status = Boolean.parseBoolean(request.getParameter("status"));
-        }
+        boolean featured = Boolean.parseBoolean(request.getParameter("featured"));
+        boolean status = Boolean.parseBoolean(request.getParameter("status"));
         String description = request.getParameter("description");
 
         Subject subject = new Subject();
@@ -156,8 +134,10 @@ public class SubjectDetailController extends HttpServlet {
         SubjectDAO subjectDAO = new SubjectDAO();
         subjectDAO.updateSubject(subject);
         AccountDAO accountDAO = new AccountDAO();
-        accountDAO.deleteAllAccountCanAccessSubject(subjectID);
-        accountDAO.insertListAccountCanAccessSubject(subjectID, expertIDCanAccess);
+        if (expertCanAccess != null) {
+            accountDAO.deleteAllAccountCanAccessSubject(subjectID);
+            accountDAO.insertListAccountCanAccessSubject(subjectID, expertIDCanAccess);
+        }
 
         response.sendRedirect("subject-list");
     }

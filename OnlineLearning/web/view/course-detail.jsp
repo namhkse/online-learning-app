@@ -19,13 +19,9 @@
             <div class="course-detail-header-left">
                 <div class="course-detail-title">
                     <h1>${course.name}</h1>
-                    <c:if test="${course.price <= 0}">
+                    <c:if test="${listPrice.isEmpty()}">
                         <p>Free</p>
-                    </c:if>
-                    <c:if test="${course.price > 0}">
-                        <p>$ ${course.price}</p>
-                    </c:if>
-                    
+                    </c:if>             
                 </div>
                 <p class="course-detail-description">${course.description}</p>
                 <div class="course-detail-author">
@@ -35,7 +31,7 @@
                 </div>
                 <c:if test="${!isRegister}">
                     <a href="${sessionScope.account != null ? '#' : 'login'}" class="${sessionScope.account != null ? 'course-enroll-button' : 'course-login-button'}">
-                        <p>Enroll</p>
+                        <p>Register</p>
                     </a>
                 </c:if>
                 <c:if test="${isRegister}">  
@@ -54,6 +50,29 @@
 
         <div class="course-detail-body">
             <div class="course-detail-body-left">
+                <c:if test="${!listPrice.isEmpty()}">
+                    <div id="list-price">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Access Package</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Sale price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${listPrice}" var="price">
+                                    <tr>
+                                        <td>${price.name}</td>
+                                        <td style="text-decoration: line-through;">$ ${price.listPrice}</td>
+                                        <td>$ ${price.salePrice}</td>
+                                    </tr>
+                                </c:forEach>      
+                            </tbody>
+                        </table>
+                    </div>
+                </c:if>
+
                 <h1 class="course-detail-body-title">About this Professional Certificate</h1>
                 <p class="course-detail-body-desc">${course.aboutCourse}</p>
             </div>
@@ -86,7 +105,6 @@
                             </li>
                             <li>Date published :  ${course.createdDate}</li>
                             <li>Total people learning :  ${course.numberPeopleLearning}</li>
-
                         </ul>
                     </div>
                 </div>
@@ -94,6 +112,70 @@
         </div>
 
         <!-- Course Details Body End -->
+
+        <div class="display-flex justify-between cd-content-bottom">
+            <div class="w-70">
+                <c:forEach items="${listSubLesson}" var="sub">
+                    <div class="list-topic">
+                        <div class="topic display-flex justify-between">
+                            <h4 class="m-0">${sub.name}</h4>
+                            <i class="fa-solid fa-angle-up"></i>
+                        </div>
+                        <ul class="list-group list-group-flush" style="height:auto">
+                            <c:forEach items="${sub.listLesson}" var="lesson">
+                                <c:choose>
+                                    <c:when test="${lesson.lessonTypeID.lessonTypeID == 1}">
+                                        <c:choose>
+                                            <c:when test="${isRegister == true}">
+                                                <li class="list-group-item"><a href="lesson?id=${course.courseId}&lid=${lesson.lessonID}"><i class="fa-solid fa-circle-play"></i>${lesson.name}</a></li>  
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                <li class="list-group-item"><span><i class="fa-solid fa-circle-play"></i>${lesson.name}</span></li>     
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:choose>
+                                                        <c:when test="${isRegister == true}">
+                                                <li class="list-group-item"><a href="quiz?id=${lesson.lessonID}"><i class="fa-solid fa-question"></i>${lesson.name}</a></li>      
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                <li class="list-group-item"><span><i class="fa-solid fa-question"></i>${lesson.name}</span></li>     
+                                                        </c:otherwise>
+                                                    </c:choose>                                                                                       
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>           
+                        </ul>
+                    </div>  
+                </c:forEach>
+            </div>
+            <div class="w-30">
+                <div class="list-feature-course">
+                    <c:forEach items="${listTopFeatureCourse}" var="course">
+                        <a href="#" class="color1c1d1f">
+                            <div class="feature-course-item">
+                                <img src="${course.thumbnailUrl}" alt="">
+                                <div>
+                                    <h4 class="feature-course-title">${course.name}</h4>
+                                    <ul class="feature-star">
+                                        <li>
+                                            <c:forEach begin="1" end="${course.star}">
+                                                <i class="fa-solid fa-star selected"></i>
+                                            </c:forEach>
+                                            <c:forEach begin="${course.star + 1}" end="5">
+                                                <i class="fa-solid fa-star"></i>
+                                            </c:forEach>
+                                        </li>
+                                    </ul>
+                                    <span class="feature-desc">${course.description}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
 
         <div id="cd-overlay"></div>
         <div id="notice-buy-course">
@@ -125,7 +207,7 @@
                             <p class="display-inline-block">Price of course: &nbsp;<p class="price-num display-inline-block">Free</p></p>
                         </c:if>
                         <c:if test="${course.price > 0}">
-                        <p class="display-inline-block">Price of course: &nbsp;$ &nbsp;<p class="price-num display-inline-block">${course.price}</p></p>
+                            <p class="display-inline-block">Price of course: &nbsp;$ &nbsp;<p class="price-num display-inline-block">${course.price}</p></p>
                         </c:if>
                     </div>
                     <div class="notice-price">
