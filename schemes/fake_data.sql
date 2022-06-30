@@ -11,6 +11,9 @@ INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [
 INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (15, N'Delete Subject', N'/OnlineLearning/management/subject-list', N'DELETE')
 INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (16, N'Edit Price Package', N'/OnlineLearning/management/price-package-detail', N'GET')
 INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (17, N'Edit Price Package', N'/OnlineLearning/management/price-package-detail', N'POST')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (18, N'Edit Subject Detail', N'/OnlineLearning/management/subject-detail', N'POST')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (19, N'Add Subject', N'/OnlineLearning/management/subject-add', N'GET')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (20, N'Add Subject', N'/OnlineLearning/management/subject-add', N'POST')
 SET IDENTITY_INSERT [dbo].[PermissionRequest] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Role] ON 
@@ -31,6 +34,9 @@ INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1
 INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 13)
 INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 14)
 INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 15)
+INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 18)
+INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 19)
+INSERT [dbo].[RolePermissionRequest] ([RoleID], [PermissionRequestID]) VALUES (1, 20)
 GO
 SET IDENTITY_INSERT [dbo].[Account] ON 
 
@@ -531,11 +537,11 @@ SET IDENTITY_INSERT [dbo].[SubjectCategory] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Subject] ON 
 
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (1, N'Biology & Life Sciences', 2, 2, 1, 1, N'cell-microbiology_spotlight.jpg', N'Biology & Life Sciences', 1, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (1, N'Biology & Life Sciences', NULL, 2, 1, 1, N'cell-microbiology_spotlight.jpg', N'Biology & Life Sciences', 1, N'CATEGORY_SUBJECT', 9)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (2, N'Training', 3, NULL, 1, 1, N'training-dao-tao-trang-bi-nang-cao-kien-thuc-cho-nhan-vien.jpg', N'Training', 2, N'CATEGORY_SUBJECT', 10)
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (3, N'Language', 4, 3, 1, 1, N'10-language-trends-in-elearning.jpg', N'Language', 3, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (3, N'Language', NULL, 3, 1, 1, N'10-language-trends-in-elearning.jpg', N'Language', 3, N'CATEGORY_SUBJECT', 9)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (4, N'Design', 3, NULL, 0, 1, N'design.jpg', N'Design', 4, N'CATEGORY_SUBJECT', 10)
-INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (5, N'Data Analysis & Statistics', 5, 1, 0, 1, N'main-qimg-86093833f5568a3579edf89c97254a68.jpg', N'Data Analysis & Statistics', 5, N'CATEGORY_SUBJECT', 9)
+INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (5, N'Data Analysis & Statistics', NULL, 1, 0, 1, N'main-qimg-86093833f5568a3579edf89c97254a68.jpg', N'Data Analysis & Statistics', 5, N'CATEGORY_SUBJECT', 9)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (6, N'Architecture', 3, NULL, 0, 1, N'model-architecture.jpg', N'Architecture', 6, N'CATEGORY_SUBJECT', 10)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (7, N'Ethics', 5, NULL, 0, 1, N'Ethics-Blog-760x550-760x550.png', N'Ethics', 7, N'CATEGORY_SUBJECT', 9)
 INSERT [dbo].[Subject] ([SubjectID], [Name], [CategoryID], [MainCategoryID], [Featured], [Status], [Image], [Description], [Order], [type], [OwnerID]) VALUES (8, N'Art & Culture', 6, NULL, 1, 1, N'Expeditions_Header_Artwork_Card_Size_1.max-1000x1000.jpg', N'Art & Culture', 8, N'CATEGORY_SUBJECT', 10)
