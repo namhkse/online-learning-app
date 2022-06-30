@@ -372,3 +372,14 @@ create table PageViewCounter (
 	[Date] date primary key,
 	AmountAccessPage int 
 );
+
+CREATE TABLE [CoursePricePackage](
+	[PriceID] [int] IDENTITY(1,1) NOT NULL primary KEY,
+	[Name] [nvarchar](255) NULL,
+	[AccessDuration] [int] NULL,
+	[Status] [bit] NULL,
+	[ListPrice] [decimal](15, 2) NULL,
+	[SalePrice] [decimal](15, 2) NULL,
+	CourseID [int] NULL,
+	CONSTRAINT [FK_CoursePricePackage_Course] FOREIGN KEY(CourseID) REFERENCES Course (CourseID) ON DELETE CASCADE
+);	
