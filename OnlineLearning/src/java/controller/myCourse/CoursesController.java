@@ -88,10 +88,9 @@ public class CoursesController extends HttpServlet {
         String status = request.getParameter("status");
         String txtSearch = request.getParameter("txtSearch");
         String subjectId = request.getParameter("arraySubjectId");
-        String categoryId = request.getParameter("arrayCategoryId");
+        //String categoryId = request.getParameter("arrayCategoryId");
         String price = request.getParameter("arrayPrice");
         int pageNum = Integer.parseInt(request.getParameter("pageNum"));
-
         ArrayList<Course> listCourseSearchBySubject = new ArrayList<>();
         if (subjectId.isEmpty()) {
             listCourseSearchBySubject = new CourseDAO().getAllCourse();
@@ -172,8 +171,13 @@ public class CoursesController extends HttpServlet {
                 listCourseCurrentInPage.add(listCourseTempII.get(i));
             }
         }
-
+        Account account = (Account) request.getSession().getAttribute("account");
+        int accountID = 0;
         ArrayList<CourseAccount> listCourseAccount = new ArrayList<>();
+        if (account != null) {
+            accountID = account.getAccountID();
+            listCourseAccount = new CourseAccountDAO().getListCourseAccount(accountID);
+        }
 
         if (listCourseCurrentInPage.isEmpty()) {
             response.getWriter().write("<section class=\"page_404\">\n"
@@ -278,7 +282,7 @@ public class CoursesController extends HttpServlet {
                             + "                                            <h5>Registered</h5>\n"
                             + "                                        </div>");
                 } else {
-                    BigDecimal num = BigDecimal.valueOf(0);
+                    BigDecimal num = new BigDecimal("0");
                     if (course.getPrice().compareTo(num) <= 0) {
                         response.getWriter().write("<div class=\"c-course-item-intro-price\">\n"
                                 + "                                           <span class=\"tag-free\">Free</span>\n"

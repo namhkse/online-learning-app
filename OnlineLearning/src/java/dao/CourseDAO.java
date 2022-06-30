@@ -233,6 +233,8 @@ public class CourseDAO extends DBContext {
                 course.setStar(star);
                 int people = getNumberPeopleLearningInCourse(course.getCourseId());
                 course.setNumberPeopleLearning(people);
+                ArrayList<CoursePricePackage> listPrice = new PricePackageDAO().getListPricePackageOfCourse(course.getCourseId());
+                course.setListPrice(listPrice);
                 listCourse.add(course);
             }
         } catch (SQLException ex) {
@@ -261,6 +263,8 @@ public class CourseDAO extends DBContext {
                 course.setStar(star);
                 int people = getNumberPeopleLearningInCourse(course.getCourseId());
                 course.setNumberPeopleLearning(people);
+                ArrayList<CoursePricePackage> listPrice = new PricePackageDAO().getListPricePackageOfCourse(course.getCourseId());
+                course.setListPrice(listPrice);
                 listCourse.add(course);
             }
         } catch (SQLException ex) {
@@ -295,6 +299,8 @@ public class CourseDAO extends DBContext {
                 course.setStar(star);
                 int people = getNumberPeopleLearningInCourse(course.getCourseId());
                 course.setNumberPeopleLearning(people);
+                ArrayList<CoursePricePackage> listPricePackage = new PricePackageDAO().getListPricePackageOfCourse(course.getCourseId());
+                course.setListPrice(listPricePackage);
                 listCourse.add(course);
             }
         } catch (SQLException ex) {

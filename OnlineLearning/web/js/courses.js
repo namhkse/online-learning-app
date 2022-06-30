@@ -158,16 +158,14 @@ function searchByValue() {
         }
     });
     var subjectData = arraySubjectId.join();
-
     var categoryDatas = document.querySelectorAll(".search-category-name input");
     var arrayCategoryId = [];
-    subjectDatas.forEach(function (data) {
+    categoryDatas.forEach(function (data) {
         if (data.checked === true) {
             arrayCategoryId.push(data.value);
         }
     });
     var categoryData = arrayCategoryId.join();
-
     var priceDatas = document.querySelectorAll(".c-course-filter-item input");
     var arrayPrice = [];
     priceDatas.forEach(function (data) {
@@ -192,7 +190,7 @@ function searchByValue() {
             },
             success: function (result) {
                 document.getElementById("c-course-container-left").innerHTML = "";
-
+                
                 document.getElementById("c-course-container-left").innerHTML = result;
             }
         });
