@@ -1,16 +1,16 @@
 
 SET IDENTITY_INSERT [dbo].[PermissionRequest] ON 
 
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (6, N'Dashboard', N'http://localhost:8080/OnlineLearning/management/dashboard', N'GET')
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (7, N'Subject Detail', N'http://localhost:8080/OnlineLearning/management/subject-detail', N'GET')
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (8, N'Delete Subject Detail', N'http://localhost:8080/OnlineLearning/management/subject-detail', N'DELETE')
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (9, N'Dimension Detail', N'http://localhost:8080/OnlineLearning/management/dimension-detail', N'GET')
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (12, N'Dimension Detail', N'http://localhost:8080/OnlineLearning/management/dimension-detail', N'POST')
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (13, N'View Subject List', N'http://localhost:8080/OnlineLearning/management/subject-list', N'GET')
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (14, N'Filter Subject List', N'http://localhost:8080/OnlineLearning/management/subject-list', N'POST')
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (15, N'Delete Subject', N'http://localhost:8080/OnlineLearning/management/subject-list', N'DELETE')
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (16, N'Edit Price Package', N'http://localhost:8080/OnlineLearning/management/price-package-detail', N'GET')
-INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (17, N'Edit Price Package', N'http://localhost:8080/OnlineLearning/management/price-package-detail', N'POST')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (6, N'Dashboard', N'/OnlineLearning/management/dashboard', N'GET')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (7, N'Subject Detail', N'/OnlineLearning/management/subject-detail', N'GET')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (8, N'Delete Subject Detail', N'/OnlineLearning/management/subject-detail', N'DELETE')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (9, N'Dimension Detail', N'/OnlineLearning/management/dimension-detail', N'GET')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (12, N'Dimension Detail', N'/OnlineLearning/management/dimension-detail', N'POST')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (13, N'View Subject List', N'/OnlineLearning/management/subject-list', N'GET')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (14, N'Filter Subject List', N'/OnlineLearning/management/subject-list', N'POST')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (15, N'Delete Subject', N'/OnlineLearning/management/subject-list', N'DELETE')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (16, N'Edit Price Package', N'/OnlineLearning/management/price-package-detail', N'GET')
+INSERT [dbo].[PermissionRequest] ([PermissionRequestID], [Name], [RequestUrl], [Method]) VALUES (17, N'Edit Price Package', N'/OnlineLearning/management/price-package-detail', N'POST')
 SET IDENTITY_INSERT [dbo].[PermissionRequest] OFF
 GO
 SET IDENTITY_INSERT [dbo].[Role] ON 
