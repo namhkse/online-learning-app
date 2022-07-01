@@ -173,10 +173,10 @@ ul {
 .filter-category::after{
     content: "";
     width: 60px;
-    height: 60px;
+    height: 24px;
     position: absolute;
     right: -17px;
-    bottom: -40px;
+    bottom: -7px;
 }
 
 #filter-category-box{

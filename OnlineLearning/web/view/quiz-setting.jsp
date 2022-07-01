@@ -39,35 +39,26 @@
                     <div class="container">
                         <div class="container-table">
                             <div class="table-content">
-                                <div class="search">
+                                <div class="search ">
 
-                                    <form class="form-search" action="quizsetting" method="GET"> 
-                                        <a  style="background-color: #365dcd;
-                                            color: #fff;
-                                            text-decoration: none;
-                                            padding: 12px 12px; margin-right: 10px;
-                                            border-radius: 10px ;" href="quizinsert" ><i class="fa-solid fa-plus"></i> Add Quiz</a>
-                                        <select name="id" class="select-tag">
-                                            <option value="-1" >Select Subject</option>
-                                            <c:forEach items="${allSubjectName}" var="ctype" >
-                                                <option value="${ctype.subjectId}" ${id == ctype.subjectId ? "selected" : ""}>${ctype.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                        <select name="type" class="select-tag">
-                                            <option value="-1" >Select Type</option>
-                                            <c:forEach items="${allQuizType}" var="ctype" >
-                                                <option value="${ctype.type}" ${cid == ctype.type ? "selected" : ""}>${ctype.type}</option>
-                                            </c:forEach>
-                                        </select>
+                                    <form class="form-search d-flex justify-content-between" action="quizsetting" method="GET"> 
+                                        <a href="quizinsert" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Quiz</a>
+                                        <div class="d-flex">
+                                            <select name="id"  class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                <option value="-1" >Select Subject</option>
+                                                <c:forEach items="${allSubjectName}" var="ctype" >
+                                                    <option value="${ctype.subjectId}" ${id == ctype.subjectId ? "selected" : ""}>${ctype.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                            <select name="type"  class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                                <option value="-1" >Select Type</option>
+                                                <c:forEach items="${allQuizType}" var="ctype" >
+                                                    <option value="${ctype.type}" ${cid == ctype.type ? "selected" : ""}>${ctype.type}</option>
+                                                </c:forEach>
+                                            </select>
 
-                                        <button
-                                            style="background-color: #365dcd;
-                                            text-decoration: none;
-                                            padding: 12px 8px;
-                                            margin-right: 8px;
-                                            border-radius: 10px;
-                                            border: 0;"
-                                            type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Filter</button>
+                                            <button type="submit" class="btn btn-primary">Filter</button>
+                                        </div>
                                     </form>  
                                 </div>
                                 <div class="align-content-center">
