@@ -43,11 +43,6 @@ td > a:hover {
     padding: 16px 20px;
 }
 
-.search {
-    display: flex;
-    justify-content: space-between;
-}
-
 .search label {
     color: #858796;
     font-size: 16px;
@@ -63,7 +58,7 @@ td > a:hover {
 
 th > i{
     margin-left: 12px;
-    cursor: poiter;
+    cursor: pointer;
 }
 
 .img-thumbnail-blog {
@@ -106,25 +101,6 @@ th > i{
 
 .table-content {
     padding: 16px 20px;
-}
-
-.search {
-    display: flex;
-    justify-content: space-between;
-}
-
-.search label {
-    color: #858796;
-    font-size: 16px;
-}
-
-.search input {
-    margin-left: 7px;
-    padding: 6px 10px;
-    outline: none;
-    font-size: 15px;
-    color: #858796;
-
 }
 
 table {
