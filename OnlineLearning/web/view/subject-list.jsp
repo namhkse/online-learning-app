@@ -43,17 +43,10 @@
                         <div class="container-table">
                             <div class="table-content">
                                 <div class="search">
-                                    <a class="margin-auto-0 btn btn-primary" href="slide-edit" ><i class="fa-solid fa-plus"></i> Add Subject</a>
+                                    <a class="margin-auto-0 btn btn-primary" href="subject-add" ><i class="fa-solid fa-plus"></i> Add Subject</a>
 
                                     <form class="search-form"> 
                                         <div class="filter-status">
-<!--                                            Status: 
-                                            <select name="status" class="select-tag" onchange="search()">
-                                                <option value="-1" >All Status</option>
-                                                <option value="false" ${display == "false" ? "selected" : ""}>Unpublished</option>
-                                                <option value="true" ${display == "true" ? "selected" : ""}>Published</option>                                       
-                                            </select>-->
-
                                             <select name="status" class="select-tag form-select form-select-sm" onchange="search()" aria-label=".form-select-sm example">
                                                 <option value="-1" >All Status</option>
                                                 <option value="false" ${display == "false" ? "selected" : ""}>Unpublished</option>
