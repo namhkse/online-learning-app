@@ -113,17 +113,20 @@ public class PermissionDAO extends DBContext {
         }
     }
 
-    public boolean canRoleUsePermissionRequest(Role role, String method, String requestURI) throws SQLException {
+    public boolean isRoleAllowed(Role role, Permission permission) {
         String sql = "select RoleID from RolePermissionRequest r join PermissionRequest p on r.PermissionRequestID = p.PermissionRequestID"
                 + " where RoleID = ? and Method = ? and RequestUrl = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, role.getId());
-            stmt.setString(1, method);
-            stmt.setString(3, requestURI);
+            stmt.setString(2, permission.getMethod());
+            stmt.setString(3, permission.getRequestUrl());
             ResultSet rs = stmt.executeQuery();
-
-            return rs.first();
+            if(rs.next()) return true;
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+        return false;
     }
 }

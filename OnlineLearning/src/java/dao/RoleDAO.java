@@ -1,5 +1,6 @@
 package dao;
 
+import exception.CrudException;
 import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,16 +14,27 @@ import model.Role;
 
 public class RoleDAO extends DBContext {
 
-    @Deprecated
+    /**
+     * Map a row in ResultSet to Role property.
+     *
+     * <pre>
+     * | Role's Setter     | Column Name |
+     * |-------------------|-------------|
+     * | setId(int)        | RoleID      |
+     * | setName(String)   | Name        |
+     * | setOrder(int)     | Order       |
+     * | setStatus(boolean)| Status      |
+     * </pre>
+     *
+     * @param role the filled Role
+     * @param rs role table
+     * @throws SQLException when missing column
+     */
     private void mapping(Role role, ResultSet rs) throws SQLException {
         role.setId(rs.getInt("RoleID"));
         role.setName(rs.getString("Name"));
         role.setOrder(rs.getInt("Order"));
-        if (rs.getInt("Status") == 1) {
-            role.setStatus(true);
-        } else {
-            role.setStatus(false);
-        }
+        role.setStatus(rs.getBoolean("Status"));
     }
 
     public ArrayList<Role> findAll() {
@@ -36,19 +48,19 @@ public class RoleDAO extends DBContext {
                 roles.add(role);
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new CrudException("Get All Role Fail", ex);
         }
 
         return roles;
     }
 
-    public HashMap<Integer, Role> getRoleTable() throws SQLException {
+    public HashMap<Integer, Role> getRoleTable() {
         ArrayList<Role> ls = findAll();
-        HashMap<Integer, Role> hm = new HashMap<>();
+        HashMap<Integer, Role> table = new HashMap<>();
         for (Role r : ls) {
-            hm.put(r.getId(), r);
+            table.put(r.getId(), r);
         }
-        return hm;
+        return table;
     }
 
     /**
@@ -75,18 +87,25 @@ public class RoleDAO extends DBContext {
         return role;
     }
 
+    /**
+     * Only map id, name property in Role.
+     *
+     * @param id
+     * @return
+     */
     public Role findById(int id) {
         String sql = "select [RoleID], [Name] from Role where [RoleID] = ?";
         Role role = null;
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                role.setId(rs.getInt("RoleID"));
-                role.setName(rs.getString("Name"));
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    role = new Role();
+                    rs.getInt("RoleID");
+                    role.setName(rs.getString("Name"));
+                }
             }
-            rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -122,7 +141,7 @@ public class RoleDAO extends DBContext {
             ResultSet rs = stmt.getGeneratedKeys();
             id = rs.next() ? rs.getInt(1) : 0;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new CrudException("Save Role Fail", ex);
         }
         return id;
     }
@@ -214,7 +233,7 @@ public class RoleDAO extends DBContext {
             stmt.setInt(1, r.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new CrudException("Delete Role Fail", ex);
         }
     }
 

@@ -1,3 +1,4 @@
+
 package controller.management;
 
 import dao.AccountDAO;
@@ -27,40 +28,25 @@ import model.Subject;
 import model.SubjectCategory;
 import model.SubjectMainCategory;
 
-@WebServlet(name = "SubjectDetailController", urlPatterns = {"/management/subject-detail"})
+@WebServlet(name = "SubjectAddController", urlPatterns = {"/management/subject-add"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 10,
         maxFileSize = 1024 * 1024 * 50,
         maxRequestSize = 1024 * 1024 * 100
 )
-public class SubjectDetailController extends HttpServlet {
+public class SubjectAddController extends HttpServlet {
 
     private static final long SerialVersionUID = 1L;
     private static final String UPLOAD_DIR = "img";
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-
+        
         AccountDAO accountDAO = new AccountDAO();
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
 
-        PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        ArrayList<PricePackage> pricePackages = pricePackageDAO.getAllPricePackages(subjectID);
-        DimensionDAO dimensionDAO = new DimensionDAO();
-        ArrayList<Dimension> dimensions = dimensionDAO.getDimensionsBySubjectID(subjectID);
-
-        SubjectDAO subjectDAO = new SubjectDAO();
-        Subject subject = subjectDAO.getSubjectByID(subjectID);
-        ArrayList<Account> accounts = accountDAO.getListAccountCanAccessSubject(subjectID);
-
-        request.setAttribute("subject", subject);
-        request.setAttribute("accounts", accounts);
-        request.setAttribute("dimensions", dimensions);
-        request.setAttribute("pricePackages", pricePackages);
-        request.setAttribute("subjectID", subjectID);
         SubjectCategoryDAO subjectCategoryDAO = new SubjectCategoryDAO();
         SubjectMainCategoryDAO subjectMainCategoryDAO = new SubjectMainCategoryDAO();
         ArrayList<SubjectCategory> subjectCategories = subjectCategoryDAO.getAllSubjectCategory();
@@ -70,23 +56,14 @@ public class SubjectDetailController extends HttpServlet {
         request.setAttribute("experts", experts);
         request.setAttribute("subjectCategories", subjectCategories);
         request.setAttribute("subjectMainCategories", subjectMainCategories);
-        request.getRequestDispatcher("/view/subject-detail.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/subject-add.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("id-deactive") != null || request.getParameter("id-active") != null) {
-            changeStatusPricePackage(request, response);
-        } else {
-            response.setContentType("text/html;charset=UTF-8");
-            request.setCharacterEncoding("utf-8");
-            editSubject(request, response);
-        }
-    }
-
-    private void editSubject(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+        Account account=(Account) request.getSession().getAttribute("account");
+        
         String name = request.getParameter("name");
         int mainCategoryID = -1;
         int categoryID = -1;
@@ -121,27 +98,27 @@ public class SubjectDetailController extends HttpServlet {
         }
         subject.setFeatured(featured);
         subject.setStatus(status);
-        String img = null;
-        if (uploadFile(request).equals("")) {
-            img = new SubjectDAO().getSubjectByID(subjectID).getImage();
-        } else {
-            img = uploadFile(request);
-        }
+        String img = uploadFile(request);
         subject.setImage(img);
         subject.setDescription(description);
-        subject.setSubjectId(subjectID);
+        subject.setOwnerID(account);
 
         SubjectDAO subjectDAO = new SubjectDAO();
-        subjectDAO.updateSubject(subject);
+        subjectDAO.insertSubject(subject);
+        
         AccountDAO accountDAO = new AccountDAO();
         if (expertCanAccess != null) {
-            accountDAO.deleteAllAccountCanAccessSubject(subjectID);
-            accountDAO.insertListAccountCanAccessSubject(subjectID, expertIDCanAccess);
+            Subject newSubject = subjectDAO.getNewSubject();
+            accountDAO.insertListAccountCanAccessSubject(newSubject.getSubjectId(), expertIDCanAccess);
+        }
+        if(account.getRole().getId()==1){
+            Subject newSubject = subjectDAO.getNewSubject();
+            accountDAO.insertAccountCanAccessSubject(newSubject.getSubjectId(), account.getId());
         }
 
         response.sendRedirect("subject-list");
     }
-
+    
     private String uploadFile(HttpServletRequest request) throws IOException, ServletException {
         String fileName = "";
         try {
@@ -188,32 +165,6 @@ public class SubjectDetailController extends HttpServlet {
         }
 
         return null;
-    }
-
-    private void changeStatusPricePackage(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        if (request.getParameter("id-deactive") != null) {
-            pricePackageDAO.updateStatusPricePackage(Integer.parseInt(request.getParameter("id-deactive")), false);
-        }
-        if (request.getParameter("id-active") != null) {
-            pricePackageDAO.updateStatusPricePackage(Integer.parseInt(request.getParameter("id-active")), true);
-        }
-        response.getWriter().flush();
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        if (request.getParameter("dimensionID") != null) {
-            int idDelete = Integer.parseInt(request.getParameter("dimensionID"));
-            new DimensionDAO().deleteDimension(idDelete);
-        } else {
-            int idDelete = Integer.parseInt(request.getParameter("priceID"));
-            new PricePackageDAO().deletePricePackage(idDelete);
-        }
-        response.setStatus(200);
-        response.flushBuffer();
     }
 
     @Override

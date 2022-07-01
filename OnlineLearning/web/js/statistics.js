@@ -10,8 +10,8 @@ const COLORS = [
     '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
     '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'
 ];
-const ctx = document.getElementById('myChart').getContext('2d');
-const blogTrendChart = new Chart(ctx, {
+const blogTrendCtx = document.getElementById('myChart').getContext('2d');
+const blogTrendChart = new Chart(blogTrendCtx, {
     type: 'bar',
     data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -42,8 +42,42 @@ const blogTrendChart = new Chart(ctx, {
     }
 });
 
+//Show amount registration chart by date
+const registrationCtx = document.getElementById('registrationChart').getContext('2d');
+const registrationChart = new Chart(registrationCtx, {
+    type: 'line',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+                label: '# of Registration',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: '#6f42c1',
+                borderColor: '#6610f2',
+                borderWidth: 1,
+                tension: 0.1
+            }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Registration Chart',
+                position: 'bottom',
+                font: {
+                    size: 16
+                }
+            }
+        }
+    }
+});
 
-const subjectCtx = document.getElementById("subjectChart");
+//Show subjects and  amount course in each subject
+const subjectCtx = document.getElementById("subjectChart").getContext('2d');
 const subjectChart = new Chart(subjectCtx, {
     type: 'doughnut',
     data: {
@@ -53,9 +87,10 @@ const subjectChart = new Chart(subjectCtx, {
             'Yellow',
         ],
         datasets: [{
-                label: 'My First Dataset',
+                label: '',
                 data: [300, 50, 100],
                 backgroundColor: COLORS,
+                borderColor: '#f8f9fa',
                 hoverOffset: 4
             }]
     },
@@ -76,7 +111,8 @@ const subjectChart = new Chart(subjectCtx, {
     }
 });
 
-const subjectEnrollTrendCtx = document.getElementById("subjectEnrollTrend");
+// Show posiblity an account will enrolled courses belong to a subject
+const subjectEnrollTrendCtx = document.getElementById("subjectEnrollTrend").getContext('2d');
 const subjectEnrollTrend = new Chart(subjectEnrollTrendCtx, {
     type: 'radar',
     data: {
@@ -110,6 +146,7 @@ const subjectEnrollTrend = new Chart(subjectEnrollTrendCtx, {
     }
 });
 
+// Show revenue in each month
 const revenueCtx = document.getElementById('revenueChart').getContext('2d');
 const revenueChart = new Chart(revenueCtx, {
     type: 'line',
@@ -135,6 +172,7 @@ const revenueChart = new Chart(revenueCtx, {
                     'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 3
+
             }]
     },
     options: {
@@ -155,6 +193,48 @@ const revenueChart = new Chart(revenueCtx, {
         plugins: {
             legend: {
                 display: false
+            }
+        }
+    }
+});
+
+// Show revenue of each subject
+const subjectRevenueCtx = document.getElementById('subjectRevenueChart').getContext('2d');
+const subjectRevenueChart = new Chart(subjectRevenueCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+                label: '',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: '#0d6efd',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function (value, index, values) {
+                        if (parseInt(value) >= 1000) {
+                            return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                        } else {
+                            return '$' + value;
+                        }
+                    }
+                }
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Subject Revenue Chart',
+                position: 'bottom',
+                font: {
+                    size: 14
+                }
             }
         }
     }
@@ -242,6 +322,19 @@ function drawSubjectEnrollTrend() {
             .catch(error => console.log(error));
 }
 
+function drawRegistrationChart(from, to) {
+    fetch(`../api/statistics/registration/${from}/${to}`)
+            .then(resp => resp.json())
+            .then(data => {
+                let dates = data.map(e => `${e.date.year}-${e.date.month}-${e.date.day}`);
+                let amounts = data.map(e => e.amount);
+                registrationChart.data.labels = dates;
+                registrationChart.data.datasets[0].data = amounts;
+                registrationChart.update();
+            })
+            .catch(error => console.log(error));
+}
+
 const fromMonthInput = document.getElementById("fromMonth");
 const toMonthInput = document.getElementById("toMonth");
 
@@ -287,8 +380,81 @@ function searchRevenueEventHandler() {
     drawRevenueChart(m1, y1, m2, y2);
 }
 
+/**
+ * Draw revenue of each subject. Input is date string in format yyyy-M-d.
+ * @param {string} from date. If it is null or undefined draw revenue so far.
+ * @param {string} to date. If it is null or undefined draw revenue so far.
+ */
+function drawSubjectRevenueChart(from, to) {
+    let url = "../api/statistics/revenue/subject";
+
+    if (from && to) {
+        url = url + "/" + from + "/" + to;
+
+    }
+
+    fetch(url)
+            .then(resp => resp.json())
+            .then(data => {
+                let subjectNames = data.map(e => e.subjectName);
+                let revenues = data.map(e => e.revenue);
+                subjectRevenueChart.data.labels = subjectNames;
+                subjectRevenueChart.data.datasets[0].data = revenues;
+                subjectRevenueChart.update();
+            })
+            .catch(error => console.log(error));
+}
+
+/**
+ * Format Date to string in ISO_LOCAL_DATE
+ * @param {type} date
+ * @returns {String} 
+ */
+function formatToISO_LOCAL_DATE(date) {
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
+}
+
+// Start - config filter registration by date event.
+$("#fromDateRegistration").change(function () {
+    drawRegistrationChart($("#fromDateRegistration").val(), $("#toDateRegistration").val());
+});
+
+$("#toDateRegistration").change(function () {
+    drawRegistrationChart($("#fromDateRegistration").val(), $("#toDateRegistration").val());
+});
+// End - config filter registration by date event.
+
+// This event belong to filter revenue by month
 fromMonthInput.addEventListener('change', () => searchRevenueEventHandler());
 toMonthInput.addEventListener('change', () => searchRevenueEventHandler());
+
+let today = new Date();
+let previous7Day = new Date(today);
+previous7Day.setDate(today.getDate() - 7);
+
+//Set default fetch data before 7 days
+$("#fromDateRegistration").val(formatToISO_LOCAL_DATE(previous7Day));
+$("#toDateRegistration").val(formatToISO_LOCAL_DATE(today));
+drawRegistrationChart(formatToISO_LOCAL_DATE(previous7Day), formatToISO_LOCAL_DATE(today));
+
+//Start - config event search in Subject Revenue Chart
+$("#fromDateRevenueSubject").change(function () {
+    drawSubjectRevenueChart($("#fromDateRevenueSubject").val(), $("#toDateRevenueSubject").val());
+});
+
+$("#toDateRevenueSubject").change(function () {
+    drawSubjectRevenueChart($("#fromDateRevenueSubject").val(), $("#toDateRevenueSubject").val());
+});
+//End - config event search in Subject Revenue Chart
+
+//Set default fetch data from previous 7 days
+$("#fromDateRevenueSubject").val(formatToISO_LOCAL_DATE(previous7Day));
+$("#toDateRevenueSubject").val(formatToISO_LOCAL_DATE(today));
+drawSubjectRevenueChart(formatToISO_LOCAL_DATE(previous7Day), formatToISO_LOCAL_DATE(today));
+
 
 drawSubjectEnrollTrend();
 drawBlogTrendChart();

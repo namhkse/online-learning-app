@@ -2,7 +2,10 @@ package service;
 
 import com.google.gson.Gson;
 import dao.StatisticDAO;
+import java.sql.Date;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -126,5 +129,54 @@ public class StatistService {
             return Response.serverError().build();
         }
         return resp;
+    }
+
+    @GET
+    @Path("/test")
+    public Response test() {
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/registration/{from}/{to}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response countRegistration(@PathParam("from") String f, @PathParam("to") String t) {
+        DateTimeFormatter dft = DateTimeFormatter.ofPattern("yyyy-M-d");
+        LocalDate from, to;
+        try {
+            from = LocalDate.parse(f, dft);
+            to = LocalDate.parse(t, dft);
+        } catch (DateTimeParseException ex) {
+            ex.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        List ls = statistDAO.countRegistration(from, to);
+        return Response.ok(gson.toJson(ls)).build();
+    }
+
+    @GET
+    @Path("/revenue/subject")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRevenueOfAllSubject() {
+        return Response.ok(gson.toJson(statistDAO.getRevenueOfAllSubject(null, null))).build();
+    }
+
+    @GET
+    @Path("/revenue/subject/{from}/{to}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRevenueOfAllSubject(@PathParam("from") String f, @PathParam("to") String t) {
+        DateTimeFormatter dft = DateTimeFormatter.ofPattern("yyyy-M-d");
+        LocalDate from = null;
+        LocalDate to = null;
+        try {
+            from = LocalDate.parse(f, dft);
+            to = LocalDate.parse(t, dft);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        return Response.ok(gson.toJson(statistDAO.getRevenueOfAllSubject(from, to))).build();
     }
 }

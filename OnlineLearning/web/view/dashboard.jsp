@@ -8,13 +8,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Dashboard</title>
+
         <!-- Bootstrap CSS -->
         <link href="../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <!--Font Awesome-->
         <script src="https://kit.fontawesome.com/7b806b5ab9.js" crossorigin="anonymous"></script>
         <!--JQuery-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 
         <style>
             .table-wraper {
@@ -150,6 +151,37 @@
                             <!--Revenue Chart-->
                             <div class="card p-4">
                                 <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!--Revenue Base On Subject Chart-->
+                        <div class="p-4 row">
+                            <div class=" col-md-5">
+                                <div class="input-group mb-3 input-group-sm">
+                                    <span class="input-group-text">From</span>
+                                    <input type="date" id="fromDateRevenueSubject" min="2000-01-01" class="form-control">
+                                    <span class="input-group-text">To</span>
+                                    <input type="date" id="toDateRevenueSubject" min="2000-01-01" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <canvas id="subjectRevenueChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!--Registration Chart-->
+                        <div class="p-4 row">
+                            <div class=" col-md-5">
+                                <div class="input-group mb-3 input-group-sm">
+                                    <span class="input-group-text">From</span>
+                                    <input type="date" id="fromDateRegistration" min="2000-01-01" class="form-control">
+                                    <span class="input-group-text">To</span>
+                                    <input type="date" id="toDateRegistration" min="2000-01-01" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <canvas id="registrationChart"></canvas>
                             </div>
                         </div>
 

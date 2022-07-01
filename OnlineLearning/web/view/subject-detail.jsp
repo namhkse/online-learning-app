@@ -129,7 +129,7 @@
                                             <input type="file" name="photo" id="file" class="inputfile" data-multiple-caption="{count} files selected" accept="image/*" <c:if test="${subjectID == null}">required</c:if> >
                                             </div>
                                         </div>
-                                        <input type="submit" value="${action}" class="save" name="action">
+                                        <input type="submit" value="EDIT" class="save">
                                 </form>
                             </div>
 
