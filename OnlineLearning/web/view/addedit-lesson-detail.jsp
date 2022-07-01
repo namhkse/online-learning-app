@@ -1,9 +1,3 @@
-<%-- 
-    Document   : addedit-lesson-detail
-    Created on : Jun 27, 2022, 8:34:21 PM
-    Author     : FPTSHOP
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -57,7 +51,7 @@
 
                             <tr>
                                 <td>Start learning time:</td>
-                                <td><input type="datetime-local" name="starttime" value="${lesson.getStartLearningTime()}" required/><p>${daywarning}</p></td>
+                                <td><input type="datetime-local" name="starttime" value="${lesson.getStartLearningTime()}" required/></td>
                             </tr>
                             <tr><td colspan="2" id="error-lname" ></td></tr>
 

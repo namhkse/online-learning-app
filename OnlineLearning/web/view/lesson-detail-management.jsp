@@ -91,7 +91,7 @@
                     </div>
                     <div class="contain-right">
                         <c:if test="${lesson.getLessonTypeID().getLessonTypeID() == 1}">
-                            <video class="video-lesson" src="../${lesson.getVideoUrl()}" controls></video>
+                            <video class="video-lesson" src="${lesson.getVideoUrl()}" controls></video>
                             </c:if>
 
                     </div>
