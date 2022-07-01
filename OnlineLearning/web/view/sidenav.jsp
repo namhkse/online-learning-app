@@ -5,7 +5,7 @@
             <img src="../img/${account.profilePictureUrl}" height="40" width="40">
             <a class="navbar-brand d-none d-md-inline px-2" href="#">${account.role}</a>
         </div>
-
+        
         <ul class="navbar-nav fs-5">
             <li class="nav-item m-auto m-md-1">
                 <a style="font-size: 15px;padding-left: 10px" class="nav-link ${(param["page"] == "Dashboard") ? "active" : ""}"
