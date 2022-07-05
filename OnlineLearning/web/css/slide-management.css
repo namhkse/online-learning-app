@@ -25,14 +25,6 @@
     padding: 16px 20px;
 }
 
-#add-blog {
-    background-color: rgb(54, 93, 205);
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 10px;
-}
-
 .search {
     display: flex;
     justify-content: space-between;
@@ -143,8 +135,9 @@ ul {
 
 .img-thumbnail-blog {
     text-align: center;
-    width: 78px;
-    height: 30px;
+    object-fit: cover;
+    width: 100%;
+    height: 50px;
 }
 
 .backlink-slide{

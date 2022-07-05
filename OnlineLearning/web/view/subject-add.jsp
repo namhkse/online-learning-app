@@ -23,7 +23,7 @@
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script src="../js/subject-detail.js" type="text/javascript"></script>
+        <script src="../js/subject-add.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
@@ -42,7 +42,7 @@
                         <a class="back" href="../management/subject-list"><i class="fa-solid fa-angle-left"></i>Back</a>
                         <div class="container-table">
 
-                            <form action="../management/subject-add" method="post" class="form-submit" enctype="multipart/form-data">
+                            <form onsubmit="return checkSelectCategory()" action="../management/subject-add" method="post" class="form-submit" enctype="multipart/form-data">
                                 <div class="form-content">
                                     <div class="left-part">
                                         <h4 class="title">Subject Name</h4>
@@ -77,6 +77,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            &nbsp;&nbsp;<span class="text-danger">You must select a category</span>
                                         </div>
                                         <c:if test="${sessionScope.account.role.id==4}">
                                             <div id="list-expert">

@@ -166,7 +166,7 @@ function searchExpert(element) {
     let searchValue = element.value.toUpperCase();
     let items = document.querySelector('#expert-checkbox').children;
     for (var i = 0; i < items.length; i++) {
-        if (items[i].children[1].innerText.toUpperCase().indexOf(searchValue) > -1) {
+        if (items[i].children[0].innerText.toUpperCase().indexOf(searchValue) > -1) {
             items[i].style.display = 'block';
         } else {
             items[i].style.display = 'none';

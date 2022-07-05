@@ -378,3 +378,7 @@ form{
     width: 100%;
     margin-bottom: 8px;
 }
+
+#category-item .text-danger{
+    display: none;
+}

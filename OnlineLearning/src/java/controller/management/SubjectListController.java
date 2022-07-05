@@ -97,7 +97,7 @@ public class SubjectListController extends HttpServlet {
             response.getWriter().write("<td>\n");
             if (account.getRole().getId() == 4) {
                 response.getWriter().write("                                                    <div id=\"action\">\n"
-                        + "                                                        <a class=\"text-primary\" href=\"../management/slide-view?id=${slider.sliderID}\">View</a>&nbsp;/&nbsp;"
+                        + "                                                        <a class=\"text-primary\" href=\"../management/subject-view?subjectID=" + get.getSubjectId() + "\">View</a>&nbsp;/&nbsp;"
                         + "                                                        <a class=\"text-primary\" href=\"../management/subject-detail?subjectID=" + get.getSubjectId() + "\">Edit</a>&nbsp;/&nbsp;"
                         + "                                                        <button class=\"text-danger\" onclick=\"deleteSubject(" + get.getSubjectId() + ", this)\">Delete</button>"
                         + "                                                    </div>\n");
@@ -106,7 +106,7 @@ public class SubjectListController extends HttpServlet {
                     Subject get1 = listSubjectCanAccess.get(j);
                     if (get1.getSubjectId() == get.getSubjectId()) {
                         response.getWriter().write("                                                    <div id=\"action\">\n"
-                                + "                                                        <a class=\"text-primary\" href=\"../management/slide-view?id=${slider.sliderID}\">View</a>&nbsp;/&nbsp;"
+                                + "                                                        <a class=\"text-primary\" href=\"../management/subject-view?subjectID=" + get.getSubjectId() + "\">View</a>&nbsp;/&nbsp;"
                                 + "                                                        <a class=\"text-primary\" href=\"../management/subject-detail?subjectID=" + get.getSubjectId() + "\">Edit</a>&nbsp;/&nbsp;"
                                 + "                                                        <button class=\"text-danger\" onclick=\"deleteSubject(" + get.getSubjectId() + ", this)\">Delete</button>"
                                 + "                                                    </div>\n");

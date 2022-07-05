@@ -125,7 +125,7 @@
                                                     <c:choose>
                                                         <c:when test="${sessionScope.account.role.id==4}">
                                                             <div id="action">
-                                                                <a class="text-primary" href="../management/slide-view?id=${slider.sliderID}">View</a>&nbsp;/&nbsp;
+                                                                <a class="text-primary" href="../management/subject-view?subjectID=${subject.subjectId}">View</a>&nbsp;/&nbsp;
                                                                 <a class="text-primary" href="../management/subject-detail?subjectID=${subject.subjectId}">Edit</a>&nbsp;/&nbsp;
                                                                 <button class="text-danger" onclick="deleteSubject(${subject.subjectId}, this)">Delete</button>
                                                             </div>
@@ -134,7 +134,7 @@
                                                             <c:forEach var="subjectCanAccess" items="${listSubjectCanAccess}">
                                                                 <c:if test="${subjectCanAccess.subjectId==subject.subjectId}">
                                                                     <div id="action">
-                                                                        <a class="text-primary" href="../management/slide-view?id=${slider.sliderID}">View</a>&nbsp;/&nbsp;
+                                                                        <a class="text-primary" href="../management/subject-view?subjectID=${subject.subjectId}">View</a>&nbsp;/&nbsp;
                                                                         <a class="text-primary" href="../management/subject-detail?subjectID=${subject.subjectId}">Edit</a>&nbsp;/&nbsp;
                                                                         <button class="text-danger" onclick="deleteSubject(${subject.subjectId}, this)">Delete</button>
                                                                     </div>

@@ -19,11 +19,11 @@
         <script src="https://kit.fontawesome.com/7b806b5ab9.js" crossorigin="anonymous"></script>
         <!--Jquery-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link href="../css/subject-detail.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/subject-view.css" rel="stylesheet" type="text/css"/>
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        <script src="../js/subject-detail.js" type="text/javascript"></script>
+        <script src="../js/subject-view.js" type="text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
@@ -51,42 +51,14 @@
                             <!-- Tab content -->
                             <!-- overview -->
                             <div id="Overview" class="tabcontent active">
-                                <form onsubmit="return checkSelectCategory()" action="../management/subject-detail?subjectID=${subjectID}" method="post" class="form-submit" enctype="multipart/form-data">
+                                <form action="" method="post" class="form-submit" enctype="multipart/form-data">
                                     <div class="form-content">
                                         <div class="left-part">
                                             <h4 class="title">Subject Name</h4>
-                                            <input type="text" name="name" maxlength="200" class="input-box" value="${subject.name}" required>
+                                            <span class="input-box">${subject.name}</span>
                                             <div id="category-item">
                                                 <h4 class="title">Category</h4>
-                                                <div class="filter-category" onmouseover="showFilterBox()" onmouseout="hideFilterBox()" >
-                                                    <div id="current-category-box">
-                                                        <span id="current-category">${subject.categoryID.name == null ? subject.mainCategoryID.name : subject.categoryID.name}</span>&nbsp;<i class="fa-solid fa-caret-down filter-icon"></i>
-                                                    </div>
-                                                    <div id="filter-category-box">
-                                                        <div class="search-category-box">
-                                                            <input onkeyup="searchCategory(this)" id="search-category" type="text" value="" placeholder="Search for category name"/>
-                                                        </div>
-                                                        <div id="category-checkbox">
-                                                            <c:forEach var="mainCategory" items="${subjectMainCategories}">
-                                                                <div>
-                                                                    <div class="main-category">
-                                                                        <input name="mainCategoryID" value="${mainCategory.mainCategoryID}" <c:if test="${subject.mainCategoryID.mainCategoryID == mainCategory.mainCategoryID}">checked="checked"</c:if> onchange="checkedCategory(this)" id="maincategory${mainCategory.mainCategoryID}" type="checkbox" />
-                                                                        <label for="maincategory${mainCategory.mainCategoryID}">${mainCategory.name}</label>
-                                                                    </div>
-                                                                    <c:forEach var="category" items="${subjectCategories}">
-                                                                        <c:if test="${category.mainCategoryID.mainCategoryID == mainCategory.mainCategoryID}">
-                                                                            <div class="category">
-                                                                                <input name="categoryID" <c:if test="${subject.categoryID.categoryID == category.categoryID}">checked="checked"</c:if> onchange="checkedCategory(this)" id="category${category.categoryID}" type="checkbox" value="${category.categoryID}" />
-                                                                                <label for="category${category.categoryID}">${category.name}</label>
-                                                                            </div>
-                                                                        </c:if>
-                                                                    </c:forEach>
-                                                                </div>
-                                                            </c:forEach>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                &nbsp;&nbsp;<span class="text-danger">You must select a category</span>
+                                                <span id="current-category">${subject.categoryID.name == null ? subject.mainCategoryID.name : subject.categoryID.name}</span>
                                             </div>
                                             <c:if test="${sessionScope.account.role.id==4}">
                                                 <div id="list-expert">
@@ -98,9 +70,8 @@
                                                                 <input onkeyup="searchExpert(this)" id="search-category" type="text" value="" placeholder="Search for expert"/>
                                                             </div>
                                                             <div id="expert-checkbox">
-                                                                <c:forEach var="expert" items="${experts}">
+                                                                <c:forEach var="expert" items="${accounts}">
                                                                     <div class="expert-info">
-                                                                        <input <c:forEach var="account" items="${accounts}"><c:if test="${account.accountID == expert.accountID}">checked="checked"</c:if></c:forEach> id="expert${expert.accountID}" type="checkbox" name="expertCanAccess" value="${expert.accountID}" />
                                                                         <label for="expert${expert.accountID}">${expert.accountID} &nbsp;&nbsp;&nbsp; ${expert.firstName} ${expert.lastName}</label>
                                                                     </div>
                                                                 </c:forEach>
@@ -111,34 +82,26 @@
                                             </c:if>
                                             <div id="featured-status">
                                                 <div>
-                                                    <input <c:if test="${sessionScope.account.role.id!=4}">disabled="disabled"</c:if> id="featured-subject" ${subject.featured == true ? "checked" : ""} type="checkbox" name="featured" value="true" /> 
-                                                        <label for="featured-subject">Featured Subject</label>
-                                                    </div>
-                                                    <div>
-                                                        <h4 class="title">Status</h4>
-                                                        <select name="status" class="select-tag">
-                                                            <option value="true" ${subject.status == true ? "selected" : ""}>Published</option>
-                                                        <option value="false" ${subject.status == false ? "selected" : ""}>Unpublished</option>
-                                                    </select>
+                                                    <input disabled="disabled" id="featured-subject" ${subject.featured == true ? "checked" : ""} type="checkbox" name="featured" value="true" /> 
+                                                    <label for="featured-subject">Featured Subject</label>
+                                                </div>
+                                                <div>
+                                                    <h4 class="title text-center align-middle align-content-center align-items-center">Status</h4>
+                                                    <span class="text-center">${subject.status == true ? "Published" : "Unpublished"}</span>
                                                 </div>
                                             </div>
                                             <h4 class="title">Description</h4>
-                                            <textarea name="description" maxlength="2000" class="input-box" rows="5" cols="50" required>${subject.description}</textarea>
+                                            <span class="input-box">${subject.description}</span>
                                         </div>
                                         <div class="upload-img">
-                                            <c:if test="${subjectID != null}"><img src="../img/${subject.image}"></c:if>
-                                            <input type="file" name="photo" id="file" class="inputfile" data-multiple-caption="{count} files selected" accept="image/*" <c:if test="${subjectID == null}">required</c:if> >
-                                            </div>
+                                            <img src="../img/${subject.image}">
                                         </div>
-                                        <input type="submit" value="EDIT" class="save">
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
+                            </div>
 
-                                <!-- dimension -->
-                                <div id="Dimension" class="tabcontent">
-                                    <div class="add-search">
-                                        <a class="margin-auto-0 add-dimension" href="../management/dimension-detail?subjectID=${subjectID}" ><i class="fa-solid fa-plus"></i> Add Dimension</a>
-                                </div>
+                            <!-- dimension -->
+                            <div id="Dimension" class="tabcontent">
                                 <table class="table table-striped" id="table1">
                                     <thead>
                                         <tr>
@@ -156,9 +119,7 @@
                                                 <td>${dimension.name}</td>
                                                 <td>
                                                     <div class="action">
-                                                        <a class="text-primary" href="../management/dimension-view?subjectID=${subjectID}&dimensionID=${dimension.dimensionID}">View</a>&nbsp;/&nbsp;
-                                                        <a class="text-primary" href="../management/dimension-detail?subjectID=${subjectID}&dimensionID=${dimension.dimensionID}">Edit</a>&nbsp;/&nbsp;
-                                                        <span class="text-danger" onclick="deleteDimension(${dimension.dimensionID}, this)">Delete</span>
+                                                        <a class="text-primary" href="../management/dimension-view?subjectID=${subjectID}&dimensionID=${dimension.dimensionID}">View</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -169,11 +130,6 @@
 
                             <!-- price package -->
                             <div id="Price" class="tabcontent">
-                                <c:if test="${sessionScope.account.role.id==4}">
-                                    <div class="add-search">
-                                        <a class="margin-auto-0 add-dimension" href="../management/price-package-detail?subjectID=${subjectID}" ><i class="fa-solid fa-plus"></i> Add Price Package</a>
-                                    </div>
-                                </c:if>
                                 <table class="table table-striped" id="table2">
                                     <thead>
                                         <tr>
@@ -183,7 +139,6 @@
                                             <th>List Price</th>
                                             <th>Sale Price</th>
                                             <th>Active</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -204,20 +159,12 @@
                                                 <td class="toggle">
                                                     <c:choose>
                                                         <c:when test="${pricePackage.status == true}">
-                                                            <button class="display-toggle" <c:if test="${sessionScope.account.role.id==4}">onclick="changeStatusPricePackage(this, ${pricePackage.priceID})"</c:if> ><i class="fa-solid fa-toggle-on"></i></button>
+                                                            <button class="display-toggle" ><i class="fa-solid fa-toggle-on"></i></button>
                                                             </c:when>
                                                             <c:otherwise>
-                                                            <button class="display-toggle" <c:if test="${sessionScope.account.role.id==4}">onclick="changeStatusPricePackage(this, ${pricePackage.priceID})"</c:if> ><i class="fa-solid fa-toggle-off"></i></button>
+                                                            <button class="display-toggle" ><i class="fa-solid fa-toggle-off"></i></button>
                                                             </c:otherwise>
                                                         </c:choose>
-                                                </td>
-                                                <td>
-                                                    <c:if test="${sessionScope.account.role.id==4}">
-                                                        <div class="action">
-                                                            <a class="text-primary" href="../management/price-package-detail?priceID=${pricePackage.priceID}&subjectID=${subjectID}">Edit</a>&nbsp;/&nbsp;
-                                                            <span class="text-danger" onclick="deletePricePackage(${pricePackage.priceID}, this)">Delete</span>
-                                                        </div>
-                                                    </c:if>
                                                 </td>
                                             </tr>
                                         </c:forEach>

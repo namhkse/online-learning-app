@@ -201,6 +201,7 @@ th i {
 .input-box{
     width: 100%;
     margin-bottom: 20px;
+    display: block;
 }
 
 .filter-icon{
@@ -265,7 +266,7 @@ th i {
 }
 
 #filter-expert-box{
-    height: 330px;
+    height: 305px;
     width: 300px;
     background-color: #fff;
     box-shadow: 0 0 15px rgb(0 0 0 / 50%);
@@ -324,6 +325,18 @@ label{
 #category-item{
     display: flex;
     margin-bottom: 20px;
+    align-items: center;
+}
+
+#category-item h4{
+    margin: 0;
+}
+
+#category-item span{
+    padding: 4px 8px;
+    background: #ccc;
+    border-radius: 16px;
+    margin-left: 4px;
 }
 
 .save {
@@ -341,11 +354,25 @@ label{
 
 #featured-status{
     display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+#featured-status h4{
+    margin: 0;
 }
 
 #featured-status div:nth-child(2){
     display: flex;
     margin-left: 100px;
+    align-items: center;
+}
+
+#featured-status div:nth-child(2) span{
+    padding: 4px 8px;
+    background: #ccc;
+    border-radius: 16px;
+    margin-left: 4px;
 }
 
 #featured-status div:nth-child(2) select{
