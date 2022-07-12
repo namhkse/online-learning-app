@@ -254,13 +254,13 @@ public class AccountDAO extends DBContext {
         return accounts;
     }
 
-    public ArrayList<Account> getListAccountCanAccessSubject(int subjectID) {
+    public ArrayList<Account> getListAccountCanAccessCourse(int courseID) {
         ArrayList<Account> accounts = new ArrayList<>();
         try {
-            String sql = "SELECT SubjectAccount.*, FirstName, LastName "
-                    + "FROM SubjectAccount JOIN Account ON SubjectAccount.AccountID = Account.AccountID WHERE SubjectID = ?";
+            String sql = "SELECT CourseExpert.*, FirstName, LastName\n"
+                    + "FROM CourseExpert JOIN Account ON CourseExpert.AccountID = Account.AccountID WHERE CourseID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, subjectID);
+            stm.setInt(1, courseID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Account account = new Account();
@@ -275,28 +275,28 @@ public class AccountDAO extends DBContext {
         return accounts;
     }
 
-    public void insertAccountCanAccessSubject(int subjectID, int accountID) {
+    public void insertAccountCanAccessSubject(int courseID, int accountID) {
         try {
-            String sql = "INSERT INTO [dbo].[SubjectAccount]\n"
-                    + "           ([AccountID]\n"
-                    + "           ,[SubjectID])\n"
+            String sql = "INSERT INTO [CourseExpert]\n"
+                    + "           ([CourseID]\n"
+                    + "           ,[AccountID])\n"
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, accountID);
-            stm.setInt(2, subjectID);
+            stm.setInt(1, courseID);
+            stm.setInt(2, accountID);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void insertListAccountCanAccessSubject(int subjectID, ArrayList<Integer> accountIDs) {
+    public void insertListAccountCanAccessSubject(int courseID, ArrayList<Integer> accountIDs) {
         try {
-            String sql = "INSERT INTO [SubjectAccount]\n"
-                    + "           ([AccountID]\n"
-                    + "           ,[SubjectID])\n"
+            String sql = "INSERT INTO [CourseExpert]\n"
+                    + "           ([CourseID]\n"
+                    + "           ,[AccountID])\n"
                     + "     VALUES\n";
             for (int i = 0; i < accountIDs.size(); i++) {
                 if (i == accountIDs.size() - 1) {
@@ -311,9 +311,9 @@ public class AccountDAO extends DBContext {
             int index = 1;
             for (int i = 0; i < accountIDs.size(); i++) {
                 Integer get = accountIDs.get(i);
-                stm.setInt(index, get);
+                stm.setInt(index, courseID);
                 index++;
-                stm.setInt(index, subjectID);
+                stm.setInt(index, get);
                 index++;
             }
             stm.executeUpdate();
@@ -322,12 +322,12 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public void deleteAllAccountCanAccessSubject(int subjectID) {
+    public void deleteAllAccountCanAccessSubject(int courseID) {
         try {
-            String sql = "DELETE FROM [SubjectAccount]\n"
-                    + "      WHERE SubjectID = ?";
+            String sql = "DELETE FROM [CourseExpert]\n"
+                    + "      WHERE CourseID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, subjectID);
+            stm.setInt(1, courseID);
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);

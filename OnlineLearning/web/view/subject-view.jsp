@@ -55,10 +55,24 @@
                                     <div class="form-content">
                                         <div class="left-part">
                                             <h4 class="title">Subject Name</h4>
-                                            <span class="input-box">${subject.name}</span>
+                                            <span class="input-box">${course.name}</span>
                                             <div id="category-item">
                                                 <h4 class="title">Category</h4>
-                                                <span id="current-category">${subject.categoryID.name == null ? subject.mainCategoryID.name : subject.categoryID.name}</span>
+                                                <div class="filter-category" onmouseover="showFilterBox()" onmouseout="hideFilterBox()" >
+                                                    <i class="fa-solid fa-list-check filter-icon"></i>
+                                                    <div id="filter-category-box">
+                                                        <div class="search-category-box">
+                                                            <input onkeyup="searchCategory(this)" id="search-category" type="text" value="" placeholder="Search for category name"/>
+                                                        </div>
+                                                        <div id="category-checkbox">
+                                                            <c:forEach var="subject" items="${course.listSubject}">
+                                                                <div class="category">
+                                                                    <label>${subject.name}</label>
+                                                                </div>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <c:if test="${sessionScope.account.role.id==4}">
                                                 <div id="list-expert">
@@ -82,19 +96,34 @@
                                             </c:if>
                                             <div id="featured-status">
                                                 <div>
-                                                    <input disabled="disabled" id="featured-subject" ${subject.featured == true ? "checked" : ""} type="checkbox" name="featured" value="true" /> 
+                                                    <input disabled="disabled" id="featured-subject" ${course.featured == true ? "checked" : ""} type="checkbox" name="featured" value="true" /> 
                                                     <label for="featured-subject">Featured Subject</label>
                                                 </div>
                                                 <div>
                                                     <h4 class="title text-center align-middle align-content-center align-items-center">Status</h4>
-                                                    <span class="text-center">${subject.status == true ? "Published" : "Unpublished"}</span>
+                                                    <span class="text-center">${course.status == true ? "Published" : "Unpublished"}</span>
                                                 </div>
                                             </div>
                                             <h4 class="title">Description</h4>
-                                            <span class="input-box">${subject.description}</span>
+                                            <span class="input-box">${course.description}</span>
+                                            <h4 class="title">About Course</h4>
+                                            <span class="input-box">${course.aboutCourse}</span>
+                                            <h4 class="title">Video Introduce</h4>
+                                            <div>
+                                                <embed src="${course.videoIntroduce}" class="course-detail-img">
+                                                <span class="input-box">${course.videoIntroduce}</span>
+                                            </div>
+                                            <h4 class="title">Objectives</h4>
+                                            <div id="objectives">
+                                                <c:forEach var="objective" items="${course.objectives}">
+                                                    <div class="objective-item">
+                                                        <i style='color: #0dd20d; margin-right: 25px;' class="fa-solid fa-check"></i><span>${objective}</span>
+                                                    </div>
+                                                </c:forEach>
+                                            </div>
                                         </div>
                                         <div class="upload-img">
-                                            <img src="../img/${subject.image}">
+                                            <img src="../img/${course.thumbnailUrl}">
                                         </div>
                                     </div>
                                 </form>
@@ -119,7 +148,7 @@
                                                 <td>${dimension.name}</td>
                                                 <td>
                                                     <div class="action">
-                                                        <a class="text-primary" href="../management/dimension-view?subjectID=${subjectID}&dimensionID=${dimension.dimensionID}">View</a>
+                                                        <a class="text-primary" href="../management/dimension-view?courseID=${courseID}&dimensionID=${dimension.dimensionID}">View</a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -144,7 +173,7 @@
                                     <tbody>
                                         <c:forEach items="${pricePackages}" var="pricePackage">
                                             <tr>
-                                                <td>${pricePackage.priceID}</td>
+                                                <td>${pricePackage.priceId}</td>
                                                 <td>${pricePackage.name}</td>
                                                 <c:choose>
                                                     <c:when test="${pricePackage.accessDuration != -1}">

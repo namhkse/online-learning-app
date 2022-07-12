@@ -10,21 +10,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Course;
 import model.CoursePricePackage;
-import model.PricePackage;
-import model.Subject;
 
 public class PricePackageDAO extends DBContext {
-
-    public ArrayList<PricePackage> getAllPricePackages(int subjectID) {
-        ArrayList<PricePackage> pricePackages = new ArrayList<>();
+    
+    public ArrayList<CoursePricePackage> getAllPricePackages(int courseID) {
+        ArrayList<CoursePricePackage> pricePackages = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM [PricePackage] WHERE SubjectID = ?";
-            PreparedStatement stm = connection.prepareCall(sql);
-            stm.setInt(1, subjectID);
+            String sql = "SELECT * FROM [CoursePricePackage] WHERE CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                PricePackage pricePackage = new PricePackage();
-                pricePackage.setPriceID(rs.getInt("PriceID"));
+                CoursePricePackage pricePackage = new CoursePricePackage();
+                pricePackage.setPriceId(rs.getInt("PriceID"));
                 pricePackage.setName(rs.getString("Name"));
                 if (rs.getObject("AccessDuration") != null) {
                     pricePackage.setAccessDuration(rs.getInt("AccessDuration"));
@@ -34,9 +32,9 @@ public class PricePackageDAO extends DBContext {
                 pricePackage.setStatus(rs.getBoolean("Status"));
                 pricePackage.setListPrice(rs.getBigDecimal("ListPrice"));
                 pricePackage.setSalePrice(rs.getBigDecimal("SalePrice"));
-                Subject subject = new Subject();
-                subject.setSubjectId(rs.getInt("SubjectID"));
-                pricePackage.setSubjectID(subject);
+                Course course = new Course();
+                course.setCourseId(rs.getInt("CourseID"));
+                pricePackage.setCourseId(course);
                 pricePackages.add(pricePackage);
             }
         } catch (SQLException ex) {
@@ -44,16 +42,16 @@ public class PricePackageDAO extends DBContext {
         }
         return pricePackages;
     }
-
-    public PricePackage getPricePackageByID(int id) {
+    
+    public CoursePricePackage getPricePackageByID(int id) {
         try {
-            String sql = "SELECT * FROM [PricePackage] WHERE PriceID = ?";
+            String sql = "SELECT * FROM [CoursePricePackage] WHERE PriceID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
             if (rs.next()) {
-                PricePackage pricePackage = new PricePackage();
-                pricePackage.setPriceID(rs.getInt("PriceID"));
+                CoursePricePackage pricePackage = new CoursePricePackage();
+                pricePackage.setPriceId(rs.getInt("PriceID"));
                 pricePackage.setName(rs.getString("Name"));
                 if (rs.getObject("AccessDuration") != null) {
                     pricePackage.setAccessDuration(rs.getInt("AccessDuration"));
@@ -63,9 +61,9 @@ public class PricePackageDAO extends DBContext {
                 pricePackage.setStatus(rs.getBoolean("Status"));
                 pricePackage.setListPrice(rs.getBigDecimal("ListPrice"));
                 pricePackage.setSalePrice(rs.getBigDecimal("SalePrice"));
-                Subject subject = new Subject();
-                subject.setSubjectId(rs.getInt("SubjectID"));
-                pricePackage.setSubjectID(subject);
+                Course course = new Course();
+                course.setCourseId(rs.getInt("CourseID"));
+                pricePackage.setCourseId(course);
                 return pricePackage;
             }
         } catch (SQLException ex) {
@@ -73,10 +71,10 @@ public class PricePackageDAO extends DBContext {
         }
         return null;
     }
-
+    
     public void updateStatusPricePackage(int id, boolean status) {
         try {
-            String sql = "UPDATE [PricePackage] SET [Status] = ? WHERE PriceID = ?";
+            String sql = "UPDATE [CoursePricePackage] SET [Status] = ? WHERE PriceID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setBoolean(1, status);
             stm.setInt(2, id);
@@ -85,10 +83,10 @@ public class PricePackageDAO extends DBContext {
             Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public void deletePricePackage(int id) {
         try {
-            String sql = "DELETE FROM [PricePackage] WHERE PriceID = ?";
+            String sql = "DELETE FROM [CoursePricePackage] WHERE PriceID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             stm.executeUpdate();
@@ -96,16 +94,16 @@ public class PricePackageDAO extends DBContext {
             Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void insertPricePackage(PricePackage pricePackage) {
+    
+    public void insertPricePackage(CoursePricePackage pricePackage) {
         try {
-            String sql = "INSERT INTO [PricePackage]\n"
+            String sql = "INSERT INTO [CoursePricePackage]\n"
                     + "           ([Name]\n"
                     + "           ,[AccessDuration]\n"
                     + "           ,[Status]\n"
                     + "           ,[ListPrice]\n"
                     + "           ,[SalePrice]\n"
-                    + "           ,[SubjectID])\n"
+                    + "           ,[CourseID])\n"
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?\n"
@@ -123,22 +121,22 @@ public class PricePackageDAO extends DBContext {
             stm.setBoolean(3, pricePackage.isStatus());
             stm.setBigDecimal(4, pricePackage.getListPrice());
             stm.setBigDecimal(5, pricePackage.getSalePrice());
-            stm.setInt(6, pricePackage.getSubjectID().getSubjectId());
+            stm.setInt(6, pricePackage.getCourseId().getCourseId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public void updatePricePackage(PricePackage pricePackage) {
+    
+    public void updatePricePackage(CoursePricePackage pricePackage) {
         try {
-            String sql = "UPDATE [dbo].[PricePackage]\n"
+            String sql = "UPDATE [dbo].[CoursePricePackage]\n"
                     + "   SET [Name] = ?\n"
                     + "      ,[AccessDuration] = ?\n"
                     + "      ,[Status] = ?\n"
                     + "      ,[ListPrice] = ?\n"
                     + "      ,[SalePrice] = ?\n"
-                    + "      ,[SubjectID] = ?\n"
+                    + "      ,[CourseID] = ?\n"
                     + " WHERE PriceID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, pricePackage.getName());
@@ -150,8 +148,8 @@ public class PricePackageDAO extends DBContext {
             stm.setBoolean(3, pricePackage.isStatus());
             stm.setBigDecimal(4, pricePackage.getListPrice());
             stm.setBigDecimal(5, pricePackage.getSalePrice());
-            stm.setInt(6, pricePackage.getSubjectID().getSubjectId());
-            stm.setInt(7, pricePackage.getPriceID());
+            stm.setInt(6, pricePackage.getCourseId().getCourseId());
+            stm.setInt(7, pricePackage.getPriceId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(PricePackageDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -189,5 +187,5 @@ public class PricePackageDAO extends DBContext {
         }
         return null;
     }
-
+    
 }

@@ -1,5 +1,6 @@
 package dao;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,7 @@ public class CourseDAO extends DBContext {
         account.setProfilePictureUrl(rs.getString("ProfilePictureUrl"));
 
         Course course = new Course();
-        course.setCourseId(rs.getInt("courseID"));
+        course.setCourseId(rs.getInt("CourseID"));
         course.setName(rs.getString("Name"));
         course.setDescription(rs.getString("Description"));
         course.setInstructorId(account);
@@ -31,6 +32,8 @@ public class CourseDAO extends DBContext {
         course.setCreatedDate(rs.getDate("CreatedDate"));
         course.setModifiedDate(rs.getDate("ModifiedDate"));
         course.setPrice(rs.getBigDecimal("Price"));
+        course.setFeatured(rs.getBoolean("Featured"));
+        course.setStatus(rs.getBoolean("Status"));
 
         return course;
     }
@@ -309,8 +312,38 @@ public class CourseDAO extends DBContext {
         return listCourse;
     }
 
-    public Course getCourseByCourseId(int id) {
+    public Course getSubjectByCourseID(int id) {
+        String sql = "select c.*, a.FirstName, a.LastName, a.ProfilePictureUrl\n"
+                + "from Course c join account a\n"
+                + "on a.AccountID = c.InstructorID\n"
+                + "where courseID = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Course course = mappingData(rs);
+                course.setVideoIntroduce(rs.getString("VideoIntroduce"));
+                ArrayList<String> objectives = getObjectives(course.getCourseId());
+                course.setObjectives(objectives);
+                course.setAboutCourse(rs.getString("AboutCourse"));
+                ArrayList<Subject> listSubject = new SubjectDAO().getSubjectsByCourseID(course.getCourseId());
+                course.setListSubject(listSubject);
+                ArrayList<Account> accounts = new AccountDAO().getListAccountCanAccessCourse(id);
+                course.setListExpertCanAccess(accounts);
+                int star = getStarOfCourse(course.getCourseId());
+                course.setStar(star);
+                int people = getNumberPeopleLearningInCourse(course.getCourseId());
+                course.setNumberPeopleLearning(people);
+                return course;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
+    public Course getCourseByCourseId(int id) {
         String sql = "select c.*, a.FirstName, a.LastName, a.ProfilePictureUrl\n"
                 + "from Course c join account a\n"
                 + "on a.AccountID = c.InstructorID\n"
@@ -358,8 +391,7 @@ public class CourseDAO extends DBContext {
 
     public ArrayList<String> getObjectives(int courseId) {
         ArrayList<String> list = new ArrayList<>();
-        String sql = "select * from Objective\n"
-                + "where CourseID = ?";
+        String sql = "select * from Objective where CourseID = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, courseId);
@@ -488,5 +520,183 @@ public class CourseDAO extends DBContext {
             }
         }
         return listCourseFeature;
+    }
+
+    public Course getNewestCourse() {
+        int id = 0;
+        try {
+            String sql = "SELECT MAX(CourseID) CourseID FROM Course";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt("CourseID");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return getCourseByCourseId(id);
+    }
+
+    public void insertCourse(Course course) {
+        try {
+            String sql = "INSERT INTO [dbo].[Course]\n"
+                    + "           ([Name]\n"
+                    + "           ,[Description]\n"
+                    + "           ,[InstructorID]\n"
+                    + "           ,[TinyPictureUrl]\n"
+                    + "           ,[ThumbnailUrl]\n"
+                    + "           ,[CreatedDate]\n"
+                    + "           ,[ModifiedDate]\n"
+                    + "           ,[Price]\n"
+                    + "           ,[Featured]\n"
+                    + "           ,[Status]\n"
+                    + "           ,[VideoIntroduce]\n"
+                    + "           ,[AboutCourse])\n"
+                    + "     VALUES\n"
+                    + "           (?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?\n"
+                    + "           ,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, course.getName());
+            stm.setString(2, course.getDescription());
+            stm.setInt(3, course.getInstructorId().getId());
+            stm.setString(4, course.getThumbnailUrl());
+            stm.setString(5, course.getThumbnailUrl());
+            stm.setDate(6, course.getCreatedDate());
+            stm.setDate(7, null);
+            stm.setBigDecimal(8, BigDecimal.ZERO);
+            stm.setBoolean(9, course.isFeatured());
+            stm.setBoolean(10, course.isStatus());
+            stm.setString(11, course.getVideoIntroduce());
+            stm.setString(12, course.getAboutCourse());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void insertCourseToCategory(ArrayList<Integer> subjectID, int courseID) {
+        try {
+            String sql = "INSERT INTO [dbo].[SubjectCourse]\n"
+                    + "           ([SubjectID]\n"
+                    + "           ,[CourseID])\n"
+                    + "     VALUES\n";
+            for (int i = 0; i < subjectID.size(); i++) {
+                if (i == subjectID.size() - 1) {
+                    sql += "           (?\n"
+                            + "           ,?)";
+                } else {
+                    sql += "           (?\n"
+                            + "           ,?),";
+                }
+            }
+            PreparedStatement stm = connection.prepareStatement(sql);
+            int index = 1;
+            for (int i = 0; i < subjectID.size(); i++) {
+                int get = subjectID.get(i);
+                stm.setInt(index, get);
+                index++;
+                stm.setInt(index, courseID);
+                index++;
+            }
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteCategoryOfCourse(int id) {
+        try {
+            String sql = "DELETE FROM [dbo].[SubjectCourse]\n"
+                    + "      WHERE CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void insertObjectives(String[] objectives, int id) {
+        try {
+            String sql = "INSERT INTO [dbo].[Objective]\n"
+                    + "           ([ObjectiveName]\n"
+                    + "           ,[CourseID])\n"
+                    + "     VALUES\n";
+            for (int i = 0; i < objectives.length; i++) {
+                if (i == objectives.length - 1) {
+                    sql += "           (?\n"
+                            + "           ,?)";
+                } else {
+                    sql += "           (?\n"
+                            + "           ,?),";
+                }
+            }
+            PreparedStatement stm = connection.prepareStatement(sql);
+            int index = 1;
+            for (int i = 0; i < objectives.length; i++) {
+                stm.setString(index, objectives[i]);
+                index++;
+                stm.setInt(index, id);
+                index++;
+            }
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void deleteObjectives(int id) {
+        try {
+            String sql = "DELETE FROM [dbo].[Objective]\n"
+                    + "      WHERE CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateCourse(Course course) {
+        try {
+            String sql = "UPDATE [dbo].[Course]\n"
+                    + "   SET [Name] = ?\n"
+                    + "      ,[Description] = ?\n"
+                    + "      ,[TinyPictureUrl] = ?\n"
+                    + "      ,[ThumbnailUrl] = ?\n"
+                    + "      ,[ModifiedDate] = ?\n"
+                    + "      ,[Price] = ?\n"
+                    + "      ,[Featured] = ?\n"
+                    + "      ,[Status] = ?\n"
+                    + "      ,[VideoIntroduce] = ?\n"
+                    + "      ,[AboutCourse] = ?\n"
+                    + " WHERE CourseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, course.getName());
+            stm.setString(2, course.getDescription());
+            stm.setString(3, course.getThumbnailUrl());
+            stm.setString(4, course.getThumbnailUrl());
+            stm.setDate(5, course.getModifiedDate());
+            stm.setBigDecimal(6, BigDecimal.ZERO);
+            stm.setBoolean(7, course.isFeatured());
+            stm.setBoolean(8, course.isStatus());
+            stm.setString(9, course.getVideoIntroduce());
+            stm.setString(10, course.getAboutCourse());
+            stm.setInt(11, course.getCourseId());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(CourseDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

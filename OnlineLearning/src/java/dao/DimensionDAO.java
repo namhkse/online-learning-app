@@ -6,18 +6,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Course;
 import model.Dimension;
 import model.DimensionType;
 import model.Subject;
 
 public class DimensionDAO extends DBContext {
 
-    public ArrayList<Dimension> getDimensionsBySubjectID(int id) {
+    public ArrayList<Dimension> getDimensionsByCourseID(int id) {
         ArrayList<Dimension> dimensions = new ArrayList<>();
         try {
-            String sql = "SELECT DimensionID, Dimension.Name, Description, Dimension.TypeID, DimensionType.Name Type, SubjectID\n"
+            String sql = "SELECT DimensionID, Dimension.Name, Description, Dimension.TypeID, DimensionType.Name Type, CourseID\n"
                     + "FROM dbo.Dimension JOIN dbo.DimensionType ON DimensionType.TypeID = Dimension.TypeID\n"
-                    + "WHERE SubjectID = ?";
+                    + "WHERE CourseID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
@@ -31,11 +32,11 @@ public class DimensionDAO extends DBContext {
                 dimensionType.setTypeID(rs.getInt("TypeID"));
                 dimensionType.setName(rs.getString("Type"));
 
-                Subject subject = new Subject();
-                subject.setSubjectId(rs.getInt("SubjectID"));
+                Course course = new Course();
+                course.setCourseId(rs.getInt("CourseID"));
 
                 dimension.setTypeID(dimensionType);
-                dimension.setSubjectID(subject);
+                dimension.setCourseID(course);
                 dimensions.add(dimension);
             }
         } catch (SQLException ex) {
@@ -46,7 +47,7 @@ public class DimensionDAO extends DBContext {
 
     public Dimension getDimensionByID(int id) {
         try {
-            String sql = "SELECT DimensionID, Dimension.Name, Description, Dimension.TypeID, DimensionType.Name Type, SubjectID\n"
+            String sql = "SELECT DimensionID, Dimension.Name, Description, Dimension.TypeID, DimensionType.Name Type, CourseID\n"
                     + "FROM dbo.Dimension JOIN dbo.DimensionType ON DimensionType.TypeID = Dimension.TypeID\n"
                     + "WHERE DimensionID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -62,11 +63,11 @@ public class DimensionDAO extends DBContext {
                 dimensionType.setTypeID(rs.getInt("TypeID"));
                 dimensionType.setName(rs.getString("Type"));
 
-                Subject subject = new Subject();
-                subject.setSubjectId(rs.getInt("SubjectID"));
+                Course course = new Course();
+                course.setCourseId(rs.getInt("CourseID"));
 
                 dimension.setTypeID(dimensionType);
-                dimension.setSubjectID(subject);
+                dimension.setCourseID(course);
                 return dimension;
             }
         } catch (SQLException ex) {
@@ -74,13 +75,13 @@ public class DimensionDAO extends DBContext {
         }
         return null;
     }
-    
-    public ArrayList<Dimension> getDimensionsByNameAndSubjectID(String name, int id) {
+
+    public ArrayList<Dimension> getDimensionsByNameAndCourseID(String name, int id) {
         ArrayList<Dimension> dimensions = new ArrayList<>();
         try {
-            String sql = "SELECT DimensionID, Dimension.Name, Description, Dimension.TypeID, DimensionType.Name Type, SubjectID\n" +
-"                    FROM dbo.Dimension JOIN dbo.DimensionType ON DimensionType.TypeID = Dimension.TypeID\n" +
-"                    WHERE SubjectID = ? AND Dimension.Name LIKE ?";
+            String sql = "SELECT DimensionID, Dimension.Name, Description, Dimension.TypeID, DimensionType.Name Type, CourseID\n"
+                    + "FROM dbo.Dimension JOIN dbo.DimensionType ON DimensionType.TypeID = Dimension.TypeID\n"
+                    + "WHERE CourseID = ? AND Dimension.Name LIKE ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             stm.setString(2, "%" + name + "%");
@@ -95,11 +96,11 @@ public class DimensionDAO extends DBContext {
                 dimensionType.setTypeID(rs.getInt("TypeID"));
                 dimensionType.setName(rs.getString("Type"));
 
-                Subject subject = new Subject();
-                subject.setSubjectId(rs.getInt("SubjectID"));
+                Course course = new Course();
+                course.setCourseId(rs.getInt("CourseID"));
 
                 dimension.setTypeID(dimensionType);
-                dimension.setSubjectID(subject);
+                dimension.setCourseID(course);
                 dimensions.add(dimension);
             }
         } catch (SQLException ex) {
@@ -143,7 +144,7 @@ public class DimensionDAO extends DBContext {
                     + "           ([Name]\n"
                     + "           ,[Description]\n"
                     + "           ,[TypeID]\n"
-                    + "           ,[SubjectID])\n"
+                    + "           ,[CourseID])\n"
                     + "     VALUES\n"
                     + "           (?\n"
                     + "           ,?\n"
@@ -153,7 +154,7 @@ public class DimensionDAO extends DBContext {
             stm.setString(1, dimension.getName());
             stm.setString(2, dimension.getDescription());
             stm.setInt(3, dimension.getTypeID().getTypeID());
-            stm.setInt(4, dimension.getSubjectID().getSubjectId());
+            stm.setInt(4, dimension.getCourseID().getCourseId());
             stm.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DimensionDAO.class.getName()).log(Level.SEVERE, null, ex);

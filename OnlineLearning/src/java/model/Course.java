@@ -16,6 +16,7 @@ public class Course {
     private Date modifiedDate;
     private BigDecimal price;
     private boolean status;
+    private boolean featured;
     private String videoIntroduce;
     private ArrayList<String> objectives;
     private String aboutCourse;
@@ -23,11 +24,28 @@ public class Course {
     private int star;
     private int numberPeopleLearning;
     private ArrayList<CoursePricePackage> listPrice;
+    private ArrayList<Account> listExpertCanAccess;
 
+    public ArrayList<Account> getListExpertCanAccess() {
+        return listExpertCanAccess;
+    }
+
+    public void setListExpertCanAccess(ArrayList<Account> listExpertCanAccess) {
+        this.listExpertCanAccess = listExpertCanAccess;
+    }
+    
     public ArrayList<CoursePricePackage> getListPrice() {
         return listPrice;
     }
 
+    public boolean isFeatured() {
+        return featured;
+    }
+
+    public void setFeatured(boolean featured) {
+        this.featured = featured;
+    }
+    
     public void setListPrice(ArrayList<CoursePricePackage> listPrice) {
         this.listPrice = listPrice;
     }
@@ -78,7 +96,6 @@ public class Course {
     public void setListSubject(ArrayList<Subject> listSubject) {
         this.listSubject = listSubject;
     }
-    
     
     public Course() {
     }

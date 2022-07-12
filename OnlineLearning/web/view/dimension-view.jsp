@@ -30,7 +30,7 @@
 
                     <div class="container">
                         <div class="container-table post">
-                            <a class="back" href="../management/subject-detail?subjectID=${subjectID}"><i class="fa-solid fa-angle-left"></i>Back</a>
+                            <a class="back" href="../management/subject-detail?courseID=${courseID}"><i class="fa-solid fa-angle-left"></i>Back</a>
                             <form action="" method="post" class="form-submit">
                                 <h4 class="title">Title</h4>
                                 <span class="input-box">${dimension.name}</span>

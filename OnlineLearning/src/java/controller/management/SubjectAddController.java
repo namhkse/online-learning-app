@@ -1,18 +1,19 @@
-
 package controller.management;
 
 import dao.AccountDAO;
+import dao.CourseDAO;
 import dao.DimensionDAO;
 import dao.PricePackageDAO;
 import dao.SubjectCategoryDAO;
 import dao.SubjectDAO;
-import dao.SubjectMainCategoryDAO;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -22,11 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import model.Account;
-import model.Dimension;
-import model.PricePackage;
+import model.Course;
 import model.Subject;
 import model.SubjectCategory;
-import model.SubjectMainCategory;
 
 @WebServlet(name = "SubjectAddController", urlPatterns = {"/management/subject-add"})
 @MultipartConfig(
@@ -38,39 +37,38 @@ public class SubjectAddController extends HttpServlet {
 
     private static final long SerialVersionUID = 1L;
     private static final String UPLOAD_DIR = "img";
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        
+
         AccountDAO accountDAO = new AccountDAO();
 
         SubjectCategoryDAO subjectCategoryDAO = new SubjectCategoryDAO();
-        SubjectMainCategoryDAO subjectMainCategoryDAO = new SubjectMainCategoryDAO();
         ArrayList<SubjectCategory> subjectCategories = subjectCategoryDAO.getAllSubjectCategory();
-        ArrayList<SubjectMainCategory> subjectMainCategories = subjectMainCategoryDAO.getAllSubjectMainCategories();
+        SubjectDAO subjectDAO = new SubjectDAO();
+        ArrayList<Subject> subjects = subjectDAO.getAllSubjects();
         ArrayList<Account> experts = accountDAO.getListExpert();
 
         request.setAttribute("experts", experts);
+        request.setAttribute("subjects", subjects);
         request.setAttribute("subjectCategories", subjectCategories);
-        request.setAttribute("subjectMainCategories", subjectMainCategories);
         request.getRequestDispatcher("/view/subject-add.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Account account=(Account) request.getSession().getAttribute("account");
-        
+        Account account = (Account) request.getSession().getAttribute("account");
+
         String name = request.getParameter("name");
-        int mainCategoryID = -1;
-        int categoryID = -1;
-        if (request.getParameter("mainCategoryID") != null) {
-            mainCategoryID = Integer.parseInt(request.getParameter("mainCategoryID"));
-        } else {
-            categoryID = Integer.parseInt(request.getParameter("categoryID"));
+        String[] categories = request.getParameterValues("categoryID");
+        ArrayList<Integer> categoryID = new ArrayList<>();
+        for (int i = 0; i < categories.length; i++) {
+            String s = categories[i];
+            categoryID.add(Integer.parseInt(s));
         }
         String[] expertCanAccess = null;
         ArrayList<Integer> expertIDCanAccess = new ArrayList<>();
@@ -84,41 +82,43 @@ public class SubjectAddController extends HttpServlet {
         boolean featured = Boolean.parseBoolean(request.getParameter("featured"));
         boolean status = Boolean.parseBoolean(request.getParameter("status"));
         String description = request.getParameter("description");
+        String video = request.getParameter("video");
+        String content = request.getParameter("content");
+        String[] objectives = request.getParameterValues("objectives");
 
-        Subject subject = new Subject();
-        subject.setName(name);
-        if (mainCategoryID == -1) {
-            SubjectCategory category = new SubjectCategory();
-            category.setCategoryID(categoryID);
-            subject.setCategoryID(category);
-        } else {
-            SubjectMainCategory mainCategory = new SubjectMainCategory();
-            mainCategory.setMainCategoryID(mainCategoryID);
-            subject.setMainCategoryID(mainCategory);
-        }
-        subject.setFeatured(featured);
-        subject.setStatus(status);
+        Course course = new Course();
+        course.setName(name);
+        course.setDescription(description);
+        course.setInstructorId(account);
         String img = uploadFile(request);
-        subject.setImage(img);
-        subject.setDescription(description);
-        subject.setOwnerID(account);
+        course.setThumbnailUrl(img);
+        course.setTinyPictureUrl(img);
+        java.util.Date utilDate = new java.util.Date();
+        Date date = new Date(utilDate.getTime());
+        course.setCreatedDate(date);
+        course.setPrice(BigDecimal.ZERO);
+        course.setFeatured(featured);
+        course.setStatus(status);
+        course.setVideoIntroduce(video);
+        course.setAboutCourse(content);
 
-        SubjectDAO subjectDAO = new SubjectDAO();
-        subjectDAO.insertSubject(subject);
-        
+        CourseDAO courseDAO = new CourseDAO();
+        courseDAO.insertCourse(course);
+
+        int idNewCourse = courseDAO.getNewestCourse().getCourseId();
+        courseDAO.insertObjectives(objectives, idNewCourse);
+        courseDAO.insertCourseToCategory(categoryID, idNewCourse);
         AccountDAO accountDAO = new AccountDAO();
         if (expertCanAccess != null) {
-            Subject newSubject = subjectDAO.getNewSubject();
-            accountDAO.insertListAccountCanAccessSubject(newSubject.getSubjectId(), expertIDCanAccess);
+            accountDAO.insertListAccountCanAccessSubject(idNewCourse, expertIDCanAccess);
         }
-        if(account.getRole().getId()==1){
-            Subject newSubject = subjectDAO.getNewSubject();
-            accountDAO.insertAccountCanAccessSubject(newSubject.getSubjectId(), account.getId());
+        if (account.getRole().getId() == 1) {
+            accountDAO.insertAccountCanAccessSubject(idNewCourse, account.getId());
         }
 
         response.sendRedirect("subject-list");
     }
-    
+
     private String uploadFile(HttpServletRequest request) throws IOException, ServletException {
         String fileName = "";
         try {

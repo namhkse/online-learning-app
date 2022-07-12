@@ -21,13 +21,13 @@ public class DimensionViewController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
 
-        String subjectID = request.getParameter("subjectID");
+        String courseID = request.getParameter("courseID");
         int dimensionID = Integer.parseInt(request.getParameter("dimensionID"));
         DimensionDAO dimensionDAO = new DimensionDAO();
         Dimension dimension = dimensionDAO.getDimensionByID(dimensionID);
 
         request.setAttribute("dimension", dimension);
-        request.setAttribute("subjectID", subjectID);
+        request.setAttribute("courseID", courseID);
         request.getRequestDispatcher("/view/dimension-view.jsp").forward(request, response);
     }
 

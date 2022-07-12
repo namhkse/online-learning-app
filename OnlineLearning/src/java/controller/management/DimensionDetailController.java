@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Course;
 import model.Dimension;
 import model.DimensionType;
 import model.Subject;
@@ -23,7 +24,7 @@ public class DimensionDetailController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
 
-        String subjectID = request.getParameter("subjectID");
+        String courseID = request.getParameter("courseID");
         DimensionTypeDAO dimensionTypeDAO = new DimensionTypeDAO();
         DimensionDAO dimensionDAO = new DimensionDAO();
         ArrayList<DimensionType> allDimensionTypes = dimensionTypeDAO.getAllDimensionTypes();
@@ -40,7 +41,7 @@ public class DimensionDetailController extends HttpServlet {
         }
 
         request.setAttribute("allDimensionTypes", allDimensionTypes);
-        request.setAttribute("subjectID", subjectID);
+        request.setAttribute("courseID", courseID);
         request.setAttribute("action", action);
         request.getRequestDispatcher("/view/dimension-detail.jsp").forward(request, response);
     }
@@ -68,7 +69,7 @@ public class DimensionDetailController extends HttpServlet {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         int type = Integer.parseInt(request.getParameter("type"));
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
 
         dimension.setDimensionID(dimensionID);
         dimension.setName(name);
@@ -76,14 +77,14 @@ public class DimensionDetailController extends HttpServlet {
         DimensionType dimensionType = new DimensionType();
         dimensionType.setTypeID(type);
         dimension.setTypeID(dimensionType);
-        Subject subject = new Subject();
-        subject.setSubjectId(subjectID);
-        dimension.setSubjectID(subject);
+        Course course = new Course();
+        course.setCourseId(courseID);
+        dimension.setCourseID(course);
 
         DimensionDAO dimensionDAO = new DimensionDAO();
         dimensionDAO.updateDimension(dimension);
 
-        response.sendRedirect("subject-detail?subjectID=" + subjectID);
+        response.sendRedirect("subject-detail?courseID=" + courseID);
     }
 
     private void addDimension(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -92,21 +93,21 @@ public class DimensionDetailController extends HttpServlet {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         int type = Integer.parseInt(request.getParameter("type"));
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
 
         dimension.setName(name);
         dimension.setDescription(description);
         DimensionType dimensionType = new DimensionType();
         dimensionType.setTypeID(type);
         dimension.setTypeID(dimensionType);
-        Subject subject = new Subject();
-        subject.setSubjectId(subjectID);
-        dimension.setSubjectID(subject);
+        Course course = new Course();
+        course.setCourseId(courseID);
+        dimension.setCourseID(course);
 
         DimensionDAO dimensionDAO = new DimensionDAO();
         dimensionDAO.insertDimension(dimension);
-        
-        response.sendRedirect("subject-detail?subjectID=" + subjectID);
+
+        response.sendRedirect("subject-detail?courseID=" + courseID);
     }
 
     @Override

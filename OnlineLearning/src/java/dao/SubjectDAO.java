@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import model.Account;
 import model.Subject;
 import model.SubjectCategory;
-import model.SubjectMainCategory;
 
 public class SubjectDAO extends DBContext {
 
@@ -22,10 +21,6 @@ public class SubjectDAO extends DBContext {
         subject.setSubjectId(rs.getInt("SubjectID"));
         subject.setName(rs.getString("Name"));
         subject.setCategoryID(sc);
-        subject.setFeatured(rs.getBoolean("Featured"));
-        subject.setStatus(rs.getBoolean("Status"));
-        subject.setImage(rs.getString("Image"));
-        subject.setDescription(rs.getString("Description"));
         subject.setOrder(rs.getInt("Order"));
         subject.setType(rs.getString("type"));
 
@@ -35,11 +30,7 @@ public class SubjectDAO extends DBContext {
     public ArrayList<Subject> getAllSubjects() {
         ArrayList<Subject> subjects = new ArrayList<>();
         try {
-            String sql = "SELECT Subject.*, Account.FirstName, Account.LastName, SubjectCategory.Name CategoryName, SubjectMainCategory.Name MainCategoryName\n"
-                    + "FROM [Subject] JOIN Account ON Subject.OwnerID = Account.AccountID\n"
-                    + "LEFT JOIN SubjectCategory ON Subject.CategoryID = SubjectCategory.CategoryID\n"
-                    + "LEFT JOIN SubjectMainCategory ON Subject.MainCategoryID = SubjectMainCategory.MainCategoryID\n"
-                    + "ORDER BY SubjectID DESC";
+            String sql = "SELECT * FROM Subject";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -49,24 +40,7 @@ public class SubjectDAO extends DBContext {
 
                 SubjectCategory category = new SubjectCategory();
                 category.setCategoryID(rs.getInt("CategoryID"));
-                category.setName(rs.getString("CategoryName"));
-
-                SubjectMainCategory mainCategory = new SubjectMainCategory();
-                mainCategory.setMainCategoryID(rs.getInt("MainCategoryID"));
-                mainCategory.setName(rs.getString("MainCategoryName"));
-
-                subject.setMainCategoryID(mainCategory);
                 subject.setCategoryID(category);
-                subject.setFeatured(rs.getBoolean("Featured"));
-                subject.setStatus(rs.getBoolean("Status"));
-                subject.setImage(rs.getString("Image"));
-                subject.setDescription(rs.getString("Description"));
-
-                Account account = new Account();
-                account.setAccountID(rs.getInt("OwnerID"));
-                account.setFirstName(rs.getString("FirstName"));
-                account.setLastName(rs.getString("LastName"));
-                subject.setOwnerID(account);
 
                 subject.setOrder(rs.getInt("Order"));
                 subject.setType(rs.getString("type"));
@@ -296,28 +270,28 @@ public class SubjectDAO extends DBContext {
                 Subject subject = new Subject();
                 subject.setSubjectId(rs.getInt("SubjectID"));
                 subject.setName(rs.getString("Name"));
-                
+
                 SubjectCategory category = new SubjectCategory();
                 category.setCategoryID(rs.getInt("CategoryID"));
                 category.setName(rs.getString("CategoryName"));
-                
+
                 SubjectMainCategory mainCategory = new SubjectMainCategory();
                 mainCategory.setMainCategoryID(rs.getInt("MainCategoryID"));
                 mainCategory.setName(rs.getString("MainCategoryName"));
-                
+
                 subject.setMainCategoryID(mainCategory);
                 subject.setCategoryID(category);
                 subject.setFeatured(rs.getBoolean("Featured"));
                 subject.setStatus(rs.getBoolean("Status"));
                 subject.setImage(rs.getString("Image"));
                 subject.setDescription(rs.getString("Description"));
-                
+
                 Account account = new Account();
                 account.setAccountID(rs.getInt("OwnerID"));
                 account.setFirstName(rs.getString("FirstName"));
                 account.setLastName(rs.getString("LastName"));
                 subject.setOwnerID(account);
-                
+
                 subject.setOrder(rs.getInt("Order"));
                 subject.setType(rs.getString("type"));
                 return subject;

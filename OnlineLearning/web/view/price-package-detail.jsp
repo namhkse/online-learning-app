@@ -32,21 +32,21 @@
 
                     <div class="container">
                         <div class="container-table post">
-                            <a class="back" href="../management/subject-detail?subjectID=${subjectID}"><i class="fa-solid fa-angle-left"></i>Back</a>
-                            <form onsubmit="return isDataValid()" action="../management/price-package-detail?subjectID=${subjectID}&priceID=${pricePackage.priceID}" method="post" class="form-submit">
+                            <a class="back" href="../management/subject-detail?courseID=${courseID}"><i class="fa-solid fa-angle-left"></i>Back</a>
+                            <form onsubmit="return isDataValid()" action="../management/price-package-detail?courseID=${courseID}&priceID=${pricePackage.priceId}" method="post" class="form-submit">
                                 <h4 class="title">Package</h4>
-                                <input type="text" name="name" maxlength="255" class="input-box" value="${pricePackage.name}" required>
+                                <input type="text" name="name" maxlength="255" class="input-box form-control" value="${pricePackage.name}" required>
                                 <h4 class="title">Duration</h4>
-                                <input id="duration" type="text" name="duration" class="input-box" <c:if test="${pricePackage.accessDuration!=-1}">value="${pricePackage.accessDuration}"</c:if> >
+                                <input id="duration" type="text" name="duration" class="input-box form-control" <c:if test="${pricePackage.accessDuration!=-1}">value="${pricePackage.accessDuration}"</c:if> >
                                     <span class="text-danger duration">Duration must be a positive integer greater than 0 or must be left blank</span>
                                     <h4 class="title">List Price</h4>
-                                    <input id="listPrice" type="text" name="listPrice" class="input-box" value="${pricePackage.listPrice}" required>
+                                    <input id="listPrice" type="text" name="listPrice" class="input-box form-control" value="${pricePackage.listPrice}" required>
                                 <span class="text-danger list-price">List price must be a number greater than or equal to 0</span>
                                 <h4 class="title">Sale Price</h4>
-                                <input id="salePrice" type="text" name="salePrice" class="input-box" value="${pricePackage.salePrice}" required>
+                                <input id="salePrice" type="text" name="salePrice" class="input-box form-control" value="${pricePackage.salePrice}" required>
                                 <span class="text-danger sale-price">Sale price must be a number greater than or equal to 0</span>
                                 <h4 class="title">Status</h4>
-                                <select name="status" class="select-tag">
+                                <select name="status" class="select-tag form-select">
                                     <option value="true" ${pricePackage.status == true ? "selected" : ""}>Active</option>
                                     <option value="false" ${pricePackage.status == false ? "selected" : ""}>Deactive</option>
                                 </select>

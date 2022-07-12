@@ -6,17 +6,17 @@ public class Dimension {
     private String name;
     private String description;
     private DimensionType typeID;
-    private Subject subjectID;
+    private Course courseID;
 
     public Dimension() {
     }
 
-    public Dimension(int dimensionID, String name, String description, DimensionType typeID, Subject subjectID) {
+    public Dimension(int dimensionID, String name, String description, DimensionType typeID, Course courseID) {
         this.dimensionID = dimensionID;
         this.name = name;
         this.description = description;
         this.typeID = typeID;
-        this.subjectID = subjectID;
+        this.courseID = courseID;
     }
 
     public int getDimensionID() {
@@ -51,12 +51,13 @@ public class Dimension {
         this.typeID = typeID;
     }
 
-    public Subject getSubjectID() {
-        return subjectID;
+    public Course getCourseID() {
+        return courseID;
     }
 
-    public void setSubjectID(Subject subjectID) {
-        this.subjectID = subjectID;
+    public void setCourseID(Course courseID) {
+        this.courseID = courseID;
     }
 
+    
 }

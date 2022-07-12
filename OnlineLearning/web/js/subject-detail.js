@@ -28,11 +28,13 @@ function deletePricePackage(id, btn) {
     }
 }
 
-function changeStatusPricePackage(button, id) {
-    if (button.innerHTML.indexOf('on') > -1) {
-        deactivePricePackage(button, id);
-    } else {
-        activePricePackage(button, id);
+function changeStatusPricePackage(button, id, account) {
+    if (account == 4) {
+        if (button.innerHTML.indexOf('on') > -1) {
+            deactivePricePackage(button, id);
+        } else {
+            activePricePackage(button, id);
+        }
     }
 }
 
@@ -97,6 +99,19 @@ function openCity(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
+window.onload = function () {
+    checkedCategoryOnLoad();
+};
+
+function checkedCategoryOnLoad() {
+    var elements = document.querySelectorAll('.category');
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].children[0].checked) {
+            checkedCategory(elements[i].children[0]);
+        }
+    }
+}
+
 function showFilterBox() {
     var searchCategory = document.getElementById('filter-category-box');
     searchCategory.style.display = "flex";
@@ -105,26 +120,6 @@ function showFilterBox() {
 function hideFilterBox() {
     var searchCategory = document.getElementById('filter-category-box');
     searchCategory.style.display = "none";
-}
-
-function checkedCategory(element) {
-    if (element.checked) {
-        uncheckedSubcategory();
-        uncheckedCategory();
-        element.checked = true;
-        textDisplay = element.parentNode.children[1].innerText;
-        document.querySelector('#current-category').innerText = textDisplay;
-    }
-    let count = 0;
-    let checkBoxes = document.querySelectorAll('#category-checkbox input');
-    for (let i = 0; i < checkBoxes.length; i++) {
-        if (checkBoxes[i].checked === false) {
-            count++;
-        }
-    }
-    if (count === checkBoxes.length) {
-        document.querySelector('#current-category').innerText = '';
-    }
 }
 
 function uncheckedSubcategory() {
@@ -154,7 +149,7 @@ function searchCategory(element) {
         }
     }
     for (var i = 0; i < items.length; i++) {
-        if (items[i].children[0].querySelector('span').innerText.toUpperCase().indexOf(searchValue) > -1) {
+        if (items[i].children[0].querySelector('label').innerText.toUpperCase().indexOf(searchValue) > -1) {
             items[i].children[0].style.display = 'block';
         } else {
             items[i].children[0].style.display = 'none';
@@ -184,6 +179,25 @@ function hideExpertBox() {
     searchCategory.style.display = "none";
 }
 
+function isSubmitavailable() {
+    if (checkInputObjective() === true && checkSelectCategory() === true) {
+        return true;
+    }
+    return false;
+}
+
+function checkInputObjective() {
+    let inputElements = document.querySelectorAll('.objective-item');
+    let check = true;
+    for (var i = 0; i < inputElements.length; i++) {
+        if (inputElements[i].children[0].children[0].value.trim() == '') {
+            inputElements[i].children[1].style.display = 'block';
+            check = false;
+        }
+    }
+    return check;
+}
+
 function checkSelectCategory() {
     let inputElements = document.querySelectorAll('#category-checkbox input');
     for (var i = 0; i < inputElements.length; i++) {
@@ -194,3 +208,59 @@ function checkSelectCategory() {
     document.querySelector('#category-item .text-danger').style.display = 'block';
     return false;
 }
+
+function addNewObjective() {
+    var container = document.querySelectorAll('.objective-item')[0].cloneNode();
+    var input = document.querySelector('.objective-item input').cloneNode();
+    input.value = '';
+    var btn = document.querySelector('.objective-item i').cloneNode();
+    container.appendChild(input);
+    container.appendChild(btn);
+    document.querySelector('#objectives').appendChild(container);
+}
+
+function deleteObjective(element) {
+    if (element.parentElement.parentElement.children.length > 1) {
+        if (confirm('Are you sure you want to delete this objective?')) {
+            element.parentElement.outerHTML = "";
+        }
+    } else {
+        alert("Must exist at least 1 objective!");
+    }
+}
+
+function checkedSubcategory(element) {
+    let listSubCategory = element.parentElement.parentElement.getElementsByTagName('div');
+    for (var i = 1; i < listSubCategory.length; i++) {
+        if (element.checked === true) {
+            listSubCategory[i].children[0].checked = true;
+        } else {
+            listSubCategory[i].children[0].checked = false;
+        }
+    }
+}
+
+function checkedCategory(element) {
+    let category = element.parentElement.parentElement.children[0].children[0];
+    let listSubCategory = element.parentElement.parentElement.getElementsByTagName('div');
+    let numberSubCategory = listSubCategory.length;
+    let count = 1;
+    for (var i = 1; i < listSubCategory.length; i++) {
+        if (listSubCategory[i].children[0].checked) {
+            count++;
+        }
+    }
+    if (count === numberSubCategory) {
+        category.indeterminate = false;
+        category.checked = true;
+    }
+    if (count > 1 && count < numberSubCategory) {
+        category.checked = false;
+        category.indeterminate = true;
+    }
+    if (count == 1) {
+        category.indeterminate = false;
+        category.checked = false;
+    }
+}
+

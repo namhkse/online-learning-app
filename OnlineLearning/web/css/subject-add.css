@@ -215,11 +215,10 @@ th i {
 
 .filter-category{
     position: relative;
-    border: 1px solid #000;
     margin-left: 8px;
+    border: 1px solid #365dcd;
     padding: 0 4px;
     border-radius: 5px;
-    width: 300px;
 }
 
 .expert-box{
@@ -241,7 +240,7 @@ th i {
 
 .filter-category::after{
     content: "";
-    width: 300px;
+    width: 12px;
     height: 35px;
     position: absolute;
     right: -1px;
@@ -256,7 +255,7 @@ th i {
     position: absolute;
     z-index: 4;
     top: 117%;
-    right: -1px;
+    right: -203px;
     padding: 15px;
     border-radius: 10px;
     overflow-y: scroll;
@@ -341,11 +340,13 @@ label{
 
 #featured-status{
     display: flex;
+    align-items: baseline;
 }
 
 #featured-status div:nth-child(2){
     display: flex;
     margin-left: 100px;
+    align-items: baseline;
 }
 
 #featured-status div:nth-child(2) select{
@@ -357,7 +358,7 @@ label{
     margin-bottom: 20px;
 }
 
-form{
+#form2nd{
     padding: 24px;
 }
 
@@ -381,4 +382,20 @@ form{
 
 #category-item .text-danger{
     display: none;
+}
+
+.input-objective{
+    width: 100%;
+}
+
+.objective-item{
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.objective-item i{
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: 8px;
 }

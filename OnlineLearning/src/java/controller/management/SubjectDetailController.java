@@ -1,17 +1,19 @@
 package controller.management;
 
 import dao.AccountDAO;
+import dao.CourseDAO;
 import dao.DimensionDAO;
 import dao.PricePackageDAO;
 import dao.SubjectCategoryDAO;
 import dao.SubjectDAO;
-import dao.SubjectMainCategoryDAO;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -21,11 +23,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import model.Account;
+import model.Course;
 import model.Dimension;
-import model.PricePackage;
+import model.CoursePricePackage;
 import model.Subject;
 import model.SubjectCategory;
-import model.SubjectMainCategory;
 
 @WebServlet(name = "SubjectDetailController", urlPatterns = {"/management/subject-detail"})
 @MultipartConfig(
@@ -34,45 +36,44 @@ import model.SubjectMainCategory;
         maxRequestSize = 1024 * 1024 * 100
 )
 public class SubjectDetailController extends HttpServlet {
-
+    
     private static final long SerialVersionUID = 1L;
     private static final String UPLOAD_DIR = "img";
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-
+        
         AccountDAO accountDAO = new AccountDAO();
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
-
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
+        
         PricePackageDAO pricePackageDAO = new PricePackageDAO();
-        ArrayList<PricePackage> pricePackages = pricePackageDAO.getAllPricePackages(subjectID);
+        ArrayList<CoursePricePackage> pricePackages = pricePackageDAO.getAllPricePackages(courseID);
         DimensionDAO dimensionDAO = new DimensionDAO();
-        ArrayList<Dimension> dimensions = dimensionDAO.getDimensionsBySubjectID(subjectID);
-
+        ArrayList<Dimension> dimensions = dimensionDAO.getDimensionsByCourseID(courseID);
+        
         SubjectDAO subjectDAO = new SubjectDAO();
-        Subject subject = subjectDAO.getSubjectByID(subjectID);
-        ArrayList<Account> accounts = accountDAO.getListAccountCanAccessSubject(subjectID);
-
-        request.setAttribute("subject", subject);
-        request.setAttribute("accounts", accounts);
+        CourseDAO courseDAO = new CourseDAO();
+        Course course = courseDAO.getSubjectByCourseID(courseID);
+        
+        request.setAttribute("course", course);
         request.setAttribute("dimensions", dimensions);
         request.setAttribute("pricePackages", pricePackages);
-        request.setAttribute("subjectID", subjectID);
+        request.setAttribute("courseID", courseID);
+        
         SubjectCategoryDAO subjectCategoryDAO = new SubjectCategoryDAO();
-        SubjectMainCategoryDAO subjectMainCategoryDAO = new SubjectMainCategoryDAO();
         ArrayList<SubjectCategory> subjectCategories = subjectCategoryDAO.getAllSubjectCategory();
-        ArrayList<SubjectMainCategory> subjectMainCategories = subjectMainCategoryDAO.getAllSubjectMainCategories();
+        ArrayList<Subject> subjects = subjectDAO.getAllSubjects();
         ArrayList<Account> experts = accountDAO.getListExpert();
-
+        
         request.setAttribute("experts", experts);
         request.setAttribute("subjectCategories", subjectCategories);
-        request.setAttribute("subjectMainCategories", subjectMainCategories);
+        request.setAttribute("subjects", subjects);
         request.getRequestDispatcher("/view/subject-detail.jsp").forward(request, response);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -84,16 +85,15 @@ public class SubjectDetailController extends HttpServlet {
             editSubject(request, response);
         }
     }
-
+    
     private void editSubject(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
         String name = request.getParameter("name");
-        int mainCategoryID = -1;
-        int categoryID = -1;
-        if (request.getParameter("mainCategoryID") != null) {
-            mainCategoryID = Integer.parseInt(request.getParameter("mainCategoryID"));
-        } else {
-            categoryID = Integer.parseInt(request.getParameter("categoryID"));
+        String[] categories = request.getParameterValues("categoryID");
+        ArrayList<Integer> categoryID = new ArrayList<>();
+        for (int i = 0; i < categories.length; i++) {
+            String s = categories[i];
+            categoryID.add(Integer.parseInt(s));
         }
         String[] expertCanAccess = null;
         ArrayList<Integer> expertIDCanAccess = new ArrayList<>();
@@ -107,41 +107,50 @@ public class SubjectDetailController extends HttpServlet {
         boolean featured = Boolean.parseBoolean(request.getParameter("featured"));
         boolean status = Boolean.parseBoolean(request.getParameter("status"));
         String description = request.getParameter("description");
-
-        Subject subject = new Subject();
-        subject.setName(name);
-        if (mainCategoryID == -1) {
-            SubjectCategory category = new SubjectCategory();
-            category.setCategoryID(categoryID);
-            subject.setCategoryID(category);
-        } else {
-            SubjectMainCategory mainCategory = new SubjectMainCategory();
-            mainCategory.setMainCategoryID(mainCategoryID);
-            subject.setMainCategoryID(mainCategory);
-        }
-        subject.setFeatured(featured);
-        subject.setStatus(status);
+        String video = request.getParameter("video");
+        String content = request.getParameter("content");
+        String[] objectives = request.getParameterValues("objectives");
+        
+        Course course = new Course();
+        course.setCourseId(courseID);
+        course.setName(name);
+        course.setDescription(description);
         String img = null;
         if (uploadFile(request).equals("")) {
-            img = new SubjectDAO().getSubjectByID(subjectID).getImage();
+            img = new CourseDAO().getSubjectByCourseID(courseID).getThumbnailUrl();
         } else {
             img = uploadFile(request);
         }
-        subject.setImage(img);
-        subject.setDescription(description);
-        subject.setSubjectId(subjectID);
-
-        SubjectDAO subjectDAO = new SubjectDAO();
-        subjectDAO.updateSubject(subject);
+        course.setThumbnailUrl(img);
+        course.setTinyPictureUrl(img);
+        java.util.Date utilDate = new java.util.Date();
+        Date date = new Date(utilDate.getTime());
+        course.setModifiedDate(date);
+        course.setPrice(BigDecimal.ZERO);
+        course.setFeatured(featured);
+        course.setStatus(status);
+        course.setVideoIntroduce(video);
+        course.setAboutCourse(content);
+        
+        CourseDAO courseDAO = new CourseDAO();
+        courseDAO.updateCourse(course);
+        
+        courseDAO.deleteObjectives(courseID);
+        courseDAO.insertObjectives(objectives, courseID);
+        courseDAO.deleteCategoryOfCourse(courseID);
+        courseDAO.insertCourseToCategory(categoryID, courseID);
+        
         AccountDAO accountDAO = new AccountDAO();
         if (expertCanAccess != null) {
-            accountDAO.deleteAllAccountCanAccessSubject(subjectID);
-            accountDAO.insertListAccountCanAccessSubject(subjectID, expertIDCanAccess);
+            accountDAO.deleteAllAccountCanAccessSubject(courseID);
+            accountDAO.insertListAccountCanAccessSubject(courseID, expertIDCanAccess);
+        } else {
+            accountDAO.deleteAllAccountCanAccessSubject(courseID);
         }
-
+        
         response.sendRedirect("subject-list");
     }
-
+    
     private String uploadFile(HttpServletRequest request) throws IOException, ServletException {
         String fileName = "";
         try {
@@ -171,13 +180,13 @@ public class SubjectDetailController extends HttpServlet {
                     outputStream.close();
                 }
             }
-
+            
         } catch (Exception e) {
             fileName = "";
         }
         return fileName;
     }
-
+    
     private String getFileName(Part part) {
         final String partHeader = part.getHeader("content-disposition");
         System.out.println("*****partHeader :" + partHeader);
@@ -186,10 +195,10 @@ public class SubjectDetailController extends HttpServlet {
                 return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
             }
         }
-
+        
         return null;
     }
-
+    
     private void changeStatusPricePackage(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PricePackageDAO pricePackageDAO = new PricePackageDAO();
@@ -201,7 +210,7 @@ public class SubjectDetailController extends HttpServlet {
         }
         response.getWriter().flush();
     }
-
+    
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -215,7 +224,7 @@ public class SubjectDetailController extends HttpServlet {
         response.setStatus(200);
         response.flushBuffer();
     }
-
+    
     @Override
     public String getServletInfo() {
         return "Short description";

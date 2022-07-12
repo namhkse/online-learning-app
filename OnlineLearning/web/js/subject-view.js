@@ -145,19 +145,10 @@ function searchCategory(element) {
     let searchValue = element.value.toUpperCase();
     let items = document.querySelector('#category-checkbox').children;
     for (var i = 0; i < items.length; i++) {
-        for (var j = 1; j < items[i].children.length; j++) {
-            if (items[i].children[j].querySelector('label').innerText.toUpperCase().indexOf(searchValue) > -1) {
-                items[i].children[j].style.display = 'block';
-            } else {
-                items[i].children[j].style.display = 'none';
-            }
-        }
-    }
-    for (var i = 0; i < items.length; i++) {
-        if (items[i].children[0].querySelector('span').innerText.toUpperCase().indexOf(searchValue) > -1) {
-            items[i].children[0].style.display = 'block';
+        if (items[i].children[0].innerText.toUpperCase().indexOf(searchValue) > -1) {
+            items[i].style.display = 'block';
         } else {
-            items[i].children[0].style.display = 'none';
+            items[i].style.display = 'none';
         }
     }
 }

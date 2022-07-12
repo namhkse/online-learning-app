@@ -9,7 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.PricePackage;
+import model.Course;
+import model.CoursePricePackage;
 import model.Subject;
 
 @WebServlet(name = "PricePackageDetailController", urlPatterns = {"/management/price-package-detail"})
@@ -21,7 +22,7 @@ public class PricePackageDetailController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
 
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
         PricePackageDAO pricePackageDAO = new PricePackageDAO();
 
         String action = "";
@@ -29,13 +30,13 @@ public class PricePackageDetailController extends HttpServlet {
             action = "ADD";
         } else {
             int priceID = Integer.parseInt(request.getParameter("priceID"));
-            PricePackage pricePackage = pricePackageDAO.getPricePackageByID(priceID);
+            CoursePricePackage pricePackage = pricePackageDAO.getPricePackageByID(priceID);
             action = "EDIT";
 
             request.setAttribute("pricePackage", pricePackage);
         }
 
-        request.setAttribute("subjectID", subjectID);
+        request.setAttribute("courseID", courseID);
         request.setAttribute("action", action);
         request.getRequestDispatcher("/view/price-package-detail.jsp").forward(request, response);
     }
@@ -56,7 +57,7 @@ public class PricePackageDetailController extends HttpServlet {
     }
 
     private void editPricePackage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        PricePackage pricePackage = new PricePackage();
+        CoursePricePackage pricePackage = new CoursePricePackage();
 
         int id = Integer.parseInt(request.getParameter("priceID"));
         String name = request.getParameter("name").trim();
@@ -68,25 +69,25 @@ public class PricePackageDetailController extends HttpServlet {
         BigDecimal salePrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("salePrice").trim()));
         boolean status = Boolean.parseBoolean(request.getParameter("status"));
 
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
-        Subject subject = new Subject();
-        subject.setSubjectId(subjectID);
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
+        Course course = new Course();
+        course.setCourseId(courseID);
 
-        pricePackage.setPriceID(id);
+        pricePackage.setPriceId(id);
         pricePackage.setName(name);
         pricePackage.setAccessDuration(duration);
         pricePackage.setListPrice(listPrice);
         pricePackage.setSalePrice(salePrice);
         pricePackage.setStatus(status);
-        pricePackage.setSubjectID(subject);
+        pricePackage.setCourseId(course);
 
         new PricePackageDAO().updatePricePackage(pricePackage);
 
-        response.sendRedirect("subject-detail?subjectID=" + subjectID);
+        response.sendRedirect("subject-detail?courseID=" + courseID);
     }
 
     private void addPricePackage(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        PricePackage pricePackage = new PricePackage();
+        CoursePricePackage pricePackage = new CoursePricePackage();
 
         String name = request.getParameter("name").trim();
         int duration = -1;
@@ -97,20 +98,20 @@ public class PricePackageDetailController extends HttpServlet {
         BigDecimal salePrice = BigDecimal.valueOf(Double.parseDouble(request.getParameter("salePrice").trim()));
         boolean status = Boolean.parseBoolean(request.getParameter("status"));
 
-        int subjectID = Integer.parseInt(request.getParameter("subjectID"));
-        Subject subject = new Subject();
-        subject.setSubjectId(subjectID);
+        int courseID = Integer.parseInt(request.getParameter("courseID"));
+        Course course = new Course();
+        course.setCourseId(courseID);
 
         pricePackage.setName(name);
         pricePackage.setAccessDuration(duration);
         pricePackage.setListPrice(listPrice);
         pricePackage.setSalePrice(salePrice);
         pricePackage.setStatus(status);
-        pricePackage.setSubjectID(subject);
+        pricePackage.setCourseId(course);
 
         new PricePackageDAO().insertPricePackage(pricePackage);
 
-        response.sendRedirect("subject-detail?subjectID=" + subjectID);
+        response.sendRedirect("subject-detail?courseID=" + courseID);
     }
 
     @Override

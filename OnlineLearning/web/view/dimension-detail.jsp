@@ -31,12 +31,12 @@
 
                     <div class="container">
                         <div class="container-table post">
-                            <a class="back" href="../management/subject-detail?subjectID=${subjectID}"><i class="fa-solid fa-angle-left"></i>Back</a>
-                            <form action="../management/dimension-detail?subjectID=${subjectID}&dimensionID=${dimensionID}" method="post" class="form-submit">
+                            <a class="back" href="../management/subject-detail?courseID=${courseID}"><i class="fa-solid fa-angle-left"></i>Back</a>
+                            <form action="../management/dimension-detail?courseID=${courseID}&dimensionID=${dimensionID}" method="post" class="form-submit">
                                 <h4 class="title">Title</h4>
-                                <input type="text" name="name" maxlength="200" class="input-box" value="${dimension.name}" required>
+                                <input type="text" name="name" maxlength="200" class="input-box form-control" value="${dimension.name}" required>
                                 <h4 class="title">Description</h4>
-                                <input type="text" name="description" maxlength="2000" class="input-box" value="${dimension.description}" required>
+                                <input type="text" name="description" maxlength="2000" class="input-box form-control" value="${dimension.description}" required>
                                 <h4 class="title">Type</h4>
                                 <select name="type" id="collection" class="select-tag">
                                     <c:forEach items="${allDimensionTypes}" var="type" >
